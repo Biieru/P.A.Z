@@ -13,13 +13,13 @@
   <link rel="stylesheet" href="/css/responsive.css" />
   <style>
     /* =========================================================
-       Big News — layout de jornal/diário
+       Big News — layout de jornal
        ========================================================= */
 
     .news-page {
       max-width: 1060px;
       margin: 0 auto;
-      padding: clamp(36px, 6vw, 80px) var(--gutter) 100px;
+      padding: clamp(40px, 7vw, 90px) var(--gutter) 100px;
     }
 
     /* ---- Masthead ---- */
@@ -30,6 +30,15 @@
       border-bottom: 1px solid rgba(201, 169, 97, 0.35);
       position: relative;
     }
+
+    .masthead__corner {
+      position: absolute;
+      width: 18px; height: 18px;
+      border: 1px solid var(--gold-deep);
+      pointer-events: none;
+    }
+    .masthead__corner--tl { top: 0; left: 0; border-right: none; border-bottom: none; }
+    .masthead__corner--tr { top: 0; right: 0; border-left: none; border-bottom: none; }
 
     .masthead__overline {
       font-family: var(--font-head);
@@ -66,16 +75,6 @@
 
     .masthead__meta-sep { color: var(--gold-deep); }
 
-    .masthead__corner {
-      position: absolute;
-      width: 18px;
-      height: 18px;
-      border: 1px solid var(--gold-deep);
-      pointer-events: none;
-    }
-    .masthead__corner--tl { top: 0; left: 0; border-right: none; border-bottom: none; }
-    .masthead__corner--tr { top: 0; right: 0; border-left: none; border-bottom: none; }
-
     /* ---- Feed de artigos ---- */
     .news-feed {
       display: flex;
@@ -83,7 +82,7 @@
       gap: clamp(36px, 5vw, 56px);
     }
 
-    /* ---- Article genérico ---- */
+    /* ---- Artigo base ---- */
     .news-article {
       position: relative;
       background:
@@ -97,8 +96,7 @@
     .news-article::after {
       content: "";
       position: absolute;
-      width: 20px;
-      height: 20px;
+      width: 20px; height: 20px;
       border: 1.5px solid var(--gold);
       pointer-events: none;
     }
@@ -109,9 +107,9 @@
     .news-article__header {
       display: flex;
       align-items: center;
-      gap: 14px;
-      margin-bottom: 20px;
-      padding-bottom: 14px;
+      gap: 12px;
+      margin-bottom: 18px;
+      padding-bottom: 13px;
       border-bottom: 1px solid rgba(201, 169, 97, 0.18);
       flex-wrap: wrap;
     }
@@ -128,6 +126,26 @@
       flex-shrink: 0;
     }
 
+    /* Badge "FURO" com destaque especial */
+    .news-article__category--furo {
+      color: #e8c878;
+      background: rgba(232, 200, 120, 0.12);
+      border-color: rgba(232, 200, 120, 0.45);
+      animation: furoPulse 2.5s ease-in-out infinite;
+    }
+
+    @keyframes furoPulse {
+      0%, 100% { box-shadow: 0 0 0 rgba(232, 200, 120, 0); }
+      50%       { box-shadow: 0 0 10px rgba(232, 200, 120, 0.25); }
+    }
+
+    .news-article__author {
+      font-family: var(--font-body);
+      font-size: 13px;
+      font-style: italic;
+      color: var(--bone-dim);
+    }
+
     .news-article__date {
       font-family: var(--font-head);
       font-size: 11px;
@@ -137,75 +155,63 @@
       flex-shrink: 0;
     }
 
-    .news-article__author {
-      font-family: var(--font-body);
-      font-size: 13px;
-      color: var(--bone-dim);
-      font-style: italic;
-    }
-
     .news-article__title {
       font-family: var(--font-display);
-      font-size: clamp(20px, 2.4vw, 28px);
+      font-size: clamp(18px, 2.2vw, 26px);
       font-weight: 700;
-      letter-spacing: 0.06em;
+      letter-spacing: 0.05em;
       color: var(--gold-bright);
       margin: 0 0 18px;
-      line-height: 1.2;
+      line-height: 1.25;
     }
 
     /* ---- Layout: mídia + texto lado a lado ---- */
     .news-layout--media {
       display: grid;
       grid-template-columns: auto 1fr;
-      gap: clamp(20px, 3vw, 36px);
+      gap: clamp(18px, 3vw, 32px);
       align-items: start;
     }
 
     /* Bloco de mídia */
-    .news-media {
-      flex-shrink: 0;
-      display: flex;
-      flex-direction: column;
-      gap: 10px;
-    }
+    .news-media { flex-shrink: 0; display: flex; flex-direction: column; gap: 10px; }
 
-    /* Vídeo 9:16 — largura fixa, altura proporcional */
-    .news-media--portrait {
-      width: clamp(180px, 22vw, 260px);
-    }
-
+    /* Retrato 9:16 */
+    .news-media--portrait { width: clamp(160px, 20vw, 240px); }
     .news-media--portrait .news-media__frame {
       width: 100%;
       aspect-ratio: 9 / 16;
       background: #050810;
       border: 1px solid rgba(201, 169, 97, 0.3);
       overflow: hidden;
-      position: relative;
     }
 
-    /* Vídeo 16:9 — largura total, sem coluna */
-    .news-media--landscape .news-media__frame {
+    /* Paisagem (screenshot print) */
+    .news-media--landscape-img { width: clamp(200px, 28vw, 300px); }
+    .news-media--landscape-img .news-media__frame {
       width: 100%;
-      aspect-ratio: 16 / 9;
       background: #050810;
       border: 1px solid rgba(201, 169, 97, 0.3);
       overflow: hidden;
     }
 
-    .news-media__frame video {
+    .news-media__frame video,
+    .news-media__frame img {
       width: 100%;
       height: 100%;
       object-fit: cover;
       display: block;
     }
 
+    /* Para imagem que não é vídeo (object-fit pode variar) */
+    .news-media__frame img { object-fit: contain; background: #050810; }
+
     .news-media__caption {
       font-family: var(--font-body);
-      font-size: 12.5px;
+      font-size: 12px;
       font-style: italic;
       color: var(--bone-dim);
-      line-height: 1.45;
+      line-height: 1.4;
       text-align: center;
     }
 
@@ -214,20 +220,14 @@
       font-family: var(--font-body);
       font-size: clamp(15px, 1.4vw, 17px);
       color: var(--text);
-      line-height: 1.7;
+      line-height: 1.75;
     }
 
-    .news-article__body p {
-      margin: 0 0 14px;
-    }
+    .news-article__body p { margin: 0 0 14px; }
     .news-article__body p:last-child { margin-bottom: 0; }
+    .news-article__body strong { color: var(--bone); font-weight: 600; }
 
-    .news-article__body strong {
-      color: var(--bone);
-      font-weight: 600;
-    }
-
-    /* Linha decorativa entre conteúdo de texto e artigos mais simples */
+    /* Separador entre artigos */
     .news-rule {
       display: flex;
       align-items: center;
@@ -253,9 +253,10 @@
       .news-layout--media {
         grid-template-columns: 1fr;
       }
-      .news-media--portrait {
+      .news-media--portrait,
+      .news-media--landscape-img {
         width: 100%;
-        max-width: 240px;
+        max-width: 260px;
         margin: 0 auto;
       }
     }
@@ -277,10 +278,9 @@
         <img src="/assets/images/logo-paz.png" alt="" class="brand__logo" />
         <span class="brand__name">P.A.Z</span>
       </a>
-
       <nav class="nav" aria-label="Navegação principal">
         <ul class="nav__list">
-          <li><a href="/"   class="nav__link" data-link>Início</a></li>
+          <li><a href="/"                      class="nav__link" data-link>Início</a></li>
           <li><a href="/pages/esquadroes.html" class="nav__link" data-link>Esquadrões</a></li>
           <li><a href="/pages/cacadas.html"    class="nav__link" data-link>Caçadas</a></li>
           <li><a href="/pages/hierarquia.html" class="nav__link" data-link>Hierarquia</a></li>
@@ -311,17 +311,48 @@
 
     <div class="news-feed">
 
-      <!-- ======================================================
-           ARTIGO 1 — Vídeo de recrutamento (9:16 / portrait)
-           ====================================================== -->
+      <!-- =====================================================
+           ARTIGO 1 (MAIS RECENTE) — TikTok
+           ===================================================== -->
       <article class="news-article">
         <div class="news-article__header">
-          <span class="news-article__category">Recrutamento</span>
-          <span class="news-article__author">P.A.Z</span>
+          <span class="news-article__category news-article__category--furo">Furo de Última Hora</span>
+          <span class="news-article__author">Por Greed</span>
           <span class="news-article__date">Mai 2025</span>
         </div>
 
-        <h2 class="news-article__title">Vídeo de Recrutamento — Primeira Versão</h2>
+        <h2 class="news-article__title">Furo de Última Hora: P.A.Z Marca Presença Oficial no TikTok</h2>
+
+        <div class="news-layout--media">
+          <div class="news-media news-media--landscape-img">
+            <div class="news-media__frame">
+              <img src="/assets/images/TiktokCrew1.jpg" alt="Página oficial da P.A.Z no TikTok" />
+            </div>
+            <p class="news-media__caption">Página oficial da P.A.Z no TikTok.</p>
+          </div>
+
+          <div class="news-article__body">
+            <p>Fontes recém-chegadas à redação do Big News indicam que a <strong>P.A.Z — Predators of the Abyssal Zone</strong> acaba de expandir sua presença digital com o lançamento de sua página oficial no TikTok.</p>
+            <p>Segundo informações apuradas, o novo canal será utilizado para divulgar vídeos de recrutamento, registros da crew, momentos de destaque, chamadas para novos membros e conteúdos voltados à identidade da tripulação. A movimentação reforça a estratégia da P.A.Z de ocupar não apenas os mares, mas também as principais rotas de comunicação fora do Discord.</p>
+            <p>Nos bastidores, a criação da página é vista como mais um passo no fortalecimento da imagem pública da crew. Com presença ativa no site oficial, no Discord e agora no TikTok, a P.A.Z amplia seu alcance e abre uma nova frente para atrair recrutas interessados em PvPvE sério, boss grind e progresso real.</p>
+            <p>Fontes internas afirmam que novos conteúdos devem ser publicados em breve. E, pelo ritmo das movimentações recentes, tudo indica que este é apenas o começo da expansão midiática dos Predators of the Abyssal Zone.</p>
+          </div>
+        </div>
+      </article>
+
+      <div class="news-rule" aria-hidden="true"><span>Big News</span></div>
+
+      <!-- =====================================================
+           ARTIGO 2 — Vídeo de Recrutamento
+           ===================================================== -->
+      <article class="news-article">
+        <div class="news-article__header">
+          <span class="news-article__category">Recrutamento</span>
+          <span class="news-article__author">Por Greed</span>
+          <span class="news-article__date">20 Mai 2025</span>
+        </div>
+
+        <h2 class="news-article__title">Fontes Revelam: Primeiro Vídeo de Recrutamento da P.A.Z é Lançado</h2>
 
         <div class="news-layout--media">
           <div class="news-media news-media--portrait">
@@ -334,22 +365,22 @@
                 aria-label="Vídeo de recrutamento da P.A.Z, primeira versão"
               ></video>
             </div>
-            <p class="news-media__caption">Vídeo de recrutamento da P.A.Z, primeira versão.</p>
+            <p class="news-media__caption">Vídeo de recrutamento da P.A.Z, primeira versão feita em 20 de Maio.</p>
           </div>
 
           <div class="news-article__body">
-            <p>Primeiro vídeo oficial de recrutamento da P.A.Z, produzido para divulgação no Instagram e demais plataformas. O material apresenta a identidade visual da crew e reforça o convite para novos membros que buscam PvPvE sério, boss grind e progresso real.</p>
-            <p>A P.A.Z opera com mais de 70 membros ativos, divididos em três esquadrões: <strong>Águas Pacíficas</strong>, <strong>Cães do Abismo</strong> e <strong>Ghost Gang</strong>. Cada divisão tem um papel estratégico distinto dentro da tripulação.</p>
-            <p>Para se alistar, acesse o Discord oficial pelo botão na página inicial ou clique no link de convite disponibilizado pelos membros.</p>
+            <p>Informações vindas dos bastidores indicam que a <strong>P.A.Z</strong> lançou a primeira versão oficial de seu vídeo de recrutamento. O material foi produzido para circulação no Instagram e em outras plataformas, apresentando ao público a identidade visual da crew e reforçando o chamado para novos membros interessados em PvPvE sério, boss grind e progresso real.</p>
+            <p>De acordo com dados apurados pelo Big News, a P.A.Z já opera com mais de <strong>70 membros ativos</strong>, organizados em três esquadrões principais: <strong>Águas Pacíficas</strong>, <strong>Cães do Abismo</strong> e <strong>Ghost Gang</strong>. Cada divisão possui uma função estratégica própria dentro da tripulação, compondo uma estrutura voltada para organização, presença e domínio em alto nível.</p>
+            <p>Fontes oficiais informam que interessados em se alistar devem acessar o Discord da crew por meio do botão disponível na página inicial do site ou utilizar os links de convite compartilhados pelos membros autorizados. A movimentação reforça a expansão da P.A.Z e sinaliza que novas vagas podem se tornar cada vez mais disputadas.</p>
           </div>
         </div>
       </article>
 
-      <div class="news-rule" aria-hidden="true"><span>P.A.Z</span></div>
+      <div class="news-rule" aria-hidden="true"><span>Big News</span></div>
 
-      <!-- ======================================================
-           ARTIGO 2 — Site criado
-           ====================================================== -->
+      <!-- =====================================================
+           ARTIGO 3 — Criação do Site
+           ===================================================== -->
       <article class="news-article">
         <div class="news-article__header">
           <span class="news-article__category">Anúncio</span>
@@ -357,12 +388,12 @@
           <span class="news-article__date">Mai 2025</span>
         </div>
 
-        <h2 class="news-article__title">Site da P.A.Z Criado com Sucesso</h2>
+        <h2 class="news-article__title">Fontes Confirmam: Site Oficial da P.A.Z Entra no Ar</h2>
 
         <div class="news-article__body">
-          <p>O site oficial da <strong>P.A.Z — Predators of the Abyssal Zone</strong> foi desenvolvido e publicado com sucesso. A plataforma centraliza as informações da crew: estrutura dos esquadrões, hierarquia, caçadas e os comunicados oficiais reunidos aqui no Big News.</p>
-          <p>O projeto foi construído por <strong>Greed</strong> com o objetivo de dar à tripulação uma base sólida fora do Discord — um ponto de referência para membros novos e veteranos.</p>
-          <p>O site continuará sendo atualizado conforme a P.A.Z cresce. Novas páginas, registros de caçadas, ranking de membros e cobertura de eventos serão adicionados nas próximas iterações.</p>
+          <p>Fontes próximas à liderança indicam que o site oficial da <strong>P.A.Z — Predators of the Abyssal Zone</strong> — foi desenvolvido, publicado e colocado em operação com sucesso. A nova plataforma surge como um ponto central de informações da crew, reunindo a estrutura dos esquadrões, a hierarquia interna, registros de caçadas e comunicados oficiais diretamente ligados ao Big News.</p>
+          <p>Segundo informações apuradas, o projeto foi conduzido por <strong>Greed</strong> com o objetivo de fortalecer a presença da tripulação além dos limites do Discord. A iniciativa busca oferecer uma base sólida de consulta tanto para novos recrutas quanto para veteranos já inseridos nas operações da P.A.Z.</p>
+          <p>Ainda de acordo com fontes internas, o site não será uma estrutura estática. Novas páginas, registros de caçadas, rankings de membros, arquivos estratégicos e coberturas de eventos devem ser adicionados conforme a P.A.Z expande sua influência pelos mares.</p>
         </div>
       </article>
 
@@ -373,7 +404,6 @@
     <div class="site-footer__line"></div>
     <p>P.A.Z — Predators of the Abyssal Zone · Se quer ficar, lute.</p>
   </footer>
-  </div>
 
   <script src="/js/main.js" defer></script>
 </body>
