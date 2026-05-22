@@ -113,3 +113,102 @@
     ? document.addEventListener("DOMContentLoaded", boot)
     : boot();
 })();
+
+/* ===========================================================
+   Audio Player
+   - Tenta autoplay; se bloqueado aguarda primeiro gesto
+   - Volume e mute persistem via localStorage entre páginas
+   =========================================================== */
+const AudioPlayer = (() => {
+  const KEY = "paz:audio";
+
+  function load() {
+    try { return JSON.parse(localStorage.getItem(KEY)) || { volume: 0.2, muted: false }; }
+    catch { return { volume: 0.2, muted: false }; }
+  }
+
+  function save(s) {
+    try { localStorage.setItem(KEY, JSON.stringify(s)); } catch {}
+  }
+
+  function updateSliderFill(slider) {
+    const pct = parseFloat(slider.value) * 100;
+    slider.style.setProperty("--fill", pct + "%");
+  }
+
+  function updateUI(player, muted) {
+    player.classList.toggle("is-muted", muted);
+    const btn = player.querySelector(".audio-player__toggle");
+    if (btn) btn.setAttribute("aria-label", muted ? "Ativar música" : "Mutar música");
+  }
+
+  function init() {
+    const audio  = document.getElementById("bgAudio");
+    const player = document.getElementById("audioPlayer");
+    const toggle = document.getElementById("audioToggle");
+    const slider = document.getElementById("volumeSlider");
+    if (!audio || !player || !toggle || !slider) return;
+
+    // Restaurar estado salvo
+    const state = load();
+    audio.volume = state.volume;
+    audio.muted  = state.muted;
+    slider.value = state.muted ? 0 : state.volume;
+    updateSliderFill(slider);
+    updateUI(player, state.muted || state.volume === 0);
+
+    // Tentar autoplay
+    const tryPlay = () => audio.play().catch(() => {});
+
+    const p = audio.play();
+    if (p !== undefined) {
+      p.catch(() => {
+        // Bloqueado pelo browser — mostrar hint, esperar gesto
+        player.classList.add("is-blocked");
+        const onGesture = () => {
+          tryPlay();
+          player.classList.remove("is-blocked");
+          document.removeEventListener("click",      onGesture);
+          document.removeEventListener("touchstart", onGesture);
+          document.removeEventListener("keydown",    onGesture);
+        };
+        document.addEventListener("click",      onGesture, { once: true });
+        document.addEventListener("touchstart", onGesture, { once: true, passive: true });
+        document.addEventListener("keydown",    onGesture, { once: true });
+      });
+    }
+
+    // Mute / unmute ao clicar no ícone
+    toggle.addEventListener("click", (e) => {
+      e.stopPropagation();
+      const s = load();
+      s.muted  = !s.muted;
+      audio.muted  = s.muted;
+      slider.value = s.muted ? 0 : s.volume;
+      updateSliderFill(slider);
+      save(s);
+      updateUI(player, s.muted);
+      if (!s.muted) tryPlay();
+    });
+
+    // Slider de volume
+    slider.addEventListener("input", () => {
+      const vol = parseFloat(slider.value);
+      audio.volume = vol;
+      audio.muted  = vol === 0;
+      updateSliderFill(slider);
+      const s = load();
+      s.volume = vol > 0 ? vol : s.volume; // preserva último volume não-zero
+      s.muted  = vol === 0;
+      save(s);
+      updateUI(player, vol === 0);
+      if (vol > 0) tryPlay();
+    });
+  }
+
+  return { init };
+})();
+
+// Adicionar ao boot
+const _origBoot = typeof boot === "function" ? boot : null;
+document.addEventListener("DOMContentLoaded", () => AudioPlayer.init());
