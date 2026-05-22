@@ -5,53 +5,46 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <meta name="theme-color" content="#050810" />
   <title>P.A.Z — Predators of the Abyssal Zone</title>
-  <meta name="description" content="P.A.Z — Predators of the Abyssal Zone. Crew PvPvE: caos, boss grind, progresso. Se quer ficar, lute. Se quer crescer, prove." />
+  <meta name="description" content="P.A.Z — Predators of the Abyssal Zone. Crew PvPvE: caos, boss grind, progresso." />
 
   <link rel="icon" type="image/png" href="assets/images/logo-paz.png" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@400;700;900&family=Cinzel:wght@400;500;600;700&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&display=swap" rel="stylesheet" />
-
   <link rel="stylesheet" href="css/style.css" />
   <link rel="stylesheet" href="css/responsive.css" />
 </head>
 <body data-page="home">
 
-  <!-- SVG filters globais (usados pela transição de água e por bordas orgânicas) -->
   <svg class="svg-defs" aria-hidden="true" focusable="false">
     <defs>
       <filter id="liquid-distort" x="-10%" y="-10%" width="120%" height="120%">
         <feTurbulence type="fractalNoise" baseFrequency="0.018 0.028" numOctaves="2" seed="7" result="noise"/>
         <feDisplacementMap in="SourceGraphic" in2="noise" scale="14" xChannelSelector="R" yChannelSelector="G"/>
       </filter>
-      <filter id="grain">
-        <feTurbulence type="fractalNoise" baseFrequency="0.9" numOctaves="2" stitchTiles="stitch"/>
-        <feColorMatrix values="0 0 0 0 0  0 0 0 0 0  0 0 0 0 0  0 0 0 0.18 0"/>
-      </filter>
     </defs>
   </svg>
 
-  <!-- Overlay de transição entre páginas: 4 cantos de água abissal -->
   <div class="page-transition" id="pageTransition" aria-hidden="true"></div>
 
-  <!-- Camadas de atmosfera de fundo -->
   <div class="atmosphere" aria-hidden="true">
     <div class="atmosphere__vignette"></div>
     <div class="atmosphere__grain"></div>
     <div class="atmosphere__bg"></div>
   </div>
 
-  <!-- Header / Nav -->
+  <!-- ====================================================
+       SHELL PERSISTENTE — nunca é substituído pelo router
+       ==================================================== -->
   <header class="site-header">
     <div class="site-header__inner">
       <a href="index.html" class="brand" data-link>
         <img src="assets/images/logo-paz.png" alt="" class="brand__logo" />
         <span class="brand__name">P.A.Z</span>
       </a>
-
       <nav class="nav" aria-label="Navegação principal">
         <ul class="nav__list">
-          <li><a href="index.html"            class="nav__link is-active" data-link>Início</a></li>
+          <li><a href="index.html"                    class="nav__link" data-link>Início</a></li>
           <li><a href="pages/esquadroes.html" class="nav__link" data-link>Esquadrões</a></li>
           <li><a href="pages/cacadas.html"    class="nav__link" data-link>Caçadas</a></li>
           <li><a href="pages/hierarquia.html" class="nav__link" data-link>Hierarquia</a></li>
@@ -64,86 +57,86 @@
     </div>
   </header>
 
-  <main class="hero">
-    <div class="hero__container">
+  <!-- Áudio persistente (fora de #app-content) -->
+  <audio id="bgAudio" loop preload="auto" src="assets/audio/bg.mp3"></audio>
 
-      <!-- Coluna esquerda: título, copy, CTA -->
-      <section class="hero__main">
-        <h1 class="display-title" aria-label="P.A.Z">
-          <span class="display-title__char">P</span><span class="display-title__dot">.</span><span class="display-title__char">A</span><span class="display-title__dot">.</span><span class="display-title__char">Z</span>
-        </h1>
-        <p class="display-subtitle">Predators of the Abyssal Zone</p>
-        <p class="display-tagline">Aqui é PvPvE, caos e boss grind.</p>
+  <!-- ====================================================
+       CONTEÚDO DINÂMICO — substituído pelo router SPA
+       ==================================================== -->
+  <div id="app-content">
+    <main class="hero">
+      <div class="hero__container">
 
-        <a href="https://discord.gg/kVCvFw2tsV" class="cta-btn" target="_blank" rel="noopener noreferrer">
-          <span class="cta-btn__corner cta-btn__corner--tl"></span>
-          <span class="cta-btn__corner cta-btn__corner--tr"></span>
-          <span class="cta-btn__corner cta-btn__corner--bl"></span>
-          <span class="cta-btn__corner cta-btn__corner--br"></span>
-          <span class="cta-btn__label">Alistar-se à Tripulação</span>
-        </a>
-      </section>
+        <section class="hero__main">
+          <h1 class="display-title" aria-label="P.A.Z">
+            <span class="display-title__char">P</span><span class="display-title__dot">.</span><span class="display-title__char">A</span><span class="display-title__dot">.</span><span class="display-title__char">Z</span>
+          </h1>
+          <p class="display-subtitle">Predators of the Abyssal Zone</p>
+          <p class="display-tagline">Aqui é PvPvE, caos e boss grind.</p>
 
-      <!-- Coluna direita: card Resumo da Tripulação -->
-      <aside class="summary-card">
-        <div class="ornate-frame">
-          <span class="ornate-frame__corner ornate-frame__corner--tl"></span>
-          <span class="ornate-frame__corner ornate-frame__corner--tr"></span>
-          <span class="ornate-frame__corner ornate-frame__corner--bl"></span>
-          <span class="ornate-frame__corner ornate-frame__corner--br"></span>
+          <a href="https://discord.gg/kVCvFw2tsV" class="cta-btn" target="_blank" rel="noopener noreferrer">
+            <span class="cta-btn__corner cta-btn__corner--tl"></span>
+            <span class="cta-btn__corner cta-btn__corner--tr"></span>
+            <span class="cta-btn__corner cta-btn__corner--bl"></span>
+            <span class="cta-btn__corner cta-btn__corner--br"></span>
+            <span class="cta-btn__label">Alistar-se à Tripulação</span>
+          </a>
+        </section>
 
-          <h2 class="summary-card__title">Resumo da Tripulação</h2>
-          <div class="summary-card__divider" aria-hidden="true"></div>
-
-          <div class="summary-card__sigil">
-            <img src="assets/images/logo-paz.png" alt="Bandeira da P.A.Z" />
+        <aside class="summary-card">
+          <div class="ornate-frame">
+            <span class="ornate-frame__corner ornate-frame__corner--tl"></span>
+            <span class="ornate-frame__corner ornate-frame__corner--tr"></span>
+            <span class="ornate-frame__corner ornate-frame__corner--bl"></span>
+            <span class="ornate-frame__corner ornate-frame__corner--br"></span>
+            <h2 class="summary-card__title">Resumo da Tripulação</h2>
+            <div class="summary-card__divider" aria-hidden="true"></div>
+            <div class="summary-card__sigil">
+              <img src="assets/images/logo-paz.png" alt="Bandeira da P.A.Z" />
+            </div>
+            <dl class="summary-card__list">
+              <div class="summary-row">
+                <dt><span class="summary-row__icon" aria-hidden="true">⚑</span>Nome:</dt>
+                <dd>P.A.Z</dd>
+              </div>
+              <div class="summary-row">
+                <dt><span class="summary-row__icon" aria-hidden="true">⚔</span>Tipo:</dt>
+                <dd>Crew PvPvE</dd>
+              </div>
+              <div class="summary-row">
+                <dt><span class="summary-row__icon" aria-hidden="true">⛓</span>Membros:</dt>
+                <dd>70+</dd>
+              </div>
+              <div class="summary-row">
+                <dt><span class="summary-row__icon" aria-hidden="true">☠</span>Foco:</dt>
+                <dd>Caos, Boss Grind, Progresso</dd>
+              </div>
+              <div class="summary-row summary-row--motto">
+                <dt><span class="summary-row__icon" aria-hidden="true">✦</span>Lema:</dt>
+                <dd>Se quer ficar, lute.<br/>Se quer crescer, prove.</dd>
+              </div>
+            </dl>
           </div>
+        </aside>
+      </div>
 
-          <dl class="summary-card__list">
-            <div class="summary-row">
-              <dt><span class="summary-row__icon" aria-hidden="true">⚑</span>Nome:</dt>
-              <dd>P.A.Z</dd>
-            </div>
-            <div class="summary-row">
-              <dt><span class="summary-row__icon" aria-hidden="true">⚔</span>Tipo:</dt>
-              <dd>Crew PvPvE</dd>
-            </div>
-            <div class="summary-row">
-              <dt><span class="summary-row__icon" aria-hidden="true">⛓</span>Membros:</dt>
-              <dd>70+</dd>
-            </div>
-            <div class="summary-row">
-              <dt><span class="summary-row__icon" aria-hidden="true">☠</span>Foco:</dt>
-              <dd>Caos, Boss Grind, Progresso</dd>
-            </div>
-            <div class="summary-row summary-row--motto">
-              <dt><span class="summary-row__icon" aria-hidden="true">✦</span>Lema:</dt>
-              <dd>Se quer ficar, lute.<br/>Se quer crescer, prove.</dd>
-            </div>
-          </dl>
-        </div>
-      </aside>
-    </div>
+      <footer class="site-footer">
+        <div class="site-footer__line"></div>
+        <p>P.A.Z — Predators of the Abyssal Zone · Se quer ficar, lute.</p>
+      </footer>
+    </main>
+  </div>
 
-    <footer class="site-footer">
-      <div class="site-footer__line"></div>
-      <p>P.A.Z — Predators of the Abyssal Zone · Se quer ficar, lute.</p>
-    </footer>
-  </main>
-
-  <!-- Audio Player -->
+  <!-- Audio Player Widget (persistente) -->
   <div class="audio-player" id="audioPlayer" role="region" aria-label="Controle de música">
-    <audio id="bgAudio" loop preload="auto" src="assets/audio/bg.mp3"></audio>
     <span class="audio-player__hint">Clique para ativar</span>
     <button class="audio-player__toggle" id="audioToggle" aria-label="Mutar música">
-      <!-- Ícone: tocando (barras animadas) -->
       <svg class="audio-icon audio-icon--playing" viewBox="0 0 24 24" width="22" height="22" fill="none" aria-hidden="true">
         <rect class="audio-bar" x="2"  y="6"  width="3" height="12" rx="1.5" fill="currentColor"/>
         <rect class="audio-bar" x="7"  y="3"  width="3" height="18" rx="1.5" fill="currentColor"/>
         <rect class="audio-bar" x="12" y="7"  width="3" height="10" rx="1.5" fill="currentColor"/>
         <rect class="audio-bar" x="17" y="4"  width="3" height="16" rx="1.5" fill="currentColor"/>
       </svg>
-      <!-- Ícone: mutado -->
       <svg class="audio-icon audio-icon--muted" viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true">
         <path d="M11 5L6 9H2v6h4l5 4V5z"/>
         <line x1="23" y1="9" x2="17" y2="15"/>

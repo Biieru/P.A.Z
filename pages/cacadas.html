@@ -5,12 +5,12 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <meta name="theme-color" content="#050810" />
   <title>Caçadas · P.A.Z</title>
-  <link rel="icon" type="image/png" href="../assets/images/logo-paz.png" />
+  <link rel="icon" type="image/png" href="/assets/images/logo-paz.png" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@400;700;900&family=Cinzel:wght@400;500;600;700&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="../css/style.css" />
-  <link rel="stylesheet" href="../css/responsive.css" />
+  <link rel="stylesheet" href="/css/style.css" />
+  <link rel="stylesheet" href="/css/responsive.css" />
 </head>
 <body data-page="cacadas">
 
@@ -33,18 +33,18 @@
 
   <header class="site-header">
     <div class="site-header__inner">
-      <a href="../index.html" class="brand" data-link>
-        <img src="../assets/images/logo-paz.png" alt="" class="brand__logo" />
+      <a href="/" class="brand" data-link>
+        <img src="/assets/images/logo-paz.png" alt="" class="brand__logo" />
         <span class="brand__name">P.A.Z</span>
       </a>
 
       <nav class="nav" aria-label="Navegação principal">
         <ul class="nav__list">
-          <li><a href="../index.html"   class="nav__link" data-link>Início</a></li>
-          <li><a href="esquadroes.html" class="nav__link" data-link>Esquadrões</a></li>
-          <li><a href="cacadas.html"    class="nav__link" data-link>Caçadas</a></li>
-          <li><a href="hierarquia.html" class="nav__link" data-link>Hierarquia</a></li>
-          <li><a href="big-news.html"   class="nav__link" data-link>Big News</a></li>
+          <li><a href="/"   class="nav__link" data-link>Início</a></li>
+          <li><a href="/pages/esquadroes.html" class="nav__link" data-link>Esquadrões</a></li>
+          <li><a href="/pages/cacadas.html"    class="nav__link" data-link>Caçadas</a></li>
+          <li><a href="/pages/hierarquia.html" class="nav__link" data-link>Hierarquia</a></li>
+          <li><a href="/pages/big-news.html"   class="nav__link" data-link>Big News</a></li>
         </ul>
       </nav>
       <button class="nav-toggle" aria-label="Abrir menu" aria-expanded="false" id="navToggle">
@@ -70,33 +70,8 @@
     <div class="site-footer__line"></div>
     <p>P.A.Z — Predators of the Abyssal Zone · Se quer ficar, lute.</p>
   </footer>
-
-  <!-- Audio Player -->
-  <div class="audio-player" id="audioPlayer" role="region" aria-label="Controle de música">
-    <audio id="bgAudio" loop preload="auto" src="../assets/audio/bg.mp3"></audio>
-    <span class="audio-player__hint">Clique para ativar</span>
-    <button class="audio-player__toggle" id="audioToggle" aria-label="Mutar música">
-      <!-- Ícone: tocando (barras animadas) -->
-      <svg class="audio-icon audio-icon--playing" viewBox="0 0 24 24" width="22" height="22" fill="none" aria-hidden="true">
-        <rect class="audio-bar" x="2"  y="6"  width="3" height="12" rx="1.5" fill="currentColor"/>
-        <rect class="audio-bar" x="7"  y="3"  width="3" height="18" rx="1.5" fill="currentColor"/>
-        <rect class="audio-bar" x="12" y="7"  width="3" height="10" rx="1.5" fill="currentColor"/>
-        <rect class="audio-bar" x="17" y="4"  width="3" height="16" rx="1.5" fill="currentColor"/>
-      </svg>
-      <!-- Ícone: mutado -->
-      <svg class="audio-icon audio-icon--muted" viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true">
-        <path d="M11 5L6 9H2v6h4l5 4V5z"/>
-        <line x1="23" y1="9" x2="17" y2="15"/>
-        <line x1="17" y1="9" x2="23" y2="15"/>
-      </svg>
-    </button>
-    <div class="audio-player__slider-wrap">
-      <input type="range" class="audio-player__slider" id="volumeSlider"
-             min="0" max="1" step="0.02" value="0.2"
-             aria-label="Volume da música">
-    </div>
   </div>
 
-  <script src="../js/main.js" defer></script>
+  <script src="/js/main.js" defer></script>
 </body>
 </html>
