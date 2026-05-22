@@ -132,8 +132,7 @@ body {
   top: 0;
   z-index: 100;
   padding: 14px var(--gutter) 12px;
-  backdrop-filter: blur(8px);
-  background: linear-gradient(180deg, rgba(5, 8, 16, 0.85) 0%, rgba(5, 8, 16, 0.45) 80%, transparent 100%);
+  background: linear-gradient(180deg, rgba(5, 8, 16, 0.92) 0%, rgba(5, 8, 16, 0.6) 80%, transparent 100%);
   border-bottom: 1px solid rgba(201, 169, 97, 0.22);
 }
 

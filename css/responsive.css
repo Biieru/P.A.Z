@@ -46,9 +46,7 @@
     position: fixed;
     inset: 0;
     z-index: 105;
-    background: rgba(5, 8, 16, 0.97);
-    backdrop-filter: blur(14px);
-    -webkit-backdrop-filter: blur(14px);
+    background: #06101c;
     flex-direction: column;
     align-items: center;
     justify-content: center;
