@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="theme-color" content="#050810" />
+  <title>Caçadas · P.A.Z</title>
+  <link rel="icon" type="image/png" href="../assets/images/logo-paz.png" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@400;700;900&family=Cinzel:wght@400;500;600;700&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="../css/style.css" />
+  <link rel="stylesheet" href="../css/responsive.css" />
+</head>
+<body data-page="cacadas">
+
+  <svg class="svg-defs" aria-hidden="true" focusable="false">
+    <defs>
+      <filter id="liquid-distort" x="-10%" y="-10%" width="120%" height="120%">
+        <feTurbulence type="fractalNoise" baseFrequency="0.018 0.028" numOctaves="2" seed="7" result="noise"/>
+        <feDisplacementMap in="SourceGraphic" in2="noise" scale="14" xChannelSelector="R" yChannelSelector="G"/>
+      </filter>
+    </defs>
+  </svg>
+
+  <div class="page-transition" id="pageTransition" aria-hidden="true"></div>
+
+  <div class="atmosphere" aria-hidden="true">
+    <div class="atmosphere__vignette"></div>
+    <div class="atmosphere__grain"></div>
+    <div class="atmosphere__bg"></div>
+  </div>
+
+  <header class="site-header">
+    <div class="site-header__inner">
+      <a href="../index.html" class="brand" data-link>
+        <img src="../assets/images/logo-paz.png" alt="" class="brand__logo" />
+        <span class="brand__name">P.A.Z</span>
+      </a>
+
+      <nav class="nav" aria-label="Navegação principal">
+        <ul class="nav__list">
+          <li><a href="../index.html"   class="nav__link" data-link>Início</a></li>
+          <li><a href="esquadroes.html" class="nav__link" data-link>Esquadrões</a></li>
+          <li><a href="cacadas.html"    class="nav__link" data-link>Caçadas</a></li>
+          <li><a href="hierarquia.html" class="nav__link" data-link>Hierarquia</a></li>
+          <li><a href="big-news.html"   class="nav__link" data-link>Big News</a></li>
+        </ul>
+      </nav>
+      <button class="nav-toggle" aria-label="Abrir menu" aria-expanded="false" id="navToggle">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </header>
+
+  <main class="inner-page">
+    <header class="inner-page__header">
+      <p class="inner-page__eyebrow">Boss Grind · Recompensas horárias</p>
+      <h1 class="inner-page__title">Caçadas</h1>
+      <div class="inner-page__divider" aria-hidden="true"></div>
+      <p class="inner-page__lede">Tabela de caçadas marcadas, drops de alta prioridade e janelas de spawn dos chefes do abismo.</p>
+    </header>
+
+    <section class="placeholder-block">
+      <p><strong>Em construção.</strong> Esta página mostrará o calendário de caçadas, com horários, alvos e divisão de loot.</p><p>Pode ser integrada futuramente a um Google Sheet ou JSON estático versionado.</p>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="site-footer__line"></div>
+    <p>P.A.Z — Predators of the Abyssal Zone · Se quer ficar, lute.</p>
+  </footer>
+
+  <script src="../js/main.js" defer></script>
+</body>
+</html>

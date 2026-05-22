@@ -1,0 +1,379 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="theme-color" content="#050810" />
+  <title>Big News · P.A.Z</title>
+  <link rel="icon" type="image/png" href="../assets/images/logo-paz.png" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@400;700;900&family=Cinzel:wght@400;500;600;700&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="../css/style.css" />
+  <link rel="stylesheet" href="../css/responsive.css" />
+  <style>
+    /* =========================================================
+       Big News — layout de jornal/diário
+       ========================================================= */
+
+    .news-page {
+      max-width: 1060px;
+      margin: 0 auto;
+      padding: clamp(36px, 6vw, 80px) var(--gutter) 100px;
+    }
+
+    /* ---- Masthead ---- */
+    .masthead {
+      text-align: center;
+      padding-bottom: clamp(28px, 4vw, 44px);
+      margin-bottom: clamp(36px, 5vw, 56px);
+      border-bottom: 1px solid rgba(201, 169, 97, 0.35);
+      position: relative;
+    }
+
+    .masthead__overline {
+      font-family: var(--font-head);
+      font-size: 10.5px;
+      letter-spacing: 0.55em;
+      color: var(--bone-dim);
+      text-transform: uppercase;
+      margin: 0 0 10px;
+    }
+
+    .masthead__title {
+      font-family: var(--font-display);
+      font-size: clamp(36px, 6vw, 68px);
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      margin: 0 0 14px;
+      background: linear-gradient(180deg, #f4ebd0 0%, #d5c79e 35%, #8e7a4a 80%);
+      -webkit-background-clip: text;
+      background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .masthead__meta {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 24px;
+      font-family: var(--font-head);
+      font-size: 11px;
+      letter-spacing: 0.3em;
+      color: var(--bone-dim);
+      text-transform: uppercase;
+    }
+
+    .masthead__meta-sep { color: var(--gold-deep); }
+
+    .masthead__corner {
+      position: absolute;
+      width: 18px;
+      height: 18px;
+      border: 1px solid var(--gold-deep);
+      pointer-events: none;
+    }
+    .masthead__corner--tl { top: 0; left: 0; border-right: none; border-bottom: none; }
+    .masthead__corner--tr { top: 0; right: 0; border-left: none; border-bottom: none; }
+
+    /* ---- Feed de artigos ---- */
+    .news-feed {
+      display: flex;
+      flex-direction: column;
+      gap: clamp(36px, 5vw, 56px);
+    }
+
+    /* ---- Article genérico ---- */
+    .news-article {
+      position: relative;
+      background:
+        radial-gradient(ellipse 80% 40% at 50% 0%, rgba(30, 69, 102, 0.14) 0%, transparent 70%),
+        linear-gradient(180deg, rgba(8, 17, 30, 0.88) 0%, rgba(5, 8, 16, 0.96) 100%);
+      border: 1px solid rgba(201, 169, 97, 0.28);
+      padding: clamp(22px, 3vw, 38px);
+    }
+
+    .news-article::before,
+    .news-article::after {
+      content: "";
+      position: absolute;
+      width: 20px;
+      height: 20px;
+      border: 1.5px solid var(--gold);
+      pointer-events: none;
+    }
+    .news-article::before { top: -2px; left: -2px; border-right: none; border-bottom: none; }
+    .news-article::after  { bottom: -2px; right: -2px; border-left: none; border-top: none; }
+
+    /* Cabeçalho do artigo */
+    .news-article__header {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      margin-bottom: 20px;
+      padding-bottom: 14px;
+      border-bottom: 1px solid rgba(201, 169, 97, 0.18);
+      flex-wrap: wrap;
+    }
+
+    .news-article__category {
+      font-family: var(--font-head);
+      font-size: 10px;
+      letter-spacing: 0.42em;
+      text-transform: uppercase;
+      color: var(--ghost-cyan);
+      background: rgba(74, 192, 255, 0.1);
+      border: 1px solid rgba(74, 192, 255, 0.3);
+      padding: 3px 10px;
+      flex-shrink: 0;
+    }
+
+    .news-article__date {
+      font-family: var(--font-head);
+      font-size: 11px;
+      letter-spacing: 0.2em;
+      color: var(--bone-dim);
+      margin-left: auto;
+      flex-shrink: 0;
+    }
+
+    .news-article__author {
+      font-family: var(--font-body);
+      font-size: 13px;
+      color: var(--bone-dim);
+      font-style: italic;
+    }
+
+    .news-article__title {
+      font-family: var(--font-display);
+      font-size: clamp(20px, 2.4vw, 28px);
+      font-weight: 700;
+      letter-spacing: 0.06em;
+      color: var(--gold-bright);
+      margin: 0 0 18px;
+      line-height: 1.2;
+    }
+
+    /* ---- Layout: mídia + texto lado a lado ---- */
+    .news-layout--media {
+      display: grid;
+      grid-template-columns: auto 1fr;
+      gap: clamp(20px, 3vw, 36px);
+      align-items: start;
+    }
+
+    /* Bloco de mídia */
+    .news-media {
+      flex-shrink: 0;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    /* Vídeo 9:16 — largura fixa, altura proporcional */
+    .news-media--portrait {
+      width: clamp(180px, 22vw, 260px);
+    }
+
+    .news-media--portrait .news-media__frame {
+      width: 100%;
+      aspect-ratio: 9 / 16;
+      background: #050810;
+      border: 1px solid rgba(201, 169, 97, 0.3);
+      overflow: hidden;
+      position: relative;
+    }
+
+    /* Vídeo 16:9 — largura total, sem coluna */
+    .news-media--landscape .news-media__frame {
+      width: 100%;
+      aspect-ratio: 16 / 9;
+      background: #050810;
+      border: 1px solid rgba(201, 169, 97, 0.3);
+      overflow: hidden;
+    }
+
+    .news-media__frame video {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+
+    .news-media__caption {
+      font-family: var(--font-body);
+      font-size: 12.5px;
+      font-style: italic;
+      color: var(--bone-dim);
+      line-height: 1.45;
+      text-align: center;
+    }
+
+    /* Corpo do artigo */
+    .news-article__body {
+      font-family: var(--font-body);
+      font-size: clamp(15px, 1.4vw, 17px);
+      color: var(--text);
+      line-height: 1.7;
+    }
+
+    .news-article__body p {
+      margin: 0 0 14px;
+    }
+    .news-article__body p:last-child { margin-bottom: 0; }
+
+    .news-article__body strong {
+      color: var(--bone);
+      font-weight: 600;
+    }
+
+    /* Linha decorativa entre conteúdo de texto e artigos mais simples */
+    .news-rule {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      opacity: 0.4;
+    }
+    .news-rule::before, .news-rule::after {
+      content: "";
+      flex: 1;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, var(--gold-deep), transparent);
+    }
+    .news-rule span {
+      font-family: var(--font-head);
+      font-size: 10px;
+      letter-spacing: 0.4em;
+      color: var(--bone-dim);
+      text-transform: uppercase;
+    }
+
+    /* Responsivo */
+    @media (max-width: 640px) {
+      .news-layout--media {
+        grid-template-columns: 1fr;
+      }
+      .news-media--portrait {
+        width: 100%;
+        max-width: 240px;
+        margin: 0 auto;
+      }
+    }
+  </style>
+</head>
+<body data-page="big-news">
+
+  <div class="page-transition" id="pageTransition" aria-hidden="true"></div>
+
+  <div class="atmosphere" aria-hidden="true">
+    <div class="atmosphere__vignette"></div>
+    <div class="atmosphere__grain"></div>
+    <div class="atmosphere__bg"></div>
+  </div>
+
+  <header class="site-header">
+    <div class="site-header__inner">
+      <a href="../index.html" class="brand" data-link>
+        <img src="../assets/images/logo-paz.png" alt="" class="brand__logo" />
+        <span class="brand__name">P.A.Z</span>
+      </a>
+
+      <nav class="nav" aria-label="Navegação principal">
+        <ul class="nav__list">
+          <li><a href="../index.html"   class="nav__link" data-link>Início</a></li>
+          <li><a href="esquadroes.html" class="nav__link" data-link>Esquadrões</a></li>
+          <li><a href="cacadas.html"    class="nav__link" data-link>Caçadas</a></li>
+          <li><a href="hierarquia.html" class="nav__link" data-link>Hierarquia</a></li>
+          <li><a href="big-news.html"   class="nav__link" data-link>Big News</a></li>
+        </ul>
+      </nav>
+      <button class="nav-toggle" aria-label="Abrir menu" aria-expanded="false" id="navToggle">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </header>
+
+  <main class="news-page">
+
+    <div class="masthead">
+      <span class="masthead__corner masthead__corner--tl"></span>
+      <span class="masthead__corner masthead__corner--tr"></span>
+      <p class="masthead__overline">P.A.Z — Diário Oficial da Tripulação</p>
+      <h1 class="masthead__title">Big News</h1>
+      <div class="masthead__meta">
+        <span>Caos</span>
+        <span class="masthead__meta-sep">·</span>
+        <span>Boss Grind</span>
+        <span class="masthead__meta-sep">·</span>
+        <span>Progresso</span>
+      </div>
+    </div>
+
+    <div class="news-feed">
+
+      <!-- ======================================================
+           ARTIGO 1 — Vídeo de recrutamento (9:16 / portrait)
+           ====================================================== -->
+      <article class="news-article">
+        <div class="news-article__header">
+          <span class="news-article__category">Recrutamento</span>
+          <span class="news-article__author">P.A.Z</span>
+          <span class="news-article__date">Mai 2025</span>
+        </div>
+
+        <h2 class="news-article__title">Vídeo de Recrutamento — Primeira Versão</h2>
+
+        <div class="news-layout--media">
+          <div class="news-media news-media--portrait">
+            <div class="news-media__frame">
+              <video
+                src="../assets/videos/PAZ-Recrutamento1.mp4"
+                controls
+                preload="metadata"
+                playsinline
+                aria-label="Vídeo de recrutamento da P.A.Z, primeira versão"
+              ></video>
+            </div>
+            <p class="news-media__caption">Vídeo de recrutamento da P.A.Z, primeira versão.</p>
+          </div>
+
+          <div class="news-article__body">
+            <p>Primeiro vídeo oficial de recrutamento da P.A.Z, produzido para divulgação no Instagram e demais plataformas. O material apresenta a identidade visual da crew e reforça o convite para novos membros que buscam PvPvE sério, boss grind e progresso real.</p>
+            <p>A P.A.Z opera com mais de 70 membros ativos, divididos em três esquadrões: <strong>Águas Pacíficas</strong>, <strong>Cães do Abismo</strong> e <strong>Ghost Gang</strong>. Cada divisão tem um papel estratégico distinto dentro da tripulação.</p>
+            <p>Para se alistar, acesse o Discord oficial pelo botão na página inicial ou clique no link de convite disponibilizado pelos membros.</p>
+          </div>
+        </div>
+      </article>
+
+      <div class="news-rule" aria-hidden="true"><span>P.A.Z</span></div>
+
+      <!-- ======================================================
+           ARTIGO 2 — Site criado
+           ====================================================== -->
+      <article class="news-article">
+        <div class="news-article__header">
+          <span class="news-article__category">Anúncio</span>
+          <span class="news-article__author">Por Greed</span>
+          <span class="news-article__date">Mai 2025</span>
+        </div>
+
+        <h2 class="news-article__title">Site da P.A.Z Criado com Sucesso</h2>
+
+        <div class="news-article__body">
+          <p>O site oficial da <strong>P.A.Z — Predators of the Abyssal Zone</strong> foi desenvolvido e publicado com sucesso. A plataforma centraliza as informações da crew: estrutura dos esquadrões, hierarquia, caçadas e os comunicados oficiais reunidos aqui no Big News.</p>
+          <p>O projeto foi construído por <strong>Greed</strong> com o objetivo de dar à tripulação uma base sólida fora do Discord — um ponto de referência para membros novos e veteranos.</p>
+          <p>O site continuará sendo atualizado conforme a P.A.Z cresce. Novas páginas, registros de caçadas, ranking de membros e cobertura de eventos serão adicionados nas próximas iterações.</p>
+        </div>
+      </article>
+
+    </div>
+  </main>
+
+  <footer class="site-footer">
+    <div class="site-footer__line"></div>
+    <p>P.A.Z — Predators of the Abyssal Zone · Se quer ficar, lute.</p>
+  </footer>
+
+  <script src="../js/main.js" defer></script>
+</body>
+</html>

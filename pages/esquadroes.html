@@ -1,0 +1,696 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="theme-color" content="#050810" />
+  <title>Esquadrões · P.A.Z</title>
+  <link rel="icon" type="image/png" href="../assets/images/logo-paz.png" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@400;700;900&family=Cinzel:wght@400;500;600;700&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="../css/style.css" />
+  <link rel="stylesheet" href="../css/responsive.css" />
+  <style>
+    /* ---- Estilos específicos da página de Esquadrões ---- */
+
+    .squads-page {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: clamp(40px, 7vw, 90px) var(--gutter) 100px;
+    }
+
+    /* Cabeçalho da página */
+    .squads-page__header {
+      text-align: center;
+      margin-bottom: clamp(60px, 8vw, 100px);
+    }
+
+    .squads-page__eyebrow {
+      font-family: var(--font-head);
+      font-size: 12px;
+      letter-spacing: 0.5em;
+      color: var(--bone-dim);
+      text-transform: uppercase;
+      margin: 0 0 10px;
+    }
+
+    .squads-page__title {
+      font-family: var(--font-display);
+      font-size: clamp(38px, 6vw, 72px);
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      margin: 0;
+      background: linear-gradient(180deg, #f4ebd0 0%, #d5c79e 35%, #8e7a4a 80%);
+      -webkit-background-clip: text;
+      background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .squads-page__divider {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 18px;
+      margin: 24px 0 0;
+    }
+
+    .squads-page__divider::before,
+    .squads-page__divider::after {
+      content: "";
+      flex: 1;
+      max-width: 160px;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, var(--gold-deep), transparent);
+    }
+
+    .squads-page__divider-gem {
+      color: var(--gold);
+      font-size: 14px;
+      letter-spacing: 0.2em;
+    }
+
+    /* Bloco de cada esquadrão */
+    .squad-block {
+      position: relative;
+      margin-bottom: clamp(70px, 10vw, 120px);
+      padding: clamp(32px, 4vw, 52px) clamp(28px, 4vw, 52px);
+      background:
+        radial-gradient(ellipse 80% 50% at 50% 0%, rgba(30, 69, 102, 0.18) 0%, transparent 65%),
+        linear-gradient(180deg, rgba(8, 17, 30, 0.88) 0%, rgba(5, 8, 16, 0.96) 100%);
+      border: 1px solid rgba(201, 169, 97, 0.3);
+    }
+
+    /* Cantos ornamentais */
+    .squad-block::before,
+    .squad-block::after {
+      content: "";
+      position: absolute;
+      width: 28px;
+      height: 28px;
+      border: 1.5px solid var(--gold);
+      pointer-events: none;
+    }
+    .squad-block::before { top: -2px; left: -2px; border-right: none; border-bottom: none; }
+    .squad-block::after  { bottom: -2px; right: -2px; border-left: none; border-top: none; }
+
+    /* Cabeçalho interno do esquadrão */
+    .squad-block__head {
+      display: flex;
+      align-items: center;
+      gap: clamp(20px, 3vw, 40px);
+      margin-bottom: 36px;
+      padding-bottom: 28px;
+      border-bottom: 1px solid rgba(201, 169, 97, 0.2);
+    }
+
+    .squad-block__emblem {
+      flex-shrink: 0;
+      width: clamp(90px, 12vw, 130px);
+      height: clamp(90px, 12vw, 130px);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .squad-block__emblem img {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+      filter: drop-shadow(0 0 16px rgba(74, 192, 255, 0.35));
+    }
+
+    .squad-block__identity {
+      flex: 1;
+    }
+
+    .squad-block__label {
+      font-family: var(--font-head);
+      font-size: 11px;
+      letter-spacing: 0.5em;
+      color: var(--bone-dim);
+      text-transform: uppercase;
+      margin: 0 0 6px;
+    }
+
+    .squad-block__name {
+      font-family: var(--font-display);
+      font-size: clamp(26px, 3.5vw, 42px);
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      color: var(--gold-bright);
+      margin: 0 0 10px;
+      line-height: 1.1;
+    }
+
+    .squad-block__motto {
+      font-family: var(--font-body);
+      font-style: italic;
+      font-size: clamp(15px, 1.5vw, 18px);
+      color: var(--bone-soft);
+      margin: 0 0 12px;
+    }
+
+    .squad-block__desc {
+      font-family: var(--font-body);
+      font-size: clamp(15px, 1.4vw, 17px);
+      color: var(--text);
+      margin: 0;
+      line-height: 1.6;
+    }
+
+    /* Grid de seções internas */
+    .squad-sections {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 28px 36px;
+    }
+
+    .squad-section {
+      display: flex;
+      flex-direction: column;
+      gap: 0;
+    }
+
+    /* Seções que ocupam a largura toda */
+    .squad-section--full {
+      grid-column: 1 / -1;
+    }
+
+    .squad-section__title {
+      font-family: var(--font-head);
+      font-size: 11.5px;
+      letter-spacing: 0.42em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin: 0 0 14px;
+      padding-bottom: 8px;
+      border-bottom: 1px solid rgba(201, 169, 97, 0.25);
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .squad-section__title::before {
+      content: "";
+      display: inline-block;
+      width: 3px;
+      height: 14px;
+      background: var(--gold);
+      flex-shrink: 0;
+    }
+
+    /* Cada item da lista */
+    .squad-list {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+    }
+
+    .squad-list__item {
+      padding-left: 16px;
+      position: relative;
+      font-family: var(--font-body);
+      font-size: clamp(14.5px, 1.3vw, 16.5px);
+      color: var(--text);
+      line-height: 1.55;
+    }
+
+    .squad-list__item::before {
+      content: "";
+      position: absolute;
+      left: 0;
+      top: 9px;
+      width: 5px;
+      height: 1px;
+      background: var(--gold);
+    }
+
+    .squad-list__item strong {
+      display: block;
+      font-family: var(--font-head);
+      font-weight: 600;
+      font-size: 0.9em;
+      letter-spacing: 0.05em;
+      color: var(--bone);
+      margin-bottom: 3px;
+    }
+
+    /* Condições de entrada (bullets simples) */
+    .squad-conditions {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .squad-conditions__item {
+      font-family: var(--font-body);
+      font-size: clamp(14.5px, 1.3vw, 16.5px);
+      color: var(--text);
+      line-height: 1.5;
+      padding-left: 16px;
+      position: relative;
+    }
+
+    .squad-conditions__item::before {
+      content: "";
+      position: absolute;
+      left: 0;
+      top: 9px;
+      width: 5px;
+      height: 1px;
+      background: var(--bone-dim);
+    }
+
+    /* Punições com destaque de aviso */
+    .squad-punishments {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .squad-punishments__item {
+      font-family: var(--font-body);
+      font-size: clamp(14.5px, 1.3vw, 16.5px);
+      color: var(--text-dim);
+      line-height: 1.5;
+      padding-left: 16px;
+      position: relative;
+    }
+
+    .squad-punishments__item::before {
+      content: "";
+      position: absolute;
+      left: 0;
+      top: 9px;
+      width: 5px;
+      height: 1px;
+      background: rgba(180, 60, 60, 0.7);
+    }
+
+    .squad-punishments__item strong {
+      display: block;
+      font-family: var(--font-head);
+      font-weight: 600;
+      font-size: 0.9em;
+      letter-spacing: 0.04em;
+      color: #c87070;
+      margin-bottom: 3px;
+    }
+
+    /* Separador entre esquadrões */
+    .squad-separator {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 22px;
+      margin: clamp(50px, 7vw, 90px) 0;
+      opacity: 0.45;
+    }
+
+    .squad-separator::before,
+    .squad-separator::after {
+      content: "";
+      flex: 1;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, var(--gold-deep), transparent);
+    }
+
+    .squad-separator span {
+      font-family: var(--font-head);
+      font-size: 11px;
+      letter-spacing: 0.5em;
+      color: var(--bone-dim);
+      text-transform: uppercase;
+    }
+
+    /* Responsivo */
+    @media (max-width: 720px) {
+      .squad-block__head {
+        flex-direction: column;
+        text-align: center;
+      }
+
+      .squad-sections {
+        grid-template-columns: 1fr;
+      }
+
+      .squad-section--full {
+        grid-column: 1;
+      }
+    }
+  </style>
+</head>
+<body data-page="esquadroes">
+
+  <svg class="svg-defs" aria-hidden="true" focusable="false">
+    <defs>
+      <filter id="liquid-distort" x="-10%" y="-10%" width="120%" height="120%">
+        <feTurbulence type="fractalNoise" baseFrequency="0.018 0.028" numOctaves="2" seed="7" result="noise"/>
+        <feDisplacementMap in="SourceGraphic" in2="noise" scale="14" xChannelSelector="R" yChannelSelector="G"/>
+      </filter>
+    </defs>
+  </svg>
+
+  <div class="page-transition" id="pageTransition" aria-hidden="true"></div>
+
+  <div class="atmosphere" aria-hidden="true">
+    <div class="atmosphere__vignette"></div>
+    <div class="atmosphere__grain"></div>
+    <div class="atmosphere__bg"></div>
+  </div>
+
+  <header class="site-header">
+    <div class="site-header__inner">
+      <a href="../index.html" class="brand" data-link>
+        <img src="../assets/images/logo-paz.png" alt="" class="brand__logo" />
+        <span class="brand__name">P.A.Z</span>
+      </a>
+
+      <nav class="nav" aria-label="Navegação principal">
+        <ul class="nav__list">
+          <li><a href="../index.html"   class="nav__link" data-link>Início</a></li>
+          <li><a href="esquadroes.html" class="nav__link" data-link>Esquadrões</a></li>
+          <li><a href="cacadas.html"    class="nav__link" data-link>Caçadas</a></li>
+          <li><a href="hierarquia.html" class="nav__link" data-link>Hierarquia</a></li>
+          <li><a href="big-news.html"   class="nav__link" data-link>Big News</a></li>
+        </ul>
+      </nav>
+      <button class="nav-toggle" aria-label="Abrir menu" aria-expanded="false" id="navToggle">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </header>
+
+  <main class="squads-page">
+
+    <header class="squads-page__header">
+      <p class="squads-page__eyebrow">P.A.Z — Divisões de Combate</p>
+      <h1 class="squads-page__title">Esquadrões</h1>
+      <div class="squads-page__divider">
+        <span class="squads-page__divider-gem">P.A.Z</span>
+      </div>
+    </header>
+
+    <!-- =====================================================
+         AGUAS PACIFICAS
+         ===================================================== -->
+    <article class="squad-block" id="aguas-pacificas">
+      <div class="squad-block__head">
+        <div class="squad-block__emblem">
+          <img src="../assets/images/emblema-aguas-pacificas.png" alt="Emblema Águas Pacíficas" />
+        </div>
+        <div class="squad-block__identity">
+          <p class="squad-block__label">Esquadrão — P.A.Z</p>
+          <h2 class="squad-block__name">Águas Pacíficas</h2>
+          <p class="squad-block__motto">"A base silenciosa que fortalece a tripulação."</p>
+          <p class="squad-block__desc">Esquadrão exclusivo para membros focados em PvE e jogadores que possuem pouco tempo disponível para jogar.</p>
+        </div>
+      </div>
+
+      <div class="squad-sections">
+
+        <section class="squad-section">
+          <h3 class="squad-section__title">Objetivos do Esquadrão</h3>
+          <ul class="squad-list">
+            <li class="squad-list__item">
+              <strong>Coleta de Materiais</strong>
+              Coletar materiais para crafts e evolução da P.A.Z. Os itens devem ser entregues para superiores ou cargos responsáveis pela distribuição.
+            </li>
+            <li class="squad-list__item">
+              <strong>Grind de Boss</strong>
+              Caçar Boss compatíveis com seus níveis e doar materiais importantes para a tripulação.
+            </li>
+            <li class="squad-list__item">
+              <strong>Participação em Eventos PvE</strong>
+              Auxiliar em eventos, farms coletivos e atividades PvE da P.A.Z.
+            </li>
+          </ul>
+        </section>
+
+        <section class="squad-section">
+          <h3 class="squad-section__title">Recompensas</h3>
+          <ul class="squad-list">
+            <li class="squad-list__item">
+              <strong>Apoio da P.A.Z</strong>
+              Os membros recebem apoio moderado dos superiores com itens e auxílio para grind.
+            </li>
+            <li class="squad-list__item">
+              <strong>Boss Rush e Level Rush</strong>
+              Caso membros superiores estejam disponíveis, será possível solicitar ajuda para evolução rápida, farm ou caçada de Boss.
+            </li>
+            <li class="squad-list__item">
+              <strong>Direito de Acionar Raid da Tripulação</strong>
+              Caso encontrem itens raros, limitados ou sofram ataques inimigos, os membros possuem autorização para convocar toda a tripulação para combate.
+            </li>
+            <li class="squad-list__item">
+              <strong>Sem Limite Offline</strong>
+              Os membros podem permanecer no esquadrão mesmo ficando longos períodos sem jogar, desde que contribuam quando ativos. Caso o limite seja atingido, o membro poderá retornar assim que houver vaga.
+            </li>
+          </ul>
+        </section>
+
+        <section class="squad-section">
+          <h3 class="squad-section__title">Condições de Entrada</h3>
+          <ul class="squad-conditions">
+            <li class="squad-conditions__item">Demonstrar interesse em participar</li>
+            <li class="squad-conditions__item">Aprovação de um superior da P.A.Z</li>
+          </ul>
+        </section>
+
+        <section class="squad-section">
+          <h3 class="squad-section__title">Punições</h3>
+          <ul class="squad-punishments">
+            <li class="squad-punishments__item">
+              <strong>Falta de Contribuição</strong>
+              Membros que não contribuírem receberão avisos. Com 3 avisos, serão removidos do esquadrão e seguirão as regras normais de expulsão da P.A.Z.
+            </li>
+            <li class="squad-punishments__item">
+              <strong>Uso Indevido de Raid</strong>
+              Acionar Raid sem motivo ou por falso alarme resultará em aviso. Com 2 avisos do mesmo tipo, o membro será removido. Caso seja comprovado que existia ameaça real, não haverá punição.
+            </li>
+            <li class="squad-punishments__item">
+              <strong>Chamadas Excessivas para Boss Rush ou Level Rush</strong>
+              Os membros têm direito de solicitar ajuda, porém devem aguardar resposta dos disponíveis. Chamados insistentes gerarão avisos. Com 3 avisos, o membro será removido.
+            </li>
+          </ul>
+        </section>
+
+      </div>
+    </article>
+
+    <div class="squad-separator" aria-hidden="true"><span>P.A.Z</span></div>
+
+    <!-- =====================================================
+         CAES DO ABISMO
+         ===================================================== -->
+    <article class="squad-block" id="caes-do-abismo">
+      <div class="squad-block__head">
+        <div class="squad-block__emblem">
+          <img src="../assets/images/emblema-caes-abismo.png" alt="Emblema Cães do Abismo" />
+        </div>
+        <div class="squad-block__identity">
+          <p class="squad-block__label">Esquadrão — P.A.Z</p>
+          <h2 class="squad-block__name">Cães do Abismo</h2>
+          <p class="squad-block__motto">"Os olhos ocultos da P.A.Z."</p>
+          <p class="squad-block__desc">Esquadrão especial destinado aos membros da DogGang como recompensa pelo cumprimento dos requisitos definidos pela liderança da P.A.Z.</p>
+        </div>
+      </div>
+
+      <div class="squad-sections">
+
+        <section class="squad-section squad-section--full">
+          <h3 class="squad-section__title">Requisitos</h3>
+          <ul class="squad-conditions">
+            <li class="squad-conditions__item">Possuir 50 ou mais tripulantes humanos no servidor</li>
+            <li class="squad-conditions__item">Convidar 10 membros para o servidor</li>
+            <li class="squad-conditions__item">Possuir 5 ou mais membros na DogGang</li>
+          </ul>
+        </section>
+
+        <section class="squad-section">
+          <h3 class="squad-section__title">Objetivos do Esquadrão</h3>
+          <ul class="squad-list">
+            <li class="squad-list__item">
+              <strong>Reconhecimento de Campo</strong>
+              Investigar informações sobre Boss, drops, builds vantajosas e repassar informações importantes ao Big News.
+            </li>
+            <li class="squad-list__item">
+              <strong>Investigação de Inimigos</strong>
+              Caso a P.A.Z possua inimigos declarados, o esquadrão será responsável por reunir informações e monitorar movimentações.
+            </li>
+            <li class="squad-list__item">
+              <strong>Rastreamento</strong>
+              Localizar inimigos dentro dos servidores quando houver suspeita ou confirmação de presença.
+            </li>
+          </ul>
+        </section>
+
+        <section class="squad-section">
+          <h3 class="squad-section__title">Recompensas</h3>
+          <ul class="squad-list">
+            <li class="squad-list__item">
+              <strong>Apoio Avançado da P.A.Z</strong>
+              Os principais membros receberão apoio grande diretamente dos superiores da tripulação com itens, equipamentos e materiais.
+            </li>
+            <li class="squad-list__item">
+              <strong>Preferência em Ofertas de Frutas</strong>
+              Caso membros principais da P.A.Z decidam vender frutas, o esquadrão terá prioridade nas ofertas, podendo receber vantagens dependendo de suas conquistas.
+            </li>
+            <li class="squad-list__item">
+              <strong>Canal Exclusivo</strong>
+              Sala privada de reunião dedicada apenas aos integrantes do esquadrão.
+            </li>
+            <li class="squad-list__item">
+              <strong>Hierarquia Própria</strong>
+              O esquadrão possui cargos exclusivos e organização interna própria, respondendo apenas a Intendentes ou cargos superiores da P.A.Z.
+            </li>
+          </ul>
+        </section>
+
+        <section class="squad-section">
+          <h3 class="squad-section__title">Condições de Entrada</h3>
+          <ul class="squad-conditions">
+            <li class="squad-conditions__item">Indicação de Capitão, Intendente, Líder ou Sub-líder do esquadrão</li>
+            <li class="squad-conditions__item">Aprovação de um superior da P.A.Z</li>
+            <li class="squad-conditions__item">Aprovação de um superior do esquadrão</li>
+          </ul>
+        </section>
+
+        <section class="squad-section">
+          <h3 class="squad-section__title">Punições</h3>
+          <ul class="squad-punishments">
+            <li class="squad-punishments__item">
+              <strong>Descumprimento das Funções</strong>
+              Não cumprimento das funções do esquadrão resultará em expulsão e perda dos benefícios.
+            </li>
+            <li class="squad-punishments__item">
+              <strong>Recusa de Ordens</strong>
+              Recusar ordens diretas resultará em aviso. Com 2 avisos, o membro será removido do esquadrão.
+            </li>
+          </ul>
+        </section>
+
+      </div>
+    </article>
+
+    <div class="squad-separator" aria-hidden="true"><span>P.A.Z</span></div>
+
+    <!-- =====================================================
+         GHOST GANG
+         ===================================================== -->
+    <article class="squad-block" id="ghost-gang">
+      <div class="squad-block__head">
+        <div class="squad-block__emblem">
+          <img src="../assets/images/emblema-ghost-gang.png" alt="Emblema Ghost Gang" />
+        </div>
+        <div class="squad-block__identity">
+          <p class="squad-block__label">Esquadrão — P.A.Z</p>
+          <h2 class="squad-block__name">Ghost Gang</h2>
+          <p class="squad-block__motto">"O apoio imperceptível zelando pela tripulação na escuridão do abismo."</p>
+          <p class="squad-block__desc">Esquadrão exclusivo para membros selecionados pelo void. Cumpre diversos deveres sem forma vinculada — membros não são vistos em guerra, mas apoiam das sombras. Um esquadrão de mercenários.</p>
+        </div>
+      </div>
+
+      <div class="squad-sections">
+
+        <section class="squad-section">
+          <h3 class="squad-section__title">Objetivos do Esquadrão</h3>
+          <ul class="squad-list">
+            <li class="squad-list__item">
+              <strong>Coleta de Materiais</strong>
+              Serviço realizado no tempo fora de missões. Coletar materiais para crafts e evolução da P.A.Z. Os itens devem ser entregues para superiores ou cargos responsáveis pela distribuição.
+            </li>
+            <li class="squad-list__item">
+              <strong>Cumprimento de Missões Rápidas</strong>
+              Os superiores da P.A.Z enviarão missões que precisam ser concluídas com urgência pelos membros ativos. Missões não serão enviadas se os membros online não puderem cumprir — neste caso, é solicitado o envio de materiais.
+            </li>
+            <li class="squad-list__item">
+              <strong>Cumprimento de Vingança</strong>
+              Caçar alvos isolados solicitados por membros. As recompensas devem ser fornecidas pelo solicitante.
+            </li>
+            <li class="squad-list__item">
+              <strong>Venda Exclusiva para a P.A.Z</strong>
+              Os membros não podem negociar receitas de itens e frutas com outros servidores ou tripulações.
+            </li>
+          </ul>
+        </section>
+
+        <section class="squad-section">
+          <h3 class="squad-section__title">Recompensas</h3>
+          <ul class="squad-list">
+            <li class="squad-list__item">
+              <strong>Apoio da P.A.Z</strong>
+              Membros que se destacam recebem apoio moderado dos superiores com itens e auxílio para grind e builds.
+            </li>
+            <li class="squad-list__item">
+              <strong>Sem Limite Offline</strong>
+              Os membros podem permanecer no esquadrão mesmo ficando longos períodos sem jogar, desde que contribuam quando ativos e tenham informado a ausência com antecedência. Caso o limite seja atingido, o membro poderá retornar assim que houver vaga.
+            </li>
+            <li class="squad-list__item">
+              <strong>Canais e Cargos Especiais</strong>
+              Membros que se destacam têm apoio para criar builds com equipamentos dos superiores da P.A.Z. Existe uma recompensa secreta adicional em desenvolvimento, informada ao líder do esquadrão.
+            </li>
+            <li class="squad-list__item">
+              <strong>Isenção de Guerras e Eventos</strong>
+              Os membros têm permissão para ignorar chamadas de guerra da tripulação, eventos limitados e defesa de forte.
+            </li>
+            <li class="squad-list__item">
+              <strong>Craft de Receitas</strong>
+              Caso encontrem uma receita de item desejada, os superiores da P.A.Z irão craftar e fornecer o item, além de remunerar pela venda da receita — sendo a venda obrigatória para a P.A.Z.
+            </li>
+          </ul>
+        </section>
+
+        <section class="squad-section">
+          <h3 class="squad-section__title">Condições de Entrada</h3>
+          <ul class="squad-conditions">
+            <li class="squad-conditions__item">Inscrição no formulário para avaliação pelo líder do esquadrão</li>
+            <li class="squad-conditions__item">Aprovação de um superior da P.A.Z após 10 membros</li>
+          </ul>
+        </section>
+
+        <section class="squad-section">
+          <h3 class="squad-section__title">Punições</h3>
+          <ul class="squad-punishments">
+            <li class="squad-punishments__item">
+              <strong>Falta de Contribuição</strong>
+              Membros que não contribuírem receberão avisos. Com 3 avisos, serão removidos do esquadrão e seguirão as regras normais da P.A.Z.
+            </li>
+            <li class="squad-punishments__item">
+              <strong>Venda Fora da P.A.Z</strong>
+              Caso seja comprovada troca de receitas ou frutas com outros locais, o membro será declarado traidor.
+            </li>
+            <li class="squad-punishments__item">
+              <strong>Recusa de Missões Estando Online</strong>
+              Recusar participar de missões sem justificativa e deixar de cumprir os objetivos do esquadrão resultará em remoção.
+            </li>
+            <li class="squad-punishments__item">
+              <strong>Desafiar o Líder ou Criar Conflitos Internos</strong>
+              O membro receberá aviso. Dependendo da gravidade, pode resultar em expulsão da P.A.Z.
+            </li>
+          </ul>
+        </section>
+
+      </div>
+    </article>
+
+  </main>
+
+  <footer class="site-footer">
+    <div class="site-footer__line"></div>
+    <p>P.A.Z — Predators of the Abyssal Zone · Se quer ficar, lute.</p>
+  </footer>
+
+  <script src="../js/main.js" defer></script>
+</body>
+</html>

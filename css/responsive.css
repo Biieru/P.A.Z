@@ -1,0 +1,263 @@
+/* =========================================================
+   P.A.Z — responsive.css
+   Sistema de breakpoints profissional
+
+   Breakpoints:
+     --bp-xl:   1200px  (laptop)
+     --bp-lg:   1024px  (tablet landscape)
+     --bp-md:    768px  (tablet portrait)
+     --bp-sm:    480px  (mobile large)
+     --bp-xs:    360px  (mobile pequeno)
+   ========================================================= */
+
+/* =========================================================
+   1) Tablet landscape — até 1100px
+   Hero continua lado a lado, mas mais compacto
+   ========================================================= */
+@media (max-width: 1100px) {
+  :root { --gutter: clamp(20px, 4vw, 40px); }
+
+  .hero__container {
+    grid-template-columns: 1fr minmax(280px, 0.75fr);
+    gap: 32px;
+  }
+
+  .display-title {
+    font-size: clamp(72px, 12vw, 148px);
+  }
+}
+
+/* =========================================================
+   2) Tablet portrait — até 860px
+   Nav vira hamburger, hero começa a compactar
+   ========================================================= */
+@media (max-width: 860px) {
+
+  /* --- Header --- */
+  .site-header { padding: 14px var(--gutter); }
+
+  .site-header__inner {
+    justify-content: space-between;
+  }
+
+  /* Nav: oculta por padrão, aparece como overlay ao abrir */
+  .nav {
+    display: none;
+    position: fixed;
+    inset: 0;
+    z-index: 105;
+    background: rgba(5, 8, 16, 0.97);
+    backdrop-filter: blur(14px);
+    -webkit-backdrop-filter: blur(14px);
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 0;
+    padding: 80px 32px 48px;
+  }
+
+  .nav.is-open {
+    display: flex;
+    animation: navFadeIn 0.35s ease both;
+  }
+
+  @keyframes navFadeIn {
+    from { opacity: 0; transform: scale(1.03); }
+    to   { opacity: 1; transform: scale(1); }
+  }
+
+  .nav__list {
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+    width: 100%;
+    max-width: 340px;
+  }
+
+  .nav__list li {
+    width: 100%;
+    text-align: center;
+  }
+
+  .nav__link {
+    display: block;
+    font-size: 22px;
+    letter-spacing: 0.18em;
+    padding: 16px 24px;
+    border-bottom: 1px solid rgba(201, 169, 97, 0.12);
+    transition: color 0.25s ease, background 0.25s ease;
+  }
+
+  .nav__link:hover,
+  .nav__link.is-active {
+    color: var(--gold-bright);
+    background: rgba(201, 169, 97, 0.06);
+  }
+
+  .nav__link::after { display: none; }
+
+  /* Botão fechar (X) no overlay */
+  .nav.is-open ~ .nav-toggle { z-index: 110; }
+
+  /* Hamburger visível */
+  .nav-toggle { display: flex; }
+
+  /* --- Hero: hero__container mantém 2 colunas mas comprime --- */
+  .hero__container {
+    grid-template-columns: 1fr minmax(260px, 0.7fr);
+    gap: 24px;
+    align-items: start;
+  }
+
+  .display-title {
+    font-size: clamp(60px, 14vw, 110px);
+  }
+
+  .display-subtitle { font-size: 13px; letter-spacing: 0.24em; }
+  .display-tagline  { font-size: 17px; margin-top: 20px; }
+
+  .cta-btn {
+    padding: 16px 40px;
+    font-size: 15px;
+    letter-spacing: 0.18em;
+    margin-top: 32px;
+  }
+
+  .summary-card__sigil img { width: 130px; }
+}
+
+/* =========================================================
+   3) Mobile — até 600px
+   Hero empilha em coluna única, Resumo vai abaixo do CTA
+   ========================================================= */
+@media (max-width: 600px) {
+  :root { --gutter: 20px; }
+
+  html, body { font-size: 15.5px; }
+
+  /* --- Header --- */
+  .site-header { padding: 12px var(--gutter); }
+
+  .brand__logo { width: 36px; height: 36px; }
+  .brand__name { font-size: 17px; letter-spacing: 0.14em; }
+
+  /* --- Hero empilhado --- */
+  .hero {
+    padding-top: clamp(28px, 8vw, 50px);
+    padding-bottom: 60px;
+  }
+
+  .hero__container {
+    grid-template-columns: 1fr;
+    gap: 36px;
+  }
+
+  /* Coluna principal: centralizada */
+  .hero__main {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+  }
+
+  .display-title {
+    font-size: clamp(72px, 22vw, 120px);
+    text-align: center;
+  }
+
+  .display-subtitle {
+    font-size: 11.5px;
+    letter-spacing: 0.26em;
+    text-align: center;
+  }
+
+  .display-tagline {
+    font-size: 17px;
+    text-align: center;
+    max-width: 320px;
+    margin-top: 18px;
+  }
+
+  .cta-btn {
+    align-self: center;
+    padding: 15px 38px;
+    font-size: 13.5px;
+    letter-spacing: 0.18em;
+    margin-top: 28px;
+    white-space: nowrap;
+  }
+
+  /* Summary card: largura total, centrado */
+  .summary-card {
+    width: 100%;
+    max-width: 460px;
+    margin: 0 auto;
+  }
+
+  .ornate-frame { padding: 24px 20px 28px; }
+
+  .summary-card__title { font-size: 19px; letter-spacing: 0.12em; }
+
+  .summary-card__sigil img {
+    width: 110px;
+    height: auto;
+  }
+
+  .summary-card__list { gap: 8px; }
+
+  .summary-row {
+    grid-template-columns: 84px 1fr;
+    gap: 8px;
+    font-size: 14px;
+  }
+
+  /* Ornamentos de canto: ligeiramente menores */
+  .ornate-frame__corner { width: 16px; height: 16px; }
+
+  /* --- Atmosfera: grão mais leve em mobile --- */
+  .atmosphere__grain { opacity: 0.28; }
+
+  /* --- Vinheta menos agressiva para não escurecer demais o bg --- */
+  .atmosphere__vignette {
+    background:
+      radial-gradient(ellipse 100% 80% at 50% 50%, transparent 30%, var(--abyss-black) 100%),
+      linear-gradient(180deg, rgba(5, 8, 16, 0.45) 0%, transparent 15%, transparent 70%, rgba(5, 8, 16, 0.85) 100%);
+  }
+}
+
+/* =========================================================
+   4) Mobile pequeno — até 380px
+   Ajustes finos para telas estreitas (ex. Galaxy A series)
+   ========================================================= */
+@media (max-width: 380px) {
+  :root { --gutter: 16px; }
+
+  .display-title { font-size: clamp(62px, 21vw, 90px); }
+
+  .display-subtitle { font-size: 10.5px; letter-spacing: 0.2em; }
+
+  .cta-btn {
+    padding: 14px 28px;
+    font-size: 12.5px;
+    width: calc(100% - 32px);
+    text-align: center;
+  }
+
+  .summary-row {
+    grid-template-columns: 76px 1fr;
+    font-size: 13.5px;
+  }
+
+  .nav__link { font-size: 19px; padding: 14px 16px; }
+}
+
+/* =========================================================
+   5) Preferência por menos movimento
+   ========================================================= */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.001ms !important;
+    animation-delay:    0ms     !important;
+    transition-duration: 0.001ms !important;
+  }
+}
