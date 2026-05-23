@@ -617,12 +617,6 @@
       <!-- Cards renderizados pelo script abaixo -->
     </div>
 
-  </main>
-
-  <footer class="site-footer">
-    <div class="site-footer__line"></div>
-    <p>P.A.Z — Predators of the Abyssal Zone · Se quer ficar, lute.</p>
-  </footer>
 
   <!-- Modal -->
   <div class="vault-modal-backdrop" id="vaultModal" role="dialog" aria-modal="true" aria-labelledby="vaultModalTitle">
@@ -1483,12 +1477,49 @@
 
     document.getElementById("vaultModalClose").addEventListener("click", closeModal);
     modal.addEventListener("click", e => { if (e.target === modal) closeModal(); });
-    document.addEventListener("keydown", e => { if (e.key === "Escape" && modal.classList.contains("is-open")) closeModal(); });
+    document.addEventListener("keydown", function vaultKeyHandler(e) {
+      const m = document.getElementById("vaultModal");
+      if (!m) { document.removeEventListener("keydown", vaultKeyHandler); return; }
+      if (e.key === "Escape" && m.classList.contains("is-open")) closeModal();
+    });
 
     renderGrid();
   })();
   </script>
 
+  </main>
+
+  <footer class="site-footer">
+    <div class="site-footer__line"></div>
+    <p>P.A.Z — Predators of the Abyssal Zone · Se quer ficar, lute.</p>
+  </footer>
+
+
+  <!-- Áudio (para quando a página é acessada diretamente sem o shell SPA) -->
+  <audio id="bgAudio" loop preload="auto" src="/assets/audio/bg.mp3"></audio>
+
+  <!-- Audio Player Widget -->
+  <div class="audio-player" id="audioPlayer" role="region" aria-label="Controle de música">
+    <span class="audio-player__hint">Clique para ativar</span>
+    <button class="audio-player__toggle" id="audioToggle" aria-label="Mutar música">
+      <svg class="audio-icon audio-icon--playing" viewBox="0 0 24 24" width="22" height="22" fill="none" aria-hidden="true">
+        <rect class="audio-bar" x="2"  y="6"  width="3" height="12" rx="1.5" fill="currentColor"/>
+        <rect class="audio-bar" x="7"  y="3"  width="3" height="18" rx="1.5" fill="currentColor"/>
+        <rect class="audio-bar" x="12" y="7"  width="3" height="10" rx="1.5" fill="currentColor"/>
+        <rect class="audio-bar" x="17" y="4"  width="3" height="16" rx="1.5" fill="currentColor"/>
+      </svg>
+      <svg class="audio-icon audio-icon--muted" viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true">
+        <path d="M11 5L6 9H2v6h4l5 4V5z"/>
+        <line x1="23" y1="9" x2="17" y2="15"/>
+        <line x1="17" y1="9" x2="23" y2="15"/>
+      </svg>
+    </button>
+    <div class="audio-player__slider-wrap">
+      <input type="range" class="audio-player__slider" id="volumeSlider"
+             min="0" max="1" step="0.02" value="0.2"
+             aria-label="Volume da música">
+    </div>
+  </div>
   <script src="/js/main.js" defer></script>
 </body>
 </html>

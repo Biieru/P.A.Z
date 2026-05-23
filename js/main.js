@@ -127,6 +127,13 @@
           resolveMediaURLs(cloned, fetchPath);
           app.innerHTML = "";
           app.appendChild(cloned);
+
+          // Re-executar scripts inline (necessário para páginas com lógica própria, ex: Vault)
+          Array.from(app.querySelectorAll("script")).forEach(oldScript => {
+            const s = document.createElement("script");
+            s.textContent = oldScript.textContent;
+            oldScript.replaceWith(s);
+          });
         }
 
         // Título
