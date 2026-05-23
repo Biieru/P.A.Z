@@ -97,6 +97,12 @@
 
     /* Navegação principal */
     async function navigate(pathname, push = true) {
+      // Sem shell SPA (#app-content) → navegação normal completa
+      // Acontece quando o usuário acessa pages/*.html diretamente pelo navegador
+      if (!appContent()) {
+        window.location.href = pathname;
+        return;
+      }
       // Ignora mesma página
       const current = window.location.pathname.replace(/\/$/, "") || "/";
       const target  = pathname.replace(/\/$/, "") || "/";
@@ -128,12 +134,8 @@
           app.innerHTML = "";
           app.appendChild(cloned);
 
-          // Re-executar scripts inline (necessário para páginas com lógica própria, ex: Vault)
-          Array.from(app.querySelectorAll("script")).forEach(oldScript => {
-            const s = document.createElement("script");
-            s.textContent = oldScript.textContent;
-            oldScript.replaceWith(s);
-          });
+          // Disparar evento de navegação para scripts externos (ex: vault.js)
+          window.dispatchEvent(new CustomEvent("paz:pageload", { detail: { pathname } }));
         }
 
         // Título
