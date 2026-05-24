@@ -439,6 +439,44 @@
       margin-top: 8px;
     }
 
+    /* Citação estilizada */
+    .vault-quote {
+      margin: 0;
+      padding: 22px 26px 18px;
+      background: radial-gradient(ellipse 80% 60% at 50% 50%, rgba(74,192,255,0.05) 0%, transparent 80%), rgba(5,8,16,0.45);
+      border-left: 3px solid var(--gold-bright);
+      position: relative;
+    }
+    .vault-quote::before {
+      content: '"';
+      font-family: var(--font-display);
+      font-size: 66px;
+      color: var(--gold-deep);
+      position: absolute;
+      top: -12px; left: 18px;
+      line-height: 1;
+      pointer-events: none;
+    }
+    .vault-quote blockquote { margin: 0; padding: 0; }
+    .vault-quote blockquote p {
+      font-family: var(--font-body);
+      font-style: italic;
+      font-size: clamp(15.5px, 1.4vw, 17.5px);
+      color: var(--bone);
+      line-height: 1.75;
+      margin: 0 0 14px;
+    }
+    .vault-quote blockquote p:last-child { margin-bottom: 0; }
+    .vault-quote figcaption {
+      margin-top: 14px;
+      padding-top: 12px;
+      border-top: 1px solid rgba(201,169,97,0.18);
+      font-family: var(--font-head);
+      font-size: 12px;
+      letter-spacing: 0.22em;
+      color: var(--gold);
+    }
+
     /* Corpo do modal */
     .vault-modal__body {
       font-family: var(--font-body);

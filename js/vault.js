@@ -23,6 +23,34 @@
      ============================================================ */
   const VAULT_ARTICLES = [
   {
+    id: 37,
+    category: "Comunicado Oficial",
+    date: "30 Abr 2026",
+    title: "Movie 3 is the One Piece — Rell Games Esclarece Status do Projeto",
+    subtitle: "Rell Games confirma que o jogo está entre 85% e 90% completo, esclarece expectativas sobre o Movie 3 e revela que o lançamento está previsto para o verão.",
+    media: {
+      type: "multi-image",
+      thumb: "https://i.imgur.com/c5T8vY3.jpeg",
+      images: [
+        { src: "https://i.imgur.com/51quAIS.png",  alt: "RELL Seas — screenshot 1" },
+        { src: "https://i.imgur.com/K9N8PQV.jpeg", alt: "RELL Seas — screenshot 2" },
+        { src: "https://i.imgur.com/RUpOCNC.png",  alt: "RELL Seas — screenshot 3" },
+        { src: "https://i.imgur.com/26uXziN.png",  alt: "RELL Seas — screenshot 4" }
+      ],
+      caption: "Screenshots anexados ao comunicado oficial."
+    },
+    body: [
+      "I see a lot of speculating about Movie 3 releasing today. The Trello was listed for completion today not Movie 3. We're almost done with that checklist. If I had to put a completion, on the . Game Completion range percentage: 85% close to 90, we're finishing up Fruit Abilities and skills currently.",
+      "We'll release Movie 3 sometime in the Summer. Now why would we rush the best part of the game . Movie 3. Like Movie 1, it'll be mainly be showcasing all the new core features. However, couldn't contain excitement so some rambling here and there of actually completing what we've set out to do since 2023.",
+      "Movie 3 will show that big jump in quality. The Armours, Weapons, Bosses (Some ScreenShot's below)... Systems, Combat Systems (with an 's') (yes multiple combat Systems), all systems.. can't list all on top of my head, constellation system etc.",
+      "We use our Dev discord mainly as the official check list and go back and check things off on Trello at the end of the month, actually need to do that rn."
+    ],
+    bodyStyle: "quote",
+    quoteAuthor: "RellBad",
+    source: "Discord oficial do Rell Games",
+    author: "Greed"
+  },
+  {
     id: 34,
     category: "Confirmação Oficial",
     date: "16 Abr 2026",
@@ -704,6 +732,13 @@
 
     function thumbHTML(a) {
       const m = a.media;
+      // Multi-image: usa a thumb dedicada
+      if (m.type === "multi-image") {
+        return `<div class="vault-card__thumb">
+          <img src="${m.thumb}" alt="Thumbnail" loading="lazy" />
+          <div class="vault-card__thumb-overlay"><span class="vault-card__thumb-label">Ver</span></div>
+        </div>`;
+      }
       // YouTube: usa thumbnail via ytimg
       if (m.type === "youtube" || m.type === "youtube-short") {
         return `<div class="vault-card__thumb">
@@ -792,6 +827,16 @@
           <div class="multi-yt-grid">${grid}</div>
           ${m.caption ? `<p class="vault-modal__media-caption">${m.caption}</p>` : ""}`;
 
+      } else if (m.type === "multi-image") {
+        mediaEl.style.display = "";
+        const imgs = m.images.map(img =>
+          `<img src="${img.src}" alt="${img.alt}" style="width:100%;display:block;border:1px solid rgba(201,169,97,0.22);margin-bottom:0;" />`
+        ).join("");
+        const gridCols = m.images.length <= 2 ? "1fr ".repeat(m.images.length).trim() : "1fr 1fr";
+        mediaEl.innerHTML = `
+          <div style="display:grid;grid-template-columns:${gridCols};gap:10px;">${imgs}</div>
+          ${m.caption ? `<p class="vault-modal__media-caption">${m.caption}</p>` : ""}`;
+
       } else if (m.type === "twitter") {
         mediaEl.style.display = "";
         const note = m.note ? `<p class="vault-modal__media-note">${m.note}</p>` : "";
@@ -817,8 +862,17 @@
       }
 
       // Corpo
-      document.getElementById("vaultModalBody").innerHTML =
-        a.body.map(p => `<p>${p}</p>`).join("");
+      const bodyEl = document.getElementById("vaultModalBody");
+      const paragraphs = a.body.map(p => `<p>${p}</p>`).join("");
+      if (a.bodyStyle === "quote") {
+        bodyEl.innerHTML = `
+          <figure class="vault-quote">
+            <blockquote>${paragraphs}</blockquote>
+            <figcaption>— ${a.quoteAuthor || a.author}</figcaption>
+          </figure>`;
+      } else {
+        bodyEl.innerHTML = paragraphs;
+      }
 
       modal.classList.add("is-open");
       document.body.style.overflow = "hidden";
