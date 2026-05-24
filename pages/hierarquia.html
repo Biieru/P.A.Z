@@ -335,6 +335,56 @@
       font-family:var(--font-body); font-size:clamp(15.5px,1.4vw,17.5px);
       color:var(--text); line-height:1.75; margin:0;
     }
+
+    /* ---- Membros do cargo ---- */
+    .hier-modal__members {
+      margin-top: 20px;
+      padding-top: 16px;
+      border-top: 1px solid rgba(201,169,97,0.18);
+    }
+    .hier-modal__members-label {
+      font-family: var(--font-head);
+      font-size: 10px;
+      letter-spacing: 0.42em;
+      text-transform: uppercase;
+      color: var(--bone-dim);
+      margin: 0 0 12px;
+    }
+    .hier-members-list {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+    .hier-member {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 2px;
+    }
+    .hier-member__handle {
+      font-family: var(--font-head);
+      font-size: 12px;
+      letter-spacing: 0.16em;
+      color: var(--ghost-cyan);
+      background: rgba(74,192,255,0.1);
+      border: 1px solid rgba(74,192,255,0.28);
+      padding: 4px 12px;
+      white-space: nowrap;
+    }
+    .hier-member__alt {
+      font-family: var(--font-head);
+      font-size: 10px;
+      letter-spacing: 0.12em;
+      color: var(--bone-dim);
+      padding: 0 12px;
+    }
+    .hier-member__role {
+      font-family: var(--font-body);
+      font-style: italic;
+      font-size: 12px;
+      color: var(--bone-dim);
+      padding: 0 12px;
+    }
   </style>
 </head>
 <body data-page="hierarquia">
@@ -398,6 +448,7 @@
                 <li><button class="node n-admin" data-role="gerente-da-taberna">Gerente da Taberna</button></li>
                 <li><button class="node n-comm"  data-role="big-news">Big News</button></li>
                 <li><button class="node n-comm"  data-role="guia-do-porto">Guia do Porto</button></li>
+                <li><button class="node n-comm"  data-role="artistas-oficiais">Artistas Oficiais</button></li>
                 <li>
                   <span class="node-group">Títulos Especiais do Servidor</span>
                   <ul>
@@ -468,6 +519,10 @@
         <h2 class="hier-modal__title" id="hierModalTitle"></h2>
         <div class="hier-modal__divider"></div>
         <p class="hier-modal__desc" id="hierModalDesc"></p>
+        <div class="hier-modal__members" id="hierModalMembers" style="display:none">
+          <p class="hier-modal__members-label">Membros</p>
+          <div class="hier-members-list" id="hierMembersList"></div>
+        </div>
       </div>
     </div>
 

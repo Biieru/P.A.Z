@@ -47,7 +47,7 @@
     ],
     bodyStyle: "quote",
     quoteAuthor: "RellBad",
-    source: "Discord oficial do Rell Games",
+    source: "Discord oficial do Rell",
     author: "Greed"
   },
   {

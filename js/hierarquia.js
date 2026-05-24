@@ -22,8 +22,33 @@ var HIER_ROLES = {
   "cacador-abissal":   { cat: "Tripulação — Progressão",     color: "#7eb8e8", desc: "Membro altamente avançado, com quase tudo maximizado. Entra nos servidores preparado para combate, domínio, confronto, exploração de conteúdo avançado e imposição de presença da P.A.Z. nos mares." },
   "veterano-abissal":  { cat: "Tripulação — Progressão",     color: "#6aaad8", desc: "Membro próximo do end-game, com renome nos servidores e busca ativa pelo set ideal. Já possui experiência sólida, presença reconhecida e capacidade de contribuir de forma consistente para os objetivos da tripulação." },
   "predador":          { cat: "Tripulação — Progressão",     color: "#5696c8", desc: "Membro de confiança em fase intermediária ou avançada de desenvolvimento. Participa de conteúdos mid-game, auxilia outros membros e demonstra comprometimento real com a evolução da P.A.Z." },
-  "marujo":            { cat: "Tripulação — Progressão",     color: "#4282b8", desc: "Membro ativo que mostra esforço, presença e evolução constante. Ainda está em crescimento, mas já demonstra participação, interesse e potencial para subir na hierarquia da tripulação." }
+  "marujo":            { cat: "Tripulação — Progressão",     color: "#4282b8", desc: "Membro ativo que mostra esforço, presença e evolução constante. Ainda está em crescimento, mas já demonstra participação, interesse e potencial para subir na hierarquia da tripulação." },
+  /* Com membros definidos */
+  "artistas-oficiais": { cat: "Discord — Criação Visual", color: "#c49fe0", desc: "Equipe de criação visual oficial da P.A.Z. Responsável por artes, identidade visual, material gráfico e conteúdo criativo da comunidade.", members: [{handle:"@Silva"},{handle:"@Tanso"},{handle:"@Tronza",alt:"@jafgjkj"},{handle:"@Lc_Midia",alt:"@lucaslk900fz"}] }
 };
+
+/* Membros por cargo (sobrescreve/complementa HIER_ROLES) */
+(function() {
+  var m = HIER_ROLES;
+  m["dono-do-porto"].members = [
+    {handle:"@thalasio"},
+    {handle:"@Azrael"}
+  ];
+  m["administracao"].members = [
+    {handle:"@Tanso"},
+    {handle:"@Skyzz"},
+    {handle:"@Viny_ZeBATATa"}
+  ];
+  m["gerente-da-taberna"].members = [
+    {handle:"@Dark_Foxy",    role:"Gestão do Server"},
+    {handle:"@ifen_fd",      role:"Gestão de Eventos"},
+    {handle:"@GUI$",     alt:"@guistpl2",   role:"Comércio"},
+    {handle:"@Meruem_jk",    role:"General"}
+  ];
+  m["big-news"].members = [
+    {handle:"@Greed", alt:"@Gureedo_Sama"}
+  ];
+})();
 
 function hierOpenModal(roleId, roleName) {
   var backdrop = document.getElementById("hierModal");
@@ -41,6 +66,22 @@ function hierOpenModal(roleId, roleName) {
   backdrop.classList.add("is-open");
   document.body.style.overflow = "hidden";
   if (closeBtn) closeBtn.focus();
+
+  /* Membros */
+  var membersSection = document.getElementById("hierModalMembers");
+  var membersList    = document.getElementById("hierMembersList");
+  if (membersSection && membersList) {
+    if (r.members && r.members.length) {
+      membersList.innerHTML = r.members.map(function(m) {
+        var altHtml  = m.alt  ? '<span class="hier-member__alt">'  + m.alt  + '</span>' : '';
+        var roleHtml = m.role ? '<span class="hier-member__role">' + m.role + '</span>' : '';
+        return '<div class="hier-member"><span class="hier-member__handle">' + m.handle + '</span>' + altHtml + roleHtml + '</div>';
+      }).join("");
+      membersSection.style.display = "";
+    } else {
+      membersSection.style.display = "none";
+    }
+  }
 }
 
 function hierCloseModal() {
@@ -48,6 +89,8 @@ function hierCloseModal() {
   if (!backdrop) return;
   backdrop.classList.remove("is-open");
   document.body.style.overflow = "";
+  var ms = document.getElementById("hierModalMembers");
+  if (ms) ms.style.display = "none";
 }
 
 /* --------------------------------------------------------
