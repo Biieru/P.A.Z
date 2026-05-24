@@ -6,25 +6,28 @@
    ========================================================= */
 
 var HIER_ROLES = {
-  "dono-do-porto":     { cat: "Discord — Administração",      color: "#e8c878", desc: "Administrador principal do servidor da P.A.Z. Responsável pela estrutura do Discord, organização dos canais, permissões, cargos, regras, segurança da comunidade e manutenção geral do ambiente digital do Porto." },
-  "administracao":     { cat: "Discord — Administração",      color: "#c9a961", desc: "Equipe administrativa do servidor. Atua no suporte à organização interna, decisões operacionais, manutenção da ordem, ajustes estruturais e apoio direto ao Dono do Porto na gestão da comunidade." },
-  "gerente-da-taberna":{ cat: "Discord — Administração",      color: "#c9a961", desc: "Equipe de moderação do servidor. Responsável por fiscalizar regras, orientar membros, mediar conflitos, manter os canais organizados e garantir que a convivência dentro da P.A.Z. permaneça saudável e funcional." },
-  "big-news":          { cat: "Discord — Comunicação",        color: "#4ac0ff", desc: "Responsável pela comunicação informativa da comunidade. Atua na apuração, organização e divulgação de notícias, teorias, rumores, comunicados, novidades e conteúdos relevantes sobre Rell Seas, a P.A.Z. e os mares. É um cargo editorial, não militar. A função é informar, registrar e movimentar a comunidade com conteúdo confiável, estratégico e bem apresentado." },
-  "guia-do-porto":     { cat: "Discord — Comunicação",        color: "#4ac0ff", desc: "Membro responsável por auxiliar novatos. Ajuda novos integrantes a entenderem o servidor, as regras, os canais, os cargos, o funcionamento da crew e os primeiros passos dentro da comunidade." },
-  "vip":               { cat: "Discord — Títulos Especiais",  color: "#e0a82a", desc: "Cargo especial de prestígio dentro do servidor, destinado a boosters, apoiadores ou membros reconhecidos por contribuição direta à comunidade. Representa apoio, presença e valorização dentro do Porto da P.A.Z." },
-  "tripulante":        { cat: "Discord / Tripulação",         color: "#2e6ea4", desc: "Membro oficialmente integrado à P.A.Z. Representa o primeiro nível real dentro da crew, já reconhecido como parte da tripulação e apto a participar das atividades internas." },
-  "naufrago":          { cat: "Discord / Tripulação",         color: "#4a6880", desc: "Recém-chegado ao servidor ou interessado que ainda não foi oficialmente integrado à tripulação. Está em fase de observação, adaptação e possível recrutamento." },
-  "ser-abissal":       { cat: "Tripulação — Comando",         color: "#e05050", desc: "Líder supremo da tripulação P.A.Z. Responsável pelo comando estratégico do bando, definição de objetivos, decisões de guerra, alianças, recrutamento de alto nível, posicionamento da crew e direção geral da tripulação nos mares." },
-  "executor-abissal":  { cat: "Tripulação — Comando",         color: "#d04040", desc: "Imediato do Ser Abissal. Responsável por executar ordens estratégicas, coordenar membros, organizar ações da tripulação, apoiar decisões de liderança e manter a disciplina operacional do bando." },
-  "lider-aliado":      { cat: "Tripulação — Diplomacia",      color: "#8ab4d4", desc: "Representante de uma tripulação aliada reconhecida pela P.A.Z. Atua como ponte diplomática entre grupos, facilitando comunicação, acordos, operações conjuntas e relações estratégicas entre crews." },
-  "abismo":            { cat: "Tripulação — Título Especial", color: "#b06fd4", desc: "Título especial concedido a membros que realizarem um feito catastrófico, histórico ou extremamente marcante dentro do jogo. Não representa necessariamente uma posição de comando, mas sim uma marca de impacto dentro da história da P.A.Z." },
-  "lenda-do-abismo":   { cat: "Tripulação — Progressão",     color: "#c49fe0", desc: "Membro de elite da tripulação, com praticamente tudo maximizado. Possui alto domínio do jogo, autonomia avançada e capacidade de explorar novos conteúdos rapidamente, servindo como referência de força e experiência dentro da crew." },
-  "cacador-abissal":   { cat: "Tripulação — Progressão",     color: "#7eb8e8", desc: "Membro altamente avançado, com quase tudo maximizado. Entra nos servidores preparado para combate, domínio, confronto, exploração de conteúdo avançado e imposição de presença da P.A.Z. nos mares." },
-  "veterano-abissal":  { cat: "Tripulação — Progressão",     color: "#6aaad8", desc: "Membro próximo do end-game, com renome nos servidores e busca ativa pelo set ideal. Já possui experiência sólida, presença reconhecida e capacidade de contribuir de forma consistente para os objetivos da tripulação." },
-  "predador":          { cat: "Tripulação — Progressão",     color: "#5696c8", desc: "Membro de confiança em fase intermediária ou avançada de desenvolvimento. Participa de conteúdos mid-game, auxilia outros membros e demonstra comprometimento real com a evolução da P.A.Z." },
-  "marujo":            { cat: "Tripulação — Progressão",     color: "#4282b8", desc: "Membro ativo que mostra esforço, presença e evolução constante. Ainda está em crescimento, mas já demonstra participação, interesse e potencial para subir na hierarquia da tripulação." },
-  /* Com membros definidos */
-  "artistas-oficiais": { cat: "Discord — Criação Visual", color: "#c49fe0", desc: "Equipe de criação visual oficial da P.A.Z. Responsável por artes, identidade visual, material gráfico e conteúdo criativo da comunidade.", members: [{handle:"@Silva"},{handle:"@Tanso"},{handle:"@Tronza",alt:"@jafgjkj"},{handle:"@Lc_Midia",alt:"@lucaslk900fz"}] }
+  /* ======== DISCORD ======== */
+  "dono-do-porto":     { cat: "Discord — Administração",       color: "#e8c878", desc: "Pessoa responsável pelo servidor e líder das gestões, aquele que organiza a maior parte das coisas e tem o maior poder de influência." },
+  "administracao":     { cat: "Discord — Administração",       color: "#c9a961", desc: "Concedido àqueles que passam no formulário escolhendo o cargo administrativo. Auxiliam os Gerentes da Taberna a manterem a organização no servidor." },
+  "gerente-da-taberna":{ cat: "Discord — Administração",       color: "#c9a961", desc: "Cargo fornecido àqueles de maior confiança do Dono do Porto. Realizam a gestão de áreas específicas do servidor e o mantém em estabilidade constante." },
+  "big-news":          { cat: "Discord — Comunicação",         color: "#4ac0ff", desc: "Dedicado apenas aos que tem interesse no Big News da tripulação e se qualificaram no formulário do mesmo." },
+  "guia-do-porto":     { cat: "Discord — Comunicação",         color: "#4ac0ff", desc: "Este cargo é dedicado especialmente às pessoas que se dedicam a ajudar as novas pessoas que adentram ao servidor, seja doando itens ou realizando qualquer tipo de ajuda a elas." },
+  "artistas-oficiais": { cat: "Discord — Criação Visual",      color: "#c49fe0", desc: "Equipe de criação visual oficial da P.A.Z. Responsável por artes, identidade visual, material gráfico e conteúdo criativo da comunidade." },
+  "vip":               { cat: "Discord — Títulos Especiais",   color: "#e0a82a", desc: "Cargo EXCLUSIVO de boosters que agrega em diversos benefícios dentro do servidor da tripulação." },
+  "membro-paz":        { cat: "Discord — Identificação",       color: "#7eb8e8", desc: "Membros da tripulação, independentemente do cargo. Representa o acesso geral ao servidor como integrante oficial da P.A.Z." },
+  "membro-alianca":    { cat: "Discord — Identificação",       color: "#8ab4d4", desc: "Menção aplicada aos membros de tripulações aliadas para identificação dos mesmos dentro do servidor da P.A.Z." },
+  "tripulante":        { cat: "Discord / Tripulação",          color: "#2e6ea4", desc: "Pessoa que acabou de se unir à tripulação." },
+  "naufrago":          { cat: "Discord / Tripulação",          color: "#4a6880", desc: "Aquele que se uniu ao servidor do Discord, mas ainda não é da tripulação." },
+  /* ======== TRIPULAÇÃO ======== */
+  "capitao-abissal":   { cat: "Tripulação — Comando",          color: "#e05050", desc: "O possuidor deste título é quem comanda a tripulação." },
+  "executor-abissal":  { cat: "Tripulação — Comando",          color: "#d04040", desc: "Imediato / Oficial Executivo do bando." },
+  "lider-aliado":      { cat: "Tripulação — Diplomacia",       color: "#8ab4d4", desc: "Título destinado aos líderes de tripulações aliadas à P.A.Z." },
+  "abismo":            { cat: "Tripulação — Título Especial",  color: "#b06fd4", desc: "Título aplicado quando o membro realiza um feito catastrófico no jogo." },
+  "lenda-do-abismo":   { cat: "Tripulação — Progressão",      color: "#c49fe0", desc: "Cargo oferecido aos membros que possuem maximizações e já possuem jogabilidade completa no jogo." },
+  "cacador-abissal":   { cat: "Tripulação — Progressão",      color: "#7eb8e8", desc: "Disponibilizado para aqueles cujo estão no end-game, ou seja, já estão em um alto nível dentro do jogo." },
+  "besta-abissal":     { cat: "Tripulação — Progressão",      color: "#6aaad8", desc: "Esse membro já possui renome nos servidores, porém ainda está procurando builds efetivas e decidindo como será seu personagem no jogo." },
+  "predador":          { cat: "Tripulação — Progressão",      color: "#5696c8", desc: "Cargo atribuído àqueles que fazem conteúdo mid-game ou estão iniciando no jogo, porém apresentando avanço constante." },
+  "marujo":            { cat: "Tripulação — Progressão",      color: "#4282b8", desc: "Cargo dado para os membros ativos dentro da tripulação e que demonstram esforço." }
 };
 
 /* Membros por cargo (sobrescreve/complementa HIER_ROLES) */
@@ -47,6 +50,12 @@ var HIER_ROLES = {
   ];
   m["big-news"].members = [
     {handle:"@Greed", alt:"@Gureedo_Sama"}
+  ];
+  m["artistas-oficiais"].members = [
+    {handle:"@Silva"},
+    {handle:"@Tanso"},
+    {handle:"@Tronza", alt:"@jafgjkj"},
+    {handle:"@Lc_Midia", alt:"@lucaslk900fz"}
   ];
 })();
 
