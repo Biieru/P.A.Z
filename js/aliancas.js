@@ -15,7 +15,7 @@ const ALIANCAS_DATA = [
     id: 1,
     name: "The Voids",
     image: "/assets/images/Jolly-The-Voids-Crew.png",
-    discord: "https://discord.gg/yuWtZN95Mx",
+    discord: "https://discord.gg/RFNS9NP4Jd",
     body: "A The Voids surgiu para aqueles que desejam algo maior do que apenas uma tripulacao comum. Nao seguimos multidoes. Nao buscamos atencao desesperadamente. E muito menos dependemos de fama para crescer. Somos um grupo unido pela lealdade, respeito e ambicao de dominar os mares atraves da inteligencia, evolucao e parceria entre membros. Aqui, cada pessoa carrega seu proprio valor dentro do vazio.\n\nO QUE OFERECEMOS\n\u2726 Comunidade ativa diariamente\n\u2726 Membros unidos e parceiros\n\u2726 Staff organizada e presente\n\u2726 Eventos e objetivos internos\n\u2726 Crescimento coletivo constante\n\u2726 Ambiente focado em respeito e evolucao\n\nNOSSA VISAO\nAcreditamos que as maiores forcas surgem no silencio. Enquanto outros procuram guerras inuteis e reconhecimento momentaneo, nos fortalecemos nossas bases, nossos membros e nossa influencia. A The Voids nao e construida apenas por poder... mas pela uniao daqueles que permanecem firmes ate o fim.\n\nREQUISITOS\n\u2726 Ser ativo\n\u2726 Respeitar todos os membros\n\u2726 Ter maturidade\n\u2726 Saber agir em equipe\n\u2726 Demonstrar lealdade a tripulacao\n\nMENSAGEM FINAL\nSe deseja apenas mais uma crew... existem varias pelos mares. Mas se procura uma familia, aliados verdadeiros e um lugar onde sua presenca realmente importa... Entao atravesse o vazio."
   },
   {
