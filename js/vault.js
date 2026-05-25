@@ -29,17 +29,16 @@
     title: "O \"WORLD D. GOVERNMENT\" Mostra Seu Abuso de Poder",
     subtitle: "O \"World D. Government\", o governo mundial no mundo do Rell Seas, aparentemente vai ser ainda mais agressivo com as frutas do que esperávamos.",
     media: {
-      type: "image-twitter",
-      src: "https://pbs.twimg.com/media/HHPQcHvW4AAJI2y?format=jpg&name=large",
+      type: "image-video",
+      src: "https://i.imgur.com/dcLEoge.png",
       alt: "World D. Government — Rell Seas",
-      twitterUrl: "https://x.com/i/status/2050211493925327360",
-      twitterLabel: "Ver post original no X",
-      caption: "Fontes das profundezas, identidade preservada em anonimato."
+      videoSrc: "https://i.imgur.com/Kjlit4O.mp4",
+      caption: "Fonte: Anônima."
     },
     body: [
       "\"All Fruits Belong To The Government, It\'s The Law. Buster Calls Confirmed\""
     ],
-    source: "Fontes das profundezas, identidade preservada em anonimato.",
+    source: "Fonte: Anônima.",
     author: "Greed"
   },
   {
@@ -773,6 +772,13 @@
           <div class="vault-card__thumb-overlay"><span class="vault-card__thumb-label">Ouvir</span></div>
         </div>`;
       }
+      // Image + Video
+      if (m.type === "image-video") {
+        return `<div class="vault-card__thumb">
+          <img src="${m.src}" alt="${m.alt || ''}" loading="lazy" />
+          <div class="vault-card__thumb-overlay"><span class="vault-card__thumb-label">Ver</span></div>
+        </div>`;
+      }
       // Image + Twitter link
       if (m.type === "image-twitter") {
         return `<div class="vault-card__thumb">
@@ -880,6 +886,15 @@
         ).join("");
         const note = m.note ? `<p class="vault-modal__media-note">${m.note}</p>` : "";
         mediaEl.innerHTML = `<div class="twitter-links">${btns}</div>${note}`;
+
+      } else if (m.type === "image-video") {
+        mediaEl.style.display = "";
+        mediaEl.innerHTML = `
+          <img src="${m.src}" alt="${m.alt || ''}" style="width:100%;display:block;border:1px solid rgba(201,169,97,0.22);margin-bottom:12px;" />
+          <video src="${m.videoSrc}" controls preload="metadata" playsinline
+            style="width:100%;display:block;border:1px solid rgba(201,169,97,0.22);"
+            aria-label="${m.alt || 'Vídeo'}"></video>
+          ${m.caption ? `<p class="vault-modal__media-caption" style="margin-top:8px;">${m.caption}</p>` : ""}`;
 
       } else if (m.type === "image-twitter") {
         mediaEl.style.display = "";
