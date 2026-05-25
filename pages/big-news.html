@@ -298,6 +298,97 @@
       margin: 0 !important;
     }
 
+
+    /* ---- Lead (citação de abertura) ---- */
+    .news-lead {
+      border-left: 3px solid rgba(201,169,97,0.5);
+      padding: 12px 18px;
+      margin: 0 0 20px;
+      background: rgba(5,8,16,0.35);
+      font-style: italic;
+      color: var(--bone-soft);
+      line-height: 1.65;
+    }
+    .news-lead strong { color: var(--gold-bright); font-style: normal; }
+
+    /* ---- Callout box (código Discord) ---- */
+    .news-callout {
+      font-family: var(--font-head);
+      font-size: 11.5px;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--gold-bright);
+      background: rgba(5,8,16,0.65);
+      border: 1px solid rgba(201,169,97,0.3);
+      border-left: 3px solid var(--gold-bright);
+      padding: 16px 20px;
+      margin: 22px 0;
+      line-height: 1.8;
+    }
+
+    /* ---- Sub-título dentro do artigo (##) ---- */
+    .news-section-title {
+      font-family: var(--font-display);
+      font-size: clamp(16px,1.6vw,20px);
+      font-weight: 700;
+      color: var(--gold);
+      margin: 26px 0 12px;
+      letter-spacing: 0.06em;
+      padding-bottom: 6px;
+      border-bottom: 1px solid rgba(201,169,97,0.15);
+    }
+
+    /* ---- Citação com autor ---- */
+    .news-quote {
+      border-left: 3px solid var(--gold-bright);
+      padding: 18px 22px 14px;
+      background: rgba(5,8,16,0.45);
+      margin: 16px 0;
+      position: relative;
+    }
+    .news-quote::before {
+      content: '"';
+      font-family: var(--font-display);
+      font-size: 56px;
+      color: var(--gold-deep);
+      position: absolute;
+      top: -8px; left: 14px;
+      line-height: 1;
+      pointer-events: none;
+    }
+    .news-quote p { font-style: italic; color: var(--bone); margin: 0 0 10px; }
+    .news-quote p:last-of-type { margin-bottom: 8px; }
+    .news-quote cite {
+      font-family: var(--font-head);
+      font-size: 11px;
+      letter-spacing: 0.2em;
+      color: var(--bone-dim);
+      font-style: normal;
+    }
+
+    /* ---- Caixa de tradução ---- */
+    .news-translation {
+      background: rgba(5,8,16,0.5);
+      border: 1px solid rgba(201,169,97,0.15);
+      padding: 16px 18px;
+      margin: 10px 0 22px;
+      font-family: var(--font-body);
+      font-size: clamp(14px,1.3vw,16px);
+      font-style: italic;
+      color: var(--text-dim);
+      line-height: 1.7;
+    }
+    .news-translation p { margin: 0 0 10px; }
+    .news-translation p:last-child { margin: 0; }
+
+    /* ---- Imagem inline no artigo ---- */
+    .news-inline-img {
+      width: 100%;
+      max-width: 480px;
+      border: 1px solid rgba(201,169,97,0.25);
+      display: block;
+      margin: 18px 0 8px;
+    }
     /* Separador entre artigos */
     .news-rule {
       display: flex;
@@ -383,6 +474,104 @@
     </div>
 
     <div class="news-feed">
+
+
+      <!-- =====================================================
+           ARTIGO — RellTeam se pronuncia sobre eventos e Brazil
+           ===================================================== -->
+      <article class="news-article">
+        <div class="news-article__header">
+          <span class="news-article__category news-article__category--furo">Furo de Última Hora</span>
+          <span class="news-article__author">Por Greed</span>
+          <span class="news-article__date">Mai 2025</span>
+        </div>
+        <h2 class="news-article__title">RellTeam se Pronuncia Sobre Eventos e Cita Servidor Sul-Americano</h2>
+        <div class="news-article__body">
+          <blockquote class="news-lead">
+            Fontes das profundezas confirmaram:<br>
+            A <strong>Equipe do Rell Seas</strong> fez um pronunciamento a respeito dos eventos e ainda citou o servidor <strong>Sul Americano</strong>.
+          </blockquote>
+          <p>Um anúncio foi feito no servidor da Rell Games. Confira a nota oficial de <em>Rellerics</em>:</p>
+          <div class="news-quote">
+            <p>"Thank you all for the positive responses. We will be hosting crazy events on RELL Seas when it's out, and we will try keep you guys entertained with events like this in the meantime if that's what you want.</p>
+            <p>Also, sorry to our South American fans, we dont have a staff member from that region, so it wasnt possible to set up on short notice. Maybe I'll do an application wave to try find one soon for the next event."</p>
+            <cite>— Rellerics</cite>
+          </div>
+          <p class="news-article__closer" style="font-size:12px;letter-spacing:.3em;color:var(--bone-dim);margin:6px 0 0 !important;text-align:left;">TRADUÇÃO:</p>
+          <div class="news-translation">
+            <p>Obrigado a todos pelas respostas positivas. Vamos realizar eventos incríveis no RELL Seas quando for lançado, e tentaremos manter vocês entretidos com eventos como este enquanto isso, se for isso que vocês querem.</p>
+            <p>Também pedimos desculpas aos nossos fãs sul-americanos, não temos nenhum membro da equipe dessa região, então não foi possível organizar tudo com tão pouco tempo de antecedência. Talvez eu faça uma seleção em breve para tentar encontrar alguém para o próximo evento.</p>
+          </div>
+          <img src="https://i.imgur.com/Q7r919k.png" alt="Anúncio oficial da Rell Games" class="news-inline-img" />
+          <p style="font-size:12.5px;font-style:italic;color:var(--bone-dim);margin:0 0 20px;">Print do anúncio no Discord oficial da Rell Games.</p>
+          <p>Muito provavelmente estaremos recebendo mais aplicações para nós, <strong>Brasileiros</strong>, podermos <strong>fazer parte da equipe do Rell Games</strong>. Já que a expansão para a <strong>LATAM</strong> não é mais um sonho distante, mas algo que eles perceberam ser necessário dado à demanda e ao número de reclamações de ping ridículo nos últimos eventos, especialmente envolvendo o <strong>Culling Games</strong> em <strong>Jujutsu Shenanigans</strong>.</p>
+          <p class="news-article__sign-off">Que as notícias ecoem das profundezas.</p>
+        </div>
+      </article>
+
+      <div class="news-rule" aria-hidden="true"><span>Big News</span></div>
+
+      <!-- =====================================================
+           ARTIGO — Alianças e Hierarquia Ativadas
+           ===================================================== -->
+      <article class="news-article">
+        <div class="news-article__header">
+          <span class="news-article__category">Anúncio Oficial</span>
+          <span class="news-article__author">Por Greed</span>
+          <span class="news-article__date">Mai 2025</span>
+        </div>
+        <h2 class="news-article__title">Fontes Confirmam: Alianças e Hierarquia Estão Ativas no Site Oficial</h2>
+        <div class="news-article__body">
+          <blockquote class="news-lead">
+            Fontes das profundezas confirmam:<br>
+            A <strong>P.A.Z</strong> acaba de lançar a aba <strong>Alianças</strong> no site oficial da crew, enquanto a aba <strong>Hierarquia</strong> finalmente está funcional.
+          </blockquote>
+          <p>O site oficial segue evoluindo e agora passa a contar com duas áreas importantes para a organização da tripulação. A aba <strong>Alianças</strong> foi criada para registrar possíveis parcerias, relações diplomáticas e conexões estratégicas da <strong>P.A.Z</strong> com outras crews, formadas pela liderança e o respectivo <strong>Líder Aliado</strong>. Já a aba <strong>Hierarquia</strong>, que antes estava em desenvolvimento, agora está funcional e exibe de forma organizada a estrutura interna da crew, seus cargos, posições e divisões.</p>
+          <div class="news-callout">
+            ALIANÇA NÃO É AMIZADE CEGA.<br>
+            HIERARQUIA NÃO É ENFEITE.<br>
+            ORGANIZAÇÃO É O QUE TRANSFORMA UMA CREW EM POTÊNCIA.
+          </div>
+          <h3 class="news-section-title">O que é a aba Alianças?</h3>
+          <p>A aba <strong>Alianças</strong> será o espaço oficial para registrar relações externas da <strong>P.A.Z</strong>. Nela, poderão ser organizadas informações sobre crews aliadas, acordos, contatos estratégicos e vínculos importantes para a presença da tripulação nos mares. Se a <strong>P.A.Z</strong> crescer, suas conexões também precisam ser registradas com clareza.</p>
+          <h3 class="news-section-title">E a aba Hierarquia?</h3>
+          <p>A aba <strong>Hierarquia</strong> agora está funcional e serve para mostrar a organização oficial da crew. Nela, membros poderão visualizar melhor a estrutura da <strong>P.A.Z</strong>, entendendo cargos, responsabilidades e posições dentro da tripulação. Isso ajuda novos membros a se localizarem e toda a crew a manter uma organização mais sólida.</p>
+          <p>As abas <strong>Alianças</strong> e <strong>Hierarquia</strong> já podem ser acessadas pelo site oficial da <strong>P.A.Z</strong>: <a href="https://p-a-z.onrender.com/" target="_blank" rel="noopener noreferrer" style="color:var(--ghost-cyan);">p-a-z.onrender.com</a></p>
+          <p class="news-article__sign-off">Que as notícias ecoem das profundezas.</p>
+        </div>
+      </article>
+
+      <div class="news-rule" aria-hidden="true"><span>Big News</span></div>
+
+      <!-- =====================================================
+           ARTIGO — Vault Aberto
+           ===================================================== -->
+      <article class="news-article">
+        <div class="news-article__header">
+          <span class="news-article__category">Anúncio Oficial</span>
+          <span class="news-article__author">Por Greed</span>
+          <span class="news-article__date">Mai 2025</span>
+        </div>
+        <h2 class="news-article__title">Fontes Confirmam: Vault Está Aberto no Site Oficial da P.A.Z</h2>
+        <div class="news-article__body">
+          <blockquote class="news-lead">
+            Fontes das profundezas confirmam:<br>
+            A <strong>P.A.Z</strong> acaba de lançar o <strong>Vault</strong> no site oficial da crew.
+          </blockquote>
+          <p>O novo espaço funciona como um arquivo organizado para reunir postagens antigas, registros oficiais, novidades e informações já divulgadas sobre <strong>Rell Seas</strong>. A ideia é simples: em vez de deixar informações importantes perdidas em prints, mensagens antigas ou posts espalhados, o <strong>Vault</strong> passa a centralizar tudo em um só lugar.</p>
+          <div class="news-callout">
+            VAULT NÃO É PARA RUMORES.<br>
+            VAULT É ARQUIVO DO TEMPO QUE VAI MANTER TODAS AS POSTAGENS OFICIAIS DO RELL SEAS.
+          </div>
+          <h3 class="news-section-title">Mas o que é o Vault?</h3>
+          <p>O <strong>Vault</strong> é uma área criada dentro do site da <strong>P.A.Z</strong> para servir como um cofre de informações sobre <strong>Rell Seas</strong>. Nele, será possível consultar conteúdos antigos, postagens oficiais, registros importantes e materiais já mostrados ao público até hoje.</p>
+          <p>Enquanto o lançamento de <strong>Rell Seas</strong> ainda não chega, o <strong>Vault</strong> será usado para acompanhar o que já foi revelado, organizar informações confiáveis e facilitar o acesso de todos os membros da crew.</p>
+          <p>O <strong>Vault</strong> já pode ser acessado pelo site oficial da <strong>P.A.Z</strong>: <a href="https://p-a-z.onrender.com/" target="_blank" rel="noopener noreferrer" style="color:var(--ghost-cyan);">p-a-z.onrender.com</a></p>
+          <p class="news-article__sign-off">Que as notícias ecoem das profundezas.</p>
+        </div>
+      </article>
+
+      <div class="news-rule" aria-hidden="true"><span>Big News</span></div>
 
       <!-- =====================================================
            ARTIGO — Greed assume o Big News
