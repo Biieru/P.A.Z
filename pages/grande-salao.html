@@ -1,0 +1,694 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Grande Salão · P.A.Z</title>
+  <link rel="icon" type="image/png" href="/assets/images/logo-paz.png" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@400;700;900&family=Cinzel:wght@400;500;600;700&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="/css/style.css" />
+  <link rel="stylesheet" href="/css/responsive.css" />
+  <style>
+    /* =========================================================
+       Grande Salão — Estilos
+       ========================================================= */
+
+    .gs-page {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: clamp(40px,7vw,90px) var(--gutter) 100px;
+    }
+
+    /* ---- LOGIN ---- */
+    .gs-login {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 60vh;
+    }
+
+    .gs-login-card {
+      position: relative;
+      width: 100%;
+      max-width: 440px;
+      background:
+        radial-gradient(ellipse 80% 50% at 50% 0%, rgba(30,69,102,0.25) 0%, transparent 70%),
+        linear-gradient(180deg, rgba(8,17,30,0.97) 0%, rgba(5,8,16,0.99) 100%);
+      border: 1px solid rgba(201,169,97,0.35);
+      padding: clamp(28px,5vw,52px);
+      text-align: center;
+    }
+    .gs-login-card::before,.gs-login-card::after {
+      content:''; position:absolute; width:22px; height:22px;
+      border:1.5px solid var(--gold); pointer-events:none;
+    }
+    .gs-login-card::before { top:-2px; left:-2px; border-right:none; border-bottom:none; }
+    .gs-login-card::after  { bottom:-2px; right:-2px; border-left:none; border-top:none; }
+
+    .gs-login__icon {
+      font-size: 36px;
+      margin-bottom: 16px;
+      filter: drop-shadow(0 0 12px rgba(201,169,97,0.4));
+    }
+
+    .gs-login__title {
+      font-family: var(--font-display);
+      font-size: clamp(22px,3vw,32px);
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      color: var(--gold-bright);
+      margin: 0 0 6px;
+    }
+
+    .gs-login__sub {
+      font-family: var(--font-head);
+      font-size: 10px;
+      letter-spacing: 0.4em;
+      text-transform: uppercase;
+      color: var(--bone-dim);
+      margin: 0 0 28px;
+    }
+
+    .gs-login__divider {
+      height: 1px;
+      background: linear-gradient(90deg,transparent,var(--gold-deep),transparent);
+      margin-bottom: 28px;
+    }
+
+    .gs-field {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 6px;
+      margin-bottom: 18px;
+      text-align: left;
+    }
+
+    .gs-field label {
+      font-family: var(--font-head);
+      font-size: 10px;
+      letter-spacing: 0.35em;
+      text-transform: uppercase;
+      color: var(--bone-dim);
+    }
+
+    .gs-field input {
+      width: 100%;
+      background: rgba(5,8,16,0.85);
+      border: 1px solid rgba(201,169,97,0.3);
+      color: var(--bone);
+      font-family: var(--font-head);
+      font-size: 13px;
+      letter-spacing: 0.12em;
+      padding: 11px 14px;
+      outline: none;
+      box-sizing: border-box;
+      transition: border-color 0.25s;
+    }
+    .gs-field input:focus { border-color: var(--gold-bright); }
+
+    .gs-login-btn {
+      width: 100%;
+      margin-top: 8px;
+      padding: 13px 24px;
+      font-family: var(--font-head);
+      font-size: 12px;
+      letter-spacing: 0.3em;
+      text-transform: uppercase;
+      color: var(--abyss-black);
+      background: linear-gradient(135deg, var(--gold-bright), var(--gold));
+      border: none;
+      cursor: pointer;
+      transition: opacity 0.25s, transform 0.2s;
+    }
+    .gs-login-btn:hover { opacity: 0.88; transform: translateY(-1px); }
+
+    .gs-error {
+      display: none;
+      margin-top: 18px;
+      font-family: var(--font-body);
+      font-size: 13.5px;
+      color: #e05050;
+      background: rgba(224,80,80,0.08);
+      border: 1px solid rgba(224,80,80,0.25);
+      padding: 12px 16px;
+      line-height: 1.5;
+    }
+
+    /* ---- CONTEÚDO PROTEGIDO ---- */
+    .gs-content { display: none; }
+
+    .gs-header {
+      text-align: center;
+      margin-bottom: clamp(36px,5vw,56px);
+      padding-bottom: clamp(24px,4vw,40px);
+      border-bottom: 1px solid rgba(201,169,97,0.35);
+      position: relative;
+    }
+    .gs-header__corner {
+      position: absolute; width: 18px; height: 18px;
+      border: 1px solid var(--gold-deep); pointer-events: none;
+    }
+    .gs-header__corner--tl { top:0; left:0; border-right:none; border-bottom:none; }
+    .gs-header__corner--tr { top:0; right:0; border-left:none; border-bottom:none; }
+
+    .gs-header__eyebrow {
+      font-family: var(--font-head); font-size: 10.5px;
+      letter-spacing: 0.55em; color: var(--bone-dim);
+      text-transform: uppercase; margin: 0 0 10px;
+    }
+    .gs-header__title {
+      font-family: var(--font-display); font-size: clamp(36px,6vw,68px);
+      font-weight: 700; letter-spacing: 0.12em; margin: 0 0 12px;
+      background: linear-gradient(180deg, #f4ebd0 0%, #d5c79e 35%, #8e7a4a 80%);
+      -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent;
+    }
+    .gs-header__subtitle {
+      font-family: var(--font-body); font-style: italic;
+      font-size: clamp(15px,1.4vw,18px); color: var(--bone-dim);
+      margin: 0 0 20px; max-width: 600px; margin-left: auto; margin-right: auto;
+    }
+    .gs-header__intro {
+      font-family: var(--font-body); font-size: clamp(15px,1.3vw,17px);
+      color: var(--text); line-height: 1.75; max-width: 760px;
+      margin: 0 auto; text-align: left;
+    }
+
+    /* ---- Barra de ações ---- */
+    .gs-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      justify-content: flex-end;
+      margin-bottom: 36px;
+    }
+
+    .gs-btn {
+      font-family: var(--font-head);
+      font-size: 11px;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      padding: 9px 20px;
+      border: 1px solid;
+      cursor: pointer;
+      transition: filter 0.25s, transform 0.2s;
+    }
+    .gs-btn:hover { filter: brightness(1.15); transform: translateY(-1px); }
+
+    .gs-pdf-btn   { color: var(--gold); border-color: var(--gold-deep); background: rgba(201,169,97,0.08); }
+    .gs-png-btn   { color: var(--ghost-cyan); border-color: rgba(74,192,255,0.4); background: rgba(74,192,255,0.08); }
+    .gs-logout-btn { color: #e05050; border-color: rgba(224,80,80,0.4); background: rgba(224,80,80,0.07); }
+
+    /* ---- Seções ---- */
+    .gs-section {
+      margin-bottom: clamp(40px,6vw,64px);
+    }
+
+    .gs-section__header {
+      margin-bottom: 20px;
+    }
+
+    .gs-section__title {
+      font-family: var(--font-display);
+      font-size: clamp(20px,2.5vw,28px);
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      color: var(--gold-bright);
+      margin: 0 0 6px;
+    }
+
+    .gs-section__desc {
+      font-family: var(--font-body);
+      font-style: italic;
+      font-size: clamp(14px,1.3vw,16px);
+      color: var(--bone-dim);
+      margin: 0 0 14px;
+      border-left: 2px solid rgba(201,169,97,0.4);
+      padding-left: 12px;
+    }
+
+    .gs-section__note {
+      font-family: var(--font-body);
+      font-size: 13.5px;
+      color: var(--bone-dim);
+      font-style: italic;
+      margin-top: 12px;
+    }
+
+    /* ---- Tabelas ---- */
+    .gs-table-wrap {
+      overflow-x: auto;
+      -webkit-overflow-scrolling: touch;
+      scrollbar-width: thin;
+      scrollbar-color: rgba(201,169,97,0.3) transparent;
+    }
+    .gs-table-wrap::-webkit-scrollbar { height: 4px; }
+    .gs-table-wrap::-webkit-scrollbar-thumb { background: rgba(201,169,97,0.3); }
+
+    .gs-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-family: var(--font-body);
+      font-size: clamp(13px,1.2vw,15px);
+      min-width: 480px;
+    }
+
+    .gs-table th {
+      background: rgba(30,50,20,0.6);
+      font-family: var(--font-head);
+      font-size: 10.5px;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--gold-bright);
+      padding: 11px 14px;
+      text-align: center;
+      border: 1px solid rgba(201,169,97,0.2);
+      white-space: nowrap;
+    }
+    .gs-table th:first-child { text-align: left; }
+
+    .gs-table td {
+      padding: 9px 14px;
+      border: 1px solid rgba(201,169,97,0.12);
+      color: var(--text);
+      text-align: center;
+      vertical-align: middle;
+    }
+    .gs-table td:first-child {
+      text-align: left;
+      font-family: var(--font-head);
+      font-size: 11.5px;
+      letter-spacing: 0.1em;
+      color: var(--bone);
+      white-space: nowrap;
+    }
+
+    .gs-table tbody tr { background: rgba(5,8,16,0.7); }
+    .gs-table tbody tr:nth-child(even) { background: rgba(8,17,30,0.8); }
+    .gs-table tbody tr:hover { background: rgba(74,192,255,0.06); }
+
+    /* Destaques por dificuldade */
+    .gs-table td.diff-mf { color: #b0e0b0; }
+    .gs-table td.diff-f  { color: #8fd48f; }
+    .gs-table td.diff-mef{ color: #6fc46f; }
+    .gs-table td.diff-m  { color: var(--gold); }
+    .gs-table td.diff-md { color: #f0b040; }
+    .gs-table td.diff-d  { color: #e07830; }
+    .gs-table td.diff-di { color: #e05050; }
+    .gs-table td.diff-i  { color: #c040d0; }
+
+    /* Destaques salários */
+    .gs-table td.sal-fixed { color: var(--ghost-cyan); font-weight: 600; text-align: right; }
+    .gs-table td.sal-mult  { color: var(--gold); text-align: center; }
+
+    /* Loja categorias */
+    .gs-table td.loja-cat  { color: var(--bone-dim); font-style: italic; }
+    .gs-table td.loja-price { text-align: right; }
+    .gs-table td.loja-rare { color: #c049d4; font-weight: 600; }
+
+    /* Sem preço máximo */
+    .gs-table td.em-dash { color: var(--bone-dim); font-style: italic; }
+
+    /* ---- Print CSS ---- */
+    @media print {
+      .site-header, .audio-player, .gs-actions, .gs-logout-btn,
+      .atmosphere, .site-footer, .page-transition, .gs-login { display: none !important; }
+      body, .gs-page, .gs-content { background: #0a0f18 !important; color: #d8cba8 !important; }
+      .gs-table th { background: #1a2a10 !important; }
+      .gs-table tbody tr { background: #08101a !important; }
+      .gs-table tbody tr:nth-child(even) { background: #0c1520 !important; }
+      .gs-table, .gs-table th, .gs-table td { border-color: rgba(201,169,97,0.4) !important; }
+      .gs-section { page-break-inside: avoid; margin-bottom: 24px; }
+      .gs-table-wrap { overflow: visible !important; }
+      .gs-table { min-width: unset !important; font-size: 10px !important; }
+      .gs-table th { font-size: 9px !important; padding: 6px 8px !important; }
+      .gs-table td { padding: 5px 8px !important; }
+    }
+
+    @media (max-width: 600px) {
+      .gs-actions { justify-content: flex-start; }
+    }
+  </style>
+</head>
+<body data-page="grande-salao">
+
+  <div class="page-transition" id="pageTransition" aria-hidden="true"></div>
+  <div class="atmosphere" aria-hidden="true">
+    <div class="atmosphere__vignette"></div>
+    <div class="atmosphere__grain"></div>
+    <div class="atmosphere__bg"></div>
+  </div>
+
+  <header class="site-header">
+    <div class="site-header__inner">
+      <a href="/" class="brand" data-link>
+        <img src="/assets/images/logo-paz.png" alt="" class="brand__logo" />
+        <span class="brand__name">P.A.Z</span>
+      </a>
+      <nav class="nav" aria-label="Navegação principal">
+        <ul class="nav__list">
+          <li><a href="/"                          class="nav__link" data-link>Início</a></li>
+          <li><a href="/pages/esquadroes.html"     class="nav__link" data-link>Esquadrões</a></li>
+          <li><a href="/pages/cacadas.html"        class="nav__link" data-link>Caçadas</a></li>
+          <li><a href="/pages/hierarquia.html"     class="nav__link" data-link>Hierarquia</a></li>
+          <li><a href="/pages/aliancas.html"       class="nav__link" data-link>Alianças</a></li>
+          <li><a href="/pages/big-news.html"       class="nav__link" data-link>Big News</a></li>
+          <li><a href="/pages/vault.html"          class="nav__link" data-link>Seas Vault</a></li>
+          <li><a href="/pages/grande-salao.html"   class="nav__link" data-link>Grande Salão</a></li>
+        </ul>
+      </nav>
+      <button class="nav-toggle" aria-label="Abrir menu" aria-expanded="false" id="navToggle">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </header>
+
+  <main class="gs-page">
+
+    <!-- ======================================================
+         LOGIN
+         ====================================================== -->
+    <section id="gs-login" class="gs-login" aria-label="Acesso restrito">
+      <div class="gs-login-card">
+        <div class="gs-login__icon">⚓</div>
+        <h1 class="gs-login__title">Grande Salão</h1>
+        <p class="gs-login__sub">Área Restrita da P.A.Z</p>
+        <div class="gs-login__divider"></div>
+
+        <form id="gs-login-form" autocomplete="off" novalidate>
+          <div class="gs-field">
+            <label for="gs-user-input">Usuário</label>
+            <input type="text" id="gs-user-input" name="gs_user" placeholder="Seu usuário" required />
+          </div>
+          <div class="gs-field">
+            <label for="gs-code-input">Código Autenticador</label>
+            <input type="password" id="gs-code-input" name="gs_code" placeholder="••••••••••" required />
+          </div>
+          <button type="submit" class="gs-login-btn">Entrar no Grande Salão</button>
+        </form>
+
+        <div class="gs-error" id="gs-error" role="alert">
+          Acesso negado. Apenas membros autorizados podem entrar no Grande Salão.
+        </div>
+      </div>
+    </section>
+
+    <!-- ======================================================
+         CONTEÚDO PROTEGIDO
+         ====================================================== -->
+    <section id="gs-content" class="gs-content" aria-label="Grande Salão">
+
+      <header class="gs-header">
+        <span class="gs-header__corner gs-header__corner--tl"></span>
+        <span class="gs-header__corner gs-header__corner--tr"></span>
+        <p class="gs-header__eyebrow">P.A.Z — Economia Interna</p>
+        <h2 class="gs-header__title">Grande Salão</h2>
+        <p class="gs-header__subtitle">Área restrita da P.A.Z para consulta de salários, recompensas de atividades e preços oficiais da loja.</p>
+        <p class="gs-header__intro">A economia da P.A.Z funciona com três bases principais: salário semanal, recompensas por atividades e loja da crew. O salário semanal representa a posição do jogador dentro da hierarquia. Já as atividades são a principal forma de enriquecer, incentivando participação, missões, eventos, combate, exploração e trabalho em equipe.</p>
+      </header>
+
+      <!-- Ações -->
+      <div class="gs-actions">
+        <button class="gs-btn gs-pdf-btn">⎙ Salvar como PDF</button>
+        <button class="gs-btn gs-png-btn">⬇ Baixar como PNG</button>
+        <button class="gs-btn gs-logout-btn">✕ Sair do Grande Salão</button>
+      </div>
+
+      <!-- Área das tabelas (alvo do PNG) -->
+      <div id="gs-tables-area">
+
+        <!-- 1. NÍVEIS DE DIFICULDADE -->
+        <div class="gs-section">
+          <div class="gs-section__header">
+            <h3 class="gs-section__title">1. Níveis de Dificuldade</h3>
+          </div>
+          <div class="gs-table-wrap">
+            <table class="gs-table">
+              <thead><tr>
+                <th>Dificuldade</th>
+                <th style="text-align:left;white-space:normal;min-width:260px">Explicação</th>
+              </tr></thead>
+              <tbody>
+                <tr><td class="diff-mf">Muito Fácil</td><td style="text-align:left">Atividades simples, rápidas e de baixo risco.</td></tr>
+                <tr><td class="diff-f">Fácil</td><td style="text-align:left">Missões leves, com pouca ameaça.</td></tr>
+                <tr><td class="diff-mef">Médio-Fácil</td><td style="text-align:left">Missões com desafio moderado, mas ainda acessíveis.</td></tr>
+                <tr><td class="diff-m">Médio</td><td style="text-align:left">Atividades equilibradas, com risco e recompensa medianos.</td></tr>
+                <tr><td class="diff-md">Médio-Difícil</td><td style="text-align:left">Missões que exigem preparo, atenção e participação ativa.</td></tr>
+                <tr><td class="diff-d">Difícil</td><td style="text-align:left">Atividades perigosas, com chance real de falha.</td></tr>
+                <tr><td class="diff-di">Difícil-Imp.</td><td style="text-align:left">Missões extremamente perigosas, próximas de eventos especiais.</td></tr>
+                <tr><td class="diff-i">Impossível</td><td style="text-align:left">Missões raras, épicas e de altíssimo risco.</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <!-- 2. SALÁRIOS SEMANAIS -->
+        <div class="gs-section">
+          <div class="gs-section__header">
+            <h3 class="gs-section__title">2. Salários Semanais por Cargo</h3>
+          </div>
+          <div class="gs-table-wrap">
+            <table class="gs-table">
+              <thead><tr>
+                <th>Cargo</th>
+                <th>Salário Semanal Fixo</th>
+                <th>Multiplicador de Atividade</th>
+              </tr></thead>
+              <tbody>
+                <tr><td>Náufrago</td>         <td class="sal-fixed">0</td>          <td class="sal-mult">1,0×</td></tr>
+                <tr><td>Tripulante</td>        <td class="sal-fixed">2.500</td>      <td class="sal-mult">1,0×</td></tr>
+                <tr><td>Marujo</td>            <td class="sal-fixed">4.500</td>      <td class="sal-mult">1,2×</td></tr>
+                <tr><td>Predador</td>          <td class="sal-fixed">8.000</td>      <td class="sal-mult">1,4×</td></tr>
+                <tr><td>Besta Abissal</td>     <td class="sal-fixed">10.000</td>     <td class="sal-mult">1,5×</td></tr>
+                <tr><td>Caçador Abissal</td>   <td class="sal-fixed">20.000</td>     <td class="sal-mult">1,8×</td></tr>
+                <tr><td>Lenda do Abismo</td>   <td class="sal-fixed">25.000</td>     <td class="sal-mult">2,0×</td></tr>
+                <tr><td>Executor Abissal</td>  <td class="sal-fixed">35.000</td>     <td class="sal-mult">2,5×</td></tr>
+                <tr><td>Capitão Abissal</td>   <td class="sal-fixed">45.000</td>     <td class="sal-mult">3,0×</td></tr>
+              </tbody>
+            </table>
+          </div>
+          <p class="gs-section__note">* Títulos especiais como VIP, Booster, Administração e outros continuam somando bônus conforme as regras internas da crew.</p>
+        </div>
+
+        <!-- 3. LOJA DA CREW -->
+        <div class="gs-section">
+          <div class="gs-section__header">
+            <h3 class="gs-section__title">3. Loja da Crew</h3>
+          </div>
+          <div class="gs-table-wrap">
+            <table class="gs-table">
+              <thead><tr>
+                <th>Categoria</th>
+                <th>Item</th>
+                <th>Preço Mínimo</th>
+                <th>Preço Máximo</th>
+              </tr></thead>
+              <tbody>
+                <tr><td class="loja-cat">Itens simples</td>   <td>Comida</td>              <td class="loja-price">150</td>          <td class="loja-price">450</td></tr>
+                <tr><td class="loja-cat">Itens simples</td>   <td>Munição</td>             <td class="loja-price">500</td>          <td class="loja-price">1.500</td></tr>
+                <tr><td class="loja-cat">Itens simples</td>   <td>Cosméticos</td>          <td class="loja-price">15.000</td>       <td class="loja-price">45.000</td></tr>
+                <tr><td class="loja-cat">Itens importantes</td><td>Armas raras</td>        <td class="loja-price">45.000</td>       <td class="loja-price">120.000</td></tr>
+                <tr><td class="loja-cat">Itens importantes</td><td>Barcos</td>             <td class="loja-price">250.000</td>      <td class="loja-price">600.000</td></tr>
+                <tr><td class="loja-rare">Akuma no Mi</td>    <td>Comum</td>              <td class="loja-price">600.000</td>      <td class="em-dash">—</td></tr>
+                <tr><td class="loja-rare">Akuma no Mi</td>    <td>Rara</td>               <td class="loja-price">1.500.000</td>    <td class="em-dash">—</td></tr>
+                <tr><td class="loja-rare">Akuma no Mi</td>    <td>Mítica ou Evento</td>   <td class="loja-price">3.000.000+</td>   <td class="em-dash">—</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <!-- 4. TABELAS DE ATIVIDADES -->
+        <div class="gs-section">
+          <h3 class="gs-section__title">4. Tabelas de Atividades</h3>
+        </div>
+
+        <!-- Helper macro para as 5 tabelas de atividade -->
+
+        <!-- CAÇADA A CRIATURAS -->
+        <div class="gs-section">
+          <div class="gs-section__header">
+            <h4 class="gs-section__title" style="font-size:clamp(17px,2vw,22px);color:var(--ghost-cyan);">Caçada a Criaturas</h4>
+            <p class="gs-section__desc">Foco em chefes, monstros e feras gigantes. Essa categoria paga valores altos por envolver risco de morte e combate contra criaturas perigosas.</p>
+          </div>
+          <div class="gs-table-wrap">
+            <table class="gs-table">
+              <thead><tr>
+                <th>Cargo / Patente</th>
+                <th class="diff-mf">M. Fácil</th><th class="diff-f">Fácil</th><th class="diff-mef">M.-Fácil</th>
+                <th class="diff-m">Médio</th><th class="diff-md">M.-Difícil</th><th class="diff-d">Difícil</th>
+                <th class="diff-di">Dif.-Imp.</th><th class="diff-i">Impossível</th>
+              </tr></thead>
+              <tbody>
+                <tr><td>Náufrago</td>        <td class="diff-mf">2.000</td><td class="diff-f">5.000</td><td class="diff-mef">12.000</td><td class="diff-m">30.000</td><td class="diff-md">70.000</td><td class="diff-d">180.000</td><td class="diff-di">400.000</td><td class="diff-i">900.000</td></tr>
+                <tr><td>Tripulante</td>      <td class="diff-mf">2.500</td><td class="diff-f">5.500</td><td class="diff-mef">12.500</td><td class="diff-m">30.500</td><td class="diff-md">70.500</td><td class="diff-d">180.500</td><td class="diff-di">400.500</td><td class="diff-i">900.500</td></tr>
+                <tr><td>Marujo</td>          <td class="diff-mf">3.000</td><td class="diff-f">6.000</td><td class="diff-mef">13.000</td><td class="diff-m">31.000</td><td class="diff-md">71.000</td><td class="diff-d">181.000</td><td class="diff-di">401.000</td><td class="diff-i">901.000</td></tr>
+                <tr><td>Predador</td>        <td class="diff-mf">4.000</td><td class="diff-f">7.000</td><td class="diff-mef">14.000</td><td class="diff-m">32.000</td><td class="diff-md">72.000</td><td class="diff-d">182.000</td><td class="diff-di">402.000</td><td class="diff-i">902.000</td></tr>
+                <tr><td>Caçador Abissal</td> <td class="diff-mf">7.000</td><td class="diff-f">10.000</td><td class="diff-mef">17.000</td><td class="diff-m">35.000</td><td class="diff-md">75.000</td><td class="diff-d">185.000</td><td class="diff-di">405.000</td><td class="diff-i">905.000</td></tr>
+                <tr><td>Lenda do Abismo</td> <td class="diff-mf">10.000</td><td class="diff-f">13.000</td><td class="diff-mef">20.000</td><td class="diff-m">38.000</td><td class="diff-md">78.000</td><td class="diff-d">188.000</td><td class="diff-di">408.000</td><td class="diff-i">908.000</td></tr>
+                <tr><td>Executor Abissal</td><td class="diff-mf">14.000</td><td class="diff-f">17.000</td><td class="diff-mef">24.000</td><td class="diff-m">42.000</td><td class="diff-md">82.000</td><td class="diff-d">192.000</td><td class="diff-di">412.000</td><td class="diff-i">912.000</td></tr>
+                <tr><td>Capitão Abissal</td> <td class="diff-mf">17.000</td><td class="diff-f">20.000</td><td class="diff-mef">27.000</td><td class="diff-m">45.000</td><td class="diff-md">85.000</td><td class="diff-d">195.000</td><td class="diff-di">415.000</td><td class="diff-i">915.000</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <!-- ASSASSINATOS -->
+        <div class="gs-section">
+          <div class="gs-section__header">
+            <h4 class="gs-section__title" style="font-size:clamp(17px,2vw,22px);color:var(--ghost-cyan);">Assassinatos</h4>
+            <p class="gs-section__desc">Foco em PvP contra rivais ou NPCs de elite. Essa categoria possui recompensas altas por envolver combate direto e risco elevado.</p>
+          </div>
+          <div class="gs-table-wrap">
+            <table class="gs-table">
+              <thead><tr>
+                <th>Cargo / Patente</th>
+                <th class="diff-mf">M. Fácil</th><th class="diff-f">Fácil</th><th class="diff-mef">M.-Fácil</th>
+                <th class="diff-m">Médio</th><th class="diff-md">M.-Difícil</th><th class="diff-d">Difícil</th>
+                <th class="diff-di">Dif.-Imp.</th><th class="diff-i">Impossível</th>
+              </tr></thead>
+              <tbody>
+                <tr><td>Náufrago</td>        <td class="diff-mf">2.500</td><td class="diff-f">6.000</td><td class="diff-mef">15.000</td><td class="diff-m">35.000</td><td class="diff-md">80.000</td><td class="diff-d">200.000</td><td class="diff-di">450.000</td><td class="diff-i">1.000.000</td></tr>
+                <tr><td>Tripulante</td>      <td class="diff-mf">3.000</td><td class="diff-f">6.500</td><td class="diff-mef">15.500</td><td class="diff-m">35.500</td><td class="diff-md">80.500</td><td class="diff-d">200.500</td><td class="diff-di">450.500</td><td class="diff-i">1.000.500</td></tr>
+                <tr><td>Marujo</td>          <td class="diff-mf">3.500</td><td class="diff-f">7.000</td><td class="diff-mef">16.000</td><td class="diff-m">36.000</td><td class="diff-md">81.000</td><td class="diff-d">201.000</td><td class="diff-di">451.000</td><td class="diff-i">1.001.000</td></tr>
+                <tr><td>Predador</td>        <td class="diff-mf">4.500</td><td class="diff-f">8.000</td><td class="diff-mef">17.000</td><td class="diff-m">37.000</td><td class="diff-md">82.000</td><td class="diff-d">202.000</td><td class="diff-di">452.000</td><td class="diff-i">1.002.000</td></tr>
+                <tr><td>Caçador Abissal</td> <td class="diff-mf">7.500</td><td class="diff-f">11.000</td><td class="diff-mef">20.000</td><td class="diff-m">40.000</td><td class="diff-md">85.000</td><td class="diff-d">205.000</td><td class="diff-di">455.000</td><td class="diff-i">1.005.000</td></tr>
+                <tr><td>Lenda do Abismo</td> <td class="diff-mf">10.500</td><td class="diff-f">14.000</td><td class="diff-mef">23.000</td><td class="diff-m">43.000</td><td class="diff-md">88.000</td><td class="diff-d">208.000</td><td class="diff-di">458.000</td><td class="diff-i">1.008.000</td></tr>
+                <tr><td>Executor Abissal</td><td class="diff-mf">14.500</td><td class="diff-f">18.000</td><td class="diff-mef">27.000</td><td class="diff-m">47.000</td><td class="diff-md">92.000</td><td class="diff-d">212.000</td><td class="diff-di">462.000</td><td class="diff-i">1.012.000</td></tr>
+                <tr><td>Capitão Abissal</td> <td class="diff-mf">17.500</td><td class="diff-f">21.000</td><td class="diff-mef">30.000</td><td class="diff-m">50.000</td><td class="diff-md">95.000</td><td class="diff-d">215.000</td><td class="diff-di">465.000</td><td class="diff-i">1.015.000</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <!-- COLETA DE MATERIAL SELVAGEM -->
+        <div class="gs-section">
+          <div class="gs-section__header">
+            <h4 class="gs-section__title" style="font-size:clamp(17px,2vw,22px);color:var(--ghost-cyan);">Coleta de Material Selvagem</h4>
+            <p class="gs-section__desc">Foco em farm seguro de insumos. Os valores são mais moderados, pois o risco de morte é menor e a atividade é voltada para acúmulo de recursos.</p>
+          </div>
+          <div class="gs-table-wrap">
+            <table class="gs-table">
+              <thead><tr>
+                <th>Cargo / Patente</th>
+                <th class="diff-mf">M. Fácil</th><th class="diff-f">Fácil</th><th class="diff-mef">M.-Fácil</th>
+                <th class="diff-m">Médio</th><th class="diff-md">M.-Difícil</th><th class="diff-d">Difícil</th>
+                <th class="diff-di">Dif.-Imp.</th><th class="diff-i">Impossível</th>
+              </tr></thead>
+              <tbody>
+                <tr><td>Náufrago</td>        <td class="diff-mf">1.000</td><td class="diff-f">3.000</td><td class="diff-mef">8.000</td><td class="diff-m">18.000</td><td class="diff-md">45.000</td><td class="diff-d">110.000</td><td class="diff-di">250.000</td><td class="diff-i">600.000</td></tr>
+                <tr><td>Tripulante</td>      <td class="diff-mf">1.500</td><td class="diff-f">3.500</td><td class="diff-mef">8.500</td><td class="diff-m">18.500</td><td class="diff-md">45.500</td><td class="diff-d">110.500</td><td class="diff-di">250.500</td><td class="diff-i">600.500</td></tr>
+                <tr><td>Marujo</td>          <td class="diff-mf">2.000</td><td class="diff-f">4.000</td><td class="diff-mef">9.000</td><td class="diff-m">19.000</td><td class="diff-md">46.000</td><td class="diff-d">111.000</td><td class="diff-di">251.000</td><td class="diff-i">601.000</td></tr>
+                <tr><td>Predador</td>        <td class="diff-mf">3.000</td><td class="diff-f">5.000</td><td class="diff-mef">10.000</td><td class="diff-m">20.000</td><td class="diff-md">47.000</td><td class="diff-d">112.000</td><td class="diff-di">252.000</td><td class="diff-i">602.000</td></tr>
+                <tr><td>Caçador Abissal</td> <td class="diff-mf">6.000</td><td class="diff-f">8.000</td><td class="diff-mef">13.000</td><td class="diff-m">23.000</td><td class="diff-md">50.000</td><td class="diff-d">115.000</td><td class="diff-di">255.000</td><td class="diff-i">605.000</td></tr>
+                <tr><td>Lenda do Abismo</td> <td class="diff-mf">9.000</td><td class="diff-f">11.000</td><td class="diff-mef">16.000</td><td class="diff-m">26.000</td><td class="diff-md">53.000</td><td class="diff-d">118.000</td><td class="diff-di">258.000</td><td class="diff-i">608.000</td></tr>
+                <tr><td>Executor Abissal</td><td class="diff-mf">13.000</td><td class="diff-f">15.000</td><td class="diff-mef">20.000</td><td class="diff-m">30.000</td><td class="diff-md">57.000</td><td class="diff-d">122.000</td><td class="diff-di">262.000</td><td class="diff-i">612.000</td></tr>
+                <tr><td>Capitão Abissal</td> <td class="diff-mf">16.000</td><td class="diff-f">18.000</td><td class="diff-mef">23.000</td><td class="diff-m">33.000</td><td class="diff-md">60.000</td><td class="diff-d">125.000</td><td class="diff-di">265.000</td><td class="diff-i">615.000</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <!-- EXPEDIÇÃO -->
+        <div class="gs-section">
+          <div class="gs-section__header">
+            <h4 class="gs-section__title" style="font-size:clamp(17px,2vw,22px);color:var(--ghost-cyan);">Expedição</h4>
+            <p class="gs-section__desc">Foco em exploração, navegação e busca por baús. Essa categoria premia descoberta de rotas, presença ativa no mundo e exploração estratégica.</p>
+          </div>
+          <div class="gs-table-wrap">
+            <table class="gs-table">
+              <thead><tr>
+                <th>Cargo / Patente</th>
+                <th class="diff-mf">M. Fácil</th><th class="diff-f">Fácil</th><th class="diff-mef">M.-Fácil</th>
+                <th class="diff-m">Médio</th><th class="diff-md">M.-Difícil</th><th class="diff-d">Difícil</th>
+                <th class="diff-di">Dif.-Imp.</th><th class="diff-i">Impossível</th>
+              </tr></thead>
+              <tbody>
+                <tr><td>Náufrago</td>        <td class="diff-mf">1.200</td><td class="diff-f">3.500</td><td class="diff-mef">9.000</td><td class="diff-m">22.000</td><td class="diff-md">50.000</td><td class="diff-d">130.000</td><td class="diff-di">300.000</td><td class="diff-i">700.000</td></tr>
+                <tr><td>Tripulante</td>      <td class="diff-mf">1.700</td><td class="diff-f">4.000</td><td class="diff-mef">9.500</td><td class="diff-m">22.500</td><td class="diff-md">50.500</td><td class="diff-d">130.500</td><td class="diff-di">300.500</td><td class="diff-i">700.500</td></tr>
+                <tr><td>Marujo</td>          <td class="diff-mf">2.200</td><td class="diff-f">4.500</td><td class="diff-mef">10.000</td><td class="diff-m">23.000</td><td class="diff-md">51.000</td><td class="diff-d">131.000</td><td class="diff-di">301.000</td><td class="diff-i">701.000</td></tr>
+                <tr><td>Predador</td>        <td class="diff-mf">3.200</td><td class="diff-f">5.500</td><td class="diff-mef">11.000</td><td class="diff-m">24.000</td><td class="diff-md">52.000</td><td class="diff-d">132.000</td><td class="diff-di">302.000</td><td class="diff-i">702.000</td></tr>
+                <tr><td>Caçador Abissal</td> <td class="diff-mf">6.200</td><td class="diff-f">8.500</td><td class="diff-mef">14.000</td><td class="diff-m">27.000</td><td class="diff-md">55.000</td><td class="diff-d">135.000</td><td class="diff-di">305.000</td><td class="diff-i">705.000</td></tr>
+                <tr><td>Lenda do Abismo</td> <td class="diff-mf">9.200</td><td class="diff-f">11.500</td><td class="diff-mef">17.000</td><td class="diff-m">30.000</td><td class="diff-md">58.000</td><td class="diff-d">138.000</td><td class="diff-di">308.000</td><td class="diff-i">708.000</td></tr>
+                <tr><td>Executor Abissal</td><td class="diff-mf">13.200</td><td class="diff-f">15.500</td><td class="diff-mef">21.000</td><td class="diff-m">34.000</td><td class="diff-md">62.000</td><td class="diff-d">142.000</td><td class="diff-di">312.000</td><td class="diff-i">712.000</td></tr>
+                <tr><td>Capitão Abissal</td> <td class="diff-mf">16.200</td><td class="diff-f">18.500</td><td class="diff-mef">24.000</td><td class="diff-m">37.000</td><td class="diff-md">65.000</td><td class="diff-d">145.000</td><td class="diff-di">315.000</td><td class="diff-i">715.000</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <!-- PROTEÇÃO -->
+        <div class="gs-section">
+          <div class="gs-section__header">
+            <h4 class="gs-section__title" style="font-size:clamp(17px,2vw,22px);color:var(--ghost-cyan);">Proteção</h4>
+            <p class="gs-section__desc">Foco em escoltas, defesa de território e suporte à tripulação. Essa categoria incentiva trabalho em equipe, presença defensiva e ajuda mútua.</p>
+          </div>
+          <div class="gs-table-wrap">
+            <table class="gs-table">
+              <thead><tr>
+                <th>Cargo / Patente</th>
+                <th class="diff-mf">M. Fácil</th><th class="diff-f">Fácil</th><th class="diff-mef">M.-Fácil</th>
+                <th class="diff-m">Médio</th><th class="diff-md">M.-Difícil</th><th class="diff-d">Difícil</th>
+                <th class="diff-di">Dif.-Imp.</th><th class="diff-i">Impossível</th>
+              </tr></thead>
+              <tbody>
+                <tr><td>Náufrago</td>        <td class="diff-mf">1.500</td><td class="diff-f">4.000</td><td class="diff-mef">10.000</td><td class="diff-m">25.000</td><td class="diff-md">60.000</td><td class="diff-d">150.000</td><td class="diff-di">350.000</td><td class="diff-i">800.000</td></tr>
+                <tr><td>Tripulante</td>      <td class="diff-mf">2.000</td><td class="diff-f">4.500</td><td class="diff-mef">10.500</td><td class="diff-m">25.500</td><td class="diff-md">60.500</td><td class="diff-d">150.500</td><td class="diff-di">350.500</td><td class="diff-i">800.500</td></tr>
+                <tr><td>Marujo</td>          <td class="diff-mf">2.500</td><td class="diff-f">5.000</td><td class="diff-mef">11.000</td><td class="diff-m">26.000</td><td class="diff-md">61.000</td><td class="diff-d">151.000</td><td class="diff-di">351.000</td><td class="diff-i">801.000</td></tr>
+                <tr><td>Predador</td>        <td class="diff-mf">3.500</td><td class="diff-f">6.000</td><td class="diff-mef">12.000</td><td class="diff-m">27.000</td><td class="diff-md">62.000</td><td class="diff-d">152.000</td><td class="diff-di">352.000</td><td class="diff-i">802.000</td></tr>
+                <tr><td>Caçador Abissal</td> <td class="diff-mf">6.500</td><td class="diff-f">9.000</td><td class="diff-mef">15.000</td><td class="diff-m">30.000</td><td class="diff-md">65.000</td><td class="diff-d">155.000</td><td class="diff-di">355.000</td><td class="diff-i">805.000</td></tr>
+                <tr><td>Lenda do Abismo</td> <td class="diff-mf">9.500</td><td class="diff-f">12.000</td><td class="diff-mef">18.000</td><td class="diff-m">33.000</td><td class="diff-md">68.000</td><td class="diff-d">158.000</td><td class="diff-di">358.000</td><td class="diff-i">808.000</td></tr>
+                <tr><td>Executor Abissal</td><td class="diff-mf">13.500</td><td class="diff-f">16.000</td><td class="diff-mef">22.000</td><td class="diff-m">37.000</td><td class="diff-md">72.000</td><td class="diff-d">162.000</td><td class="diff-di">362.000</td><td class="diff-i">812.000</td></tr>
+                <tr><td>Capitão Abissal</td> <td class="diff-mf">16.500</td><td class="diff-f">19.000</td><td class="diff-mef">25.000</td><td class="diff-m">40.000</td><td class="diff-md">75.000</td><td class="diff-d">165.000</td><td class="diff-di">365.000</td><td class="diff-i">815.000</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+      </div><!-- fim #gs-tables-area -->
+
+      <!-- Ações inferiores -->
+      <div class="gs-actions" style="margin-top:0;padding-top:20px;border-top:1px solid rgba(201,169,97,0.2);">
+        <button class="gs-btn gs-pdf-btn">⎙ Salvar como PDF</button>
+        <button class="gs-btn gs-png-btn">⬇ Baixar como PNG</button>
+        <button class="gs-btn gs-logout-btn">✕ Sair do Grande Salão</button>
+      </div>
+
+    </section><!-- fim #gs-content -->
+
+  </main>
+
+  <footer class="site-footer">
+    <div class="site-footer__line"></div>
+    <p>P.A.Z — Predators of the Abyssal Zone · Se quer ficar, lute.</p>
+  </footer>
+
+  <audio id="bgAudio" loop preload="auto" src="/assets/audio/bg.mp3"></audio>
+  <div class="audio-player" id="audioPlayer" role="region" aria-label="Controle de música">
+    <span class="audio-player__hint">Clique para ativar</span>
+    <button class="audio-player__toggle" id="audioToggle" aria-label="Mutar música">
+      <svg class="audio-icon audio-icon--playing" viewBox="0 0 24 24" width="22" height="22" fill="none" aria-hidden="true">
+        <rect class="audio-bar" x="2"  y="6"  width="3" height="12" rx="1.5" fill="currentColor"/>
+        <rect class="audio-bar" x="7"  y="3"  width="3" height="18" rx="1.5" fill="currentColor"/>
+        <rect class="audio-bar" x="12" y="7"  width="3" height="10" rx="1.5" fill="currentColor"/>
+        <rect class="audio-bar" x="17" y="4"  width="3" height="16" rx="1.5" fill="currentColor"/>
+      </svg>
+      <svg class="audio-icon audio-icon--muted" viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true">
+        <path d="M11 5L6 9H2v6h4l5 4V5z"/>
+        <line x1="23" y1="9" x2="17" y2="15"/>
+        <line x1="17" y1="9" x2="23" y2="15"/>
+      </svg>
+    </button>
+    <div class="audio-player__slider-wrap">
+      <input type="range" class="audio-player__slider" id="volumeSlider" min="0" max="1" step="0.02" value="0.2" aria-label="Volume">
+    </div>
+  </div>
+
+  <script src="/js/main.js" defer></script>
+  <script src="/js/vault.js" defer></script>
+  <script src="/js/aliancas.js" defer></script>
+  <script src="/js/hierarquia.js" defer></script>
+  <script src="/js/grande-salao.js" defer></script>
+</body>
+</html>

@@ -890,10 +890,8 @@
       } else if (m.type === "image-video") {
         mediaEl.style.display = "";
         mediaEl.innerHTML = `
-          <div style="display:flex;justify-content:center;margin-bottom:14px;">
-            <img src="${m.src}" alt="${m.alt || ''}"
-              style="max-width:260px;width:100%;display:block;border:1px solid rgba(201,169,97,0.28);" />
-          </div>
+          <img src="${m.src}" alt="${m.alt || ''}"
+            style="width:100%;display:block;border:1px solid rgba(201,169,97,0.22);margin-bottom:12px;" />
           <video src="${m.videoSrc}" controls preload="metadata" playsinline
             style="width:100%;display:block;border:1px solid rgba(201,169,97,0.22);"
             aria-label="${m.alt || 'Vídeo'}"></video>
