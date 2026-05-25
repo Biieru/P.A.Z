@@ -64,9 +64,10 @@ var GS_CAPTURE_CSS = [
   ".gs-section__desc{color:#a89878!important}",
   ".gs-section__note{color:#a89878!important}",
   ".gs-table-container{background:#050a10!important;border:1px solid rgba(201,169,97,0.35)!important}",
-  ".gs-table th{background:#192d0c!important;color:#e8c878!important;font-family:'Cinzel',Georgia,serif!important}",
-  ".gs-table td{color:#d8cba8!important;font-family:'Cormorant Garamond',Georgia,serif!important}",
-  ".gs-table td:first-child{color:#e0d5b5!important;font-family:'Cinzel',Georgia,serif!important}",
+  ".gs-table th{background:#192d0c!important;color:#e8c878!important;font-family:'Cinzel',Georgia,serif!important;vertical-align:middle!important;text-align:center!important;padding:11px 14px!important}",
+  ".gs-table th:first-child{text-align:left!important}",
+  ".gs-table td{color:#d8cba8!important;font-family:'Cinzel',Georgia,serif!important;font-size:13px!important;vertical-align:middle!important;text-align:center!important;padding:9px 14px!important}",
+  ".gs-table td:first-child{color:#e0d5b5!important;text-align:left!important;vertical-align:middle!important}",
   ".gs-table tbody tr{background:#050a10!important}",
   ".gs-table tbody tr:nth-child(even){background:#08101e!important}",
   ".gs-table tbody tr:hover{background:#050a10!important}",
@@ -78,12 +79,13 @@ var GS_CAPTURE_CSS = [
   ".diff-d{color:#e07830!important}",
   ".diff-di{color:#e05050!important}",
   ".diff-i{color:#c040d0!important}",
-  ".sal-fixed{color:#4ac0ff!important;font-weight:600!important}",
-  ".sal-mult{color:#d4a840!important}",
+  ".sal-fixed{color:#4ac0ff!important;font-weight:600!important;text-align:right!important}",
+  ".sal-mult{color:#d4a840!important;text-align:center!important}",
   ".loja-cat{color:#a89878!important;font-style:italic!important}",
-  ".loja-price{color:#d8cba8!important}",
+  ".loja-price{color:#d8cba8!important;text-align:right!important}",
   ".loja-rare{color:#c049d4!important;font-weight:600!important}",
-  ".em-dash{color:#6a6a6a!important}"
+  ".em-dash{color:#6a6a6a!important}",
+  ".gs-table{min-width:unset!important;width:100%!important;border-collapse:collapse!important}"
 ].join("\n");
 
 /* Toast de loading */
