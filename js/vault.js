@@ -30,15 +30,15 @@
     subtitle: "O \"World D. Government\", o governo mundial no mundo do Rell Seas, aparentemente vai ser ainda mais agressivo com as frutas do que esperávamos.",
     media: {
       type: "image-video",
-      src: "https://i.imgur.com/dcLEoge.png",
+      src: "https://i.imgur.com/IsAIid7.png",
       alt: "World D. Government — Rell Seas",
       videoSrc: "https://i.imgur.com/Kjlit4O.mp4",
-      caption: "Fonte: Anônima."
+      caption: ""
     },
     body: [
-      "\"All Fruits Belong To The Government, It\'s The Law. Buster Calls Confirmed\""
+      "Todas as frutas pertencem ao Governo, é A Lei. Buster Calls confirmados! E conjunto de leis revelado!"
     ],
-    source: "Fonte: Anônima.",
+    source: "Anônima",
     author: "Greed"
   },
   {
@@ -890,7 +890,10 @@
       } else if (m.type === "image-video") {
         mediaEl.style.display = "";
         mediaEl.innerHTML = `
-          <img src="${m.src}" alt="${m.alt || ''}" style="width:100%;display:block;border:1px solid rgba(201,169,97,0.22);margin-bottom:12px;" />
+          <div style="display:flex;justify-content:center;margin-bottom:14px;">
+            <img src="${m.src}" alt="${m.alt || ''}"
+              style="max-width:260px;width:100%;display:block;border:1px solid rgba(201,169,97,0.28);" />
+          </div>
           <video src="${m.videoSrc}" controls preload="metadata" playsinline
             style="width:100%;display:block;border:1px solid rgba(201,169,97,0.22);"
             aria-label="${m.alt || 'Vídeo'}"></video>
