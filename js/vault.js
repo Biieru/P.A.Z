@@ -23,6 +23,26 @@
      ============================================================ */
   const VAULT_ARTICLES = [
   {
+    id: 38,
+    category: "Revelação Exclusiva",
+    date: "Mai 2026",
+    title: "O \"WORLD D. GOVERNMENT\" Mostra Seu Abuso de Poder",
+    subtitle: "O \"World D. Government\", o governo mundial no mundo do Rell Seas, aparentemente vai ser ainda mais agressivo com as frutas do que esperávamos.",
+    media: {
+      type: "image-twitter",
+      src: "https://pbs.twimg.com/media/HHPQcHvW4AAJI2y?format=jpg&name=large",
+      alt: "World D. Government — Rell Seas",
+      twitterUrl: "https://x.com/i/status/2050211493925327360",
+      twitterLabel: "Ver post original no X",
+      caption: "Fontes das profundezas, identidade preservada em anonimato."
+    },
+    body: [
+      "\"All Fruits Belong To The Government, It\'s The Law. Buster Calls Confirmed\""
+    ],
+    source: "Fontes das profundezas, identidade preservada em anonimato.",
+    author: "Greed"
+  },
+  {
     id: 37,
     category: "Comunicado Oficial",
     date: "30 Abr 2026",
@@ -753,6 +773,13 @@
           <div class="vault-card__thumb-overlay"><span class="vault-card__thumb-label">Ouvir</span></div>
         </div>`;
       }
+      // Image + Twitter link
+      if (m.type === "image-twitter") {
+        return `<div class="vault-card__thumb">
+          <img src="${m.src}" alt="${m.alt || ''}" loading="lazy" />
+          <div class="vault-card__thumb-overlay"><span class="vault-card__thumb-label">Ver</span></div>
+        </div>`;
+      }
       // Imagem
       if (m.type === "image") {
         return `<div class="vault-card__thumb">
@@ -853,6 +880,17 @@
         ).join("");
         const note = m.note ? `<p class="vault-modal__media-note">${m.note}</p>` : "";
         mediaEl.innerHTML = `<div class="twitter-links">${btns}</div>${note}`;
+
+      } else if (m.type === "image-twitter") {
+        mediaEl.style.display = "";
+        mediaEl.innerHTML = `
+          <img src="${m.src}" alt="${m.alt || ''}" style="width:100%;display:block;border:1px solid rgba(201,169,97,0.22);" />
+          <div style="margin-top:12px;">
+            <a href="${m.twitterUrl}" target="_blank" rel="noopener noreferrer" class="twitter-link">
+              <span>𝕏</span> ${m.twitterLabel || 'Ver post original no X'}
+            </a>
+          </div>
+          ${m.caption ? `<p class="vault-modal__media-caption" style="margin-top:10px;">${m.caption}</p>` : ""}`;
 
       } else if (m.type === "image") {
         mediaEl.style.display = "";
