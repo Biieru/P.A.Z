@@ -124,6 +124,19 @@ body {
   mix-blend-mode: overlay;
 }
 
+
+/* ===========================================================
+   Fundo escuro em páginas internas (não-home)
+   body[data-page] é atualizado pelo router SPA e pelo data-page
+   de cada página acessada diretamente.
+   =========================================================== */
+body[data-page]:not([data-page="home"]) .atmosphere__bg {
+  filter: saturate(0.9) brightness(0.38);
+}
+body[data-page]:not([data-page="home"]) .atmosphere__vignette {
+  opacity: 1.0;
+}
+
 /* ===========================================================
    Header / Nav
    =========================================================== */

@@ -136,6 +136,10 @@
 
           // Disparar evento de navegação para scripts externos (ex: vault.js)
           window.dispatchEvent(new CustomEvent("paz:pageload", { detail: { pathname } }));
+
+          // Atualizar data-page no body para CSS (fundo escuro em páginas internas)
+          var isHome = target === "/" || target === "" || target.endsWith("index.html");
+          document.body.dataset.page = isHome ? "home" : target.replace("/pages/","").replace(".html","");
         }
 
         // Título
