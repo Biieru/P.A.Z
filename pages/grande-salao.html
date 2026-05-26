@@ -7,7 +7,7 @@
   <link rel="icon" type="image/png" href="/assets/images/logo-paz.png" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@400;700;900&family=Cinzel:wght@400;500;600;700&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@400;700;900&family=Cinzel:wght@400;500;600;700;900&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="/css/style.css" />
   <link rel="stylesheet" href="/css/responsive.css" />
   <style>
@@ -192,17 +192,7 @@
     /* === CONTRATO VISUAL — pergaminho === */
     #contract-render {
       width: 900px; min-width: 900px;
-      background:
-        radial-gradient(ellipse 28% 22% at 4%  4%,  rgba(45,22,3,0.55)  0%, transparent 100%),
-        radial-gradient(ellipse 22% 18% at 96% 3%,  rgba(40,18,2,0.50)  0%, transparent 100%),
-        radial-gradient(ellipse 25% 28% at 97% 97%, rgba(55,28,4,0.55)  0%, transparent 100%),
-        radial-gradient(ellipse 32% 22% at 3%  96%, rgba(50,24,3,0.50)  0%, transparent 100%),
-        radial-gradient(ellipse 18% 12% at 72% 18%, rgba(65,30,4,0.28)  0%, transparent 100%),
-        radial-gradient(ellipse 14% 18% at 22% 55%, rgba(55,25,3,0.24)  0%, transparent 100%),
-        radial-gradient(ellipse 10% 14% at 48% 72%, rgba(60,28,4,0.20)  0%, transparent 100%),
-        radial-gradient(ellipse 12% 10% at 85% 60%, rgba(45,20,2,0.22)  0%, transparent 100%),
-        radial-gradient(ellipse 16% 10% at 35% 88%, rgba(50,24,3,0.20)  0%, transparent 100%),
-        linear-gradient(150deg, #b58a40 0%, #c9a254 18%, #a87830 35%, #bd9848 52%, #a07228 68%, #bd9a4a 82%, #a88035 100%);
+      background: linear-gradient(rgba(40,18,4,0.30), rgba(40,18,4,0.30)), url('/assets/images/pergaminho.png') center center / 130% auto no-repeat;
       padding: 44px 48px 36px;
       font-family: "Cormorant Garamond", "EB Garamond", Georgia, serif;
       position: relative; overflow: hidden; box-sizing: border-box;
@@ -213,47 +203,48 @@
     .cr-logo { width: 90px; height: 90px; object-fit: contain; flex-shrink: 0; filter: sepia(0.4) brightness(0.75); }
     .cr-header-center { flex: 1; text-align: center; }
     .cr-title { font-family: "Cinzel Decorative", "Cinzel", serif; font-size: 48px; font-weight: 900; letter-spacing: 0.08em; color: #180b02; line-height: 1; margin: 0 0 4px; text-shadow: 2px 3px 6px rgba(0,0,0,0.35); }
-    .cr-subtitle { font-family: "Cinzel", serif; font-size: 10px; letter-spacing: 0.45em; text-transform: uppercase; color: #2e1604; margin: 0 0 7px; }
+    .cr-subtitle { font-family: "Cinzel", serif; font-size: 13px; font-weight: 700; letter-spacing: 0.45em; text-transform: uppercase; color: #2e1604; margin: 0 0 7px; }
     .cr-badge-row { display: flex; align-items: center; justify-content: center; gap: 8px; }
     .cr-badge-line { flex: 1; height: 1px; background: rgba(30,12,2,0.55); }
-    .cr-badge-text { font-family: "Cinzel", serif; font-size: 9.5px; letter-spacing: 0.38em; text-transform: uppercase; color: #1e0e02; white-space: nowrap; }
-    .cr-stamp { width: 84px; height: 84px; flex-shrink: 0; border: 2px solid rgba(120,40,10,0.5); border-radius: 50%; display: flex; flex-direction: column; align-items: center; justify-content: center; background: radial-gradient(circle, rgba(180,60,20,0.12) 0%, rgba(140,40,10,0.08) 100%); position: relative; text-align: center; padding: 8px; box-sizing: border-box; transform: rotate(-8deg); }
-    .cr-stamp::before { content: ""; position: absolute; inset: 4px; border: 1px dashed rgba(120,40,10,0.4); border-radius: 50%; }
-    .cr-stamp-line { font-family: "Cinzel", serif; font-size: 7px; letter-spacing: 0.2em; text-transform: uppercase; color: rgba(120,40,10,0.75); line-height: 1.5; position: relative; z-index: 1; }
-    .cr-stamp-logo { font-family: "Cinzel Decorative", serif; font-size: 13px; font-weight: 900; color: rgba(120,40,10,0.85); position: relative; z-index: 1; }
+    .cr-badge-text { font-family: "Cinzel", serif; font-size: 12px; font-weight: 700; letter-spacing: 0.38em; text-transform: uppercase; color: #1e0e02; white-space: nowrap; }
+    .cr-stamp { width: 116px; height: 116px; flex-shrink: 0; border: 2.5px solid rgba(80,20,5,0.82); border-radius: 50%; display: flex; flex-direction: column; align-items: center; justify-content: center; background: radial-gradient(circle, rgba(180,60,20,0.18) 0%, rgba(140,40,10,0.10) 100%); position: relative; text-align: center; padding: 14px; box-sizing: border-box; transform: rotate(-8deg); }
+    .cr-stamp::before { content: ""; position: absolute; inset: 5px; border: 1.5px dashed rgba(80,20,5,0.65); border-radius: 50%; }
+    .cr-stamp-line { font-family: "Cinzel", serif; font-size: 10px; font-weight: 700; letter-spacing: 0.22em; text-transform: uppercase; color: rgba(70,15,2,0.92); line-height: 1.6; position: relative; z-index: 1; }
+    .cr-stamp-logo { font-family: "Cinzel Decorative", serif; font-size: 18px; font-weight: 900; color: rgba(70,15,2,0.96); position: relative; z-index: 1; letter-spacing: 0.05em; }
     .cr-divider { height: 1.5px; background: linear-gradient(90deg, transparent, rgba(30,12,2,0.6), rgba(30,12,2,0.85), rgba(30,12,2,0.6), transparent); margin: 10px 0 14px; }
     .cr-body { display: flex; gap: 24px; }
     .cr-left { flex: 1; }
     .cr-right { width: 220px; flex-shrink: 0; display: flex; flex-direction: column; gap: 14px; }
     .cr-field { margin-bottom: 14px; }
-    .cr-field-label { display: flex; align-items: center; gap: 7px; font-family: "Cinzel", serif; font-size: 9px; letter-spacing: 0.32em; text-transform: uppercase; color: #160802; font-weight: 700; margin-bottom: 5px; }
-    .cr-field-icon { font-size: 12px; opacity: 0.7; }
-    .cr-field-value { font-family: "Cormorant Garamond", serif; font-size: 14.5px; color: #0e0602; line-height: 1.55; padding: 2px 0 4px; border-bottom: 1px solid rgba(40,18,2,0.45); min-height: 22px; word-break: break-word; }
-    .cr-field-line { border-bottom: 1px solid rgba(40,18,2,0.38); min-height: 18px; margin-bottom: 4px; }
+    .cr-field-label { display: flex; align-items: center; gap: 7px; font-family: "Cinzel", serif; font-size: 12px; letter-spacing: 0.32em; text-transform: uppercase; color: #160802; font-weight: 700; margin-bottom: 5px; }
+    .cr-field-icon { font-size: 14px; opacity: 0.8; }
+    .cr-field-value { font-family: "Cormorant Garamond", serif; font-size: 18px; font-weight: 700; color: #0e0602; line-height: 1.55; padding: 2px 0 4px; border-bottom: 1px solid rgba(40,18,2,0.45); min-height: 24px; word-break: break-word; }
+    .cr-field-line { border-bottom: 1px solid rgba(40,18,2,0.38); min-height: 20px; margin-bottom: 4px; }
     .cr-alvo-box { border: 1.5px solid rgba(40,18,2,0.6); background: rgba(60,30,5,0.08); min-height: 200px; display: flex; flex-direction: column; overflow: hidden; }
-    .cr-alvo-title { font-family: "Cinzel", serif; font-size: 9px; letter-spacing: 0.45em; text-transform: uppercase; color: #f0e8d0; background: rgba(40,15,2,0.85); text-align: center; padding: 6px 8px; flex-shrink: 0; }
+    .cr-alvo-title { font-family: "Cinzel", serif; font-size: 12px; font-weight: 700; letter-spacing: 0.45em; text-transform: uppercase; color: #f0e8d0; background: rgba(40,15,2,0.85); text-align: center; padding: 6px 8px; flex-shrink: 0; }
     .cr-alvo-img-area { flex: 1; display: flex; align-items: center; justify-content: center; min-height: 170px; overflow: hidden; }
     .cr-alvo-img-area img { width: 100%; height: 100%; object-fit: cover; display: block; }
-    .cr-alvo-empty { color: rgba(60,30,5,0.3); font-size: 12px; font-style: italic; font-family: "Cormorant Garamond", serif; padding: 16px; text-align: center; }
-    .cr-recompensa-box { border: 1.5px solid rgba(40,18,2,0.55); padding: 8px 12px; margin-top: 4px; min-height: 44px; font-family: "Cormorant Garamond", serif; font-size: 14.5px; color: #0e0602; line-height: 1.5; word-break: break-word; }
+    .cr-alvo-empty { color: rgba(60,30,5,0.4); font-size: 14px; font-style: italic; font-family: "Cormorant Garamond", serif; padding: 16px; text-align: center; }
+    .cr-recompensa-box { border: 1.5px solid rgba(40,18,2,0.55); padding: 8px 12px; margin-top: 4px; min-height: 44px; font-family: "Cormorant Garamond", serif; font-size: 18px; font-weight: 700; color: #0e0602; line-height: 1.5; word-break: break-word; }
     .cr-wax-area { display: flex; justify-content: flex-end; align-items: flex-end; flex: 1; padding-top: 8px; }
     .cr-wax { width: 56px; height: 56px; border-radius: 50%; background: radial-gradient(circle at 38% 35%, #c0302a, #7a1010); display: flex; align-items: center; justify-content: center; box-shadow: 0 3px 10px rgba(100,10,10,0.5), inset 0 -2px 6px rgba(0,0,0,0.4); font-size: 22px; color: rgba(255,200,180,0.7); }
     .cr-footer { display: flex; gap: 16px; margin-top: 14px; border-top: 1.5px solid rgba(30,12,2,0.55); padding-top: 12px; }
     .cr-clausula { flex: 1; text-align: center; }
-    .cr-clausula-title { font-family: "Cinzel", serif; font-size: 8.5px; letter-spacing: 0.35em; text-transform: uppercase; color: #160802; margin-bottom: 6px; }
-    .cr-clausula-text { font-family: "Cormorant Garamond", serif; font-size: 11.5px; color: #160802; line-height: 1.6; }
+    .cr-clausula-title { font-family: "Cinzel", serif; font-size: 12px; font-weight: 700; letter-spacing: 0.35em; text-transform: uppercase; color: #160802; margin-bottom: 6px; }
+    .cr-clausula-text { font-family: "Cormorant Garamond", serif; font-size: 15px; font-weight: 700; color: #160802; line-height: 1.6; }
     .cr-atencao { width: 220px; flex-shrink: 0; border: 1.5px solid rgba(80,20,4,0.7); padding: 10px 12px; box-sizing: border-box; }
-    .cr-atencao-title { font-family: "Cinzel", serif; font-size: 8px; letter-spacing: 0.35em; text-transform: uppercase; color: #3a0e02; text-align: center; margin-bottom: 6px; }
-    .cr-atencao-text { font-family: "Cinzel", serif; font-size: 8px; letter-spacing: 0.05em; color: #3a0e02; line-height: 1.6; text-align: center; text-transform: uppercase; }
+    .cr-atencao-title { font-family: "Cinzel", serif; font-size: 11px; font-weight: 700; letter-spacing: 0.35em; text-transform: uppercase; color: #3a0e02; text-align: center; margin-bottom: 6px; }
+    .cr-atencao-text { font-family: "Cinzel", serif; font-size: 11px; font-weight: 700; letter-spacing: 0.05em; color: #3a0e02; line-height: 1.6; text-align: center; text-transform: uppercase; }
 
     /* === CARIMBO DE RANK === */
     .cr-rank-stamp {
-      position: absolute; right: 58px; bottom: 130px; z-index: 10;
+      position: relative; z-index: 10;
       width: 152px; height: 152px; border-radius: 50%;
       border: 3.5px solid rgba(100,15,5,0.72);
       background: transparent;
       display: flex; flex-direction: column; align-items: center; justify-content: center;
       transform: rotate(14deg);
+      align-self: center; margin: 6px auto;
     }
     .cr-rank-stamp::before {
       content: ""; position: absolute; inset: 8px;
@@ -267,8 +258,8 @@
       position: relative; z-index: 1;
     }
     .cr-rank-label {
-      font-family: "Cinzel", serif; font-size: 10px; letter-spacing: 0.55em;
-      text-transform: uppercase; color: rgba(100,15,5,0.70);
+      font-family: "Cinzel", serif; font-size: 13px; font-weight: 700; letter-spacing: 0.55em;
+      text-transform: uppercase; color: rgba(100,15,5,0.75);
       position: relative; z-index: 1; margin-top: -4px;
     }
 
@@ -736,11 +727,10 @@
           <div id="contract-render">
             <div class="cr-border"></div>
             <div class="cr-border-inner"></div>
-            <div class="cr-rank-stamp" id="cr-rank-stamp"><span class="cr-rank-letter" id="cr-rank-letter">—</span><span class="cr-rank-label">Rank</span></div>
 
             <!-- Cabeçalho -->
             <div class="cr-header">
-              <img src="/assets/images/logo-paz.png" class="cr-logo" alt="P.A.Z" crossorigin="anonymous" />
+              <img src="/assets/images/logo-paz.png" class="cr-logo" alt="P.A.Z" />
               <div class="cr-header-center">
                 <div class="cr-title">P.A.Z</div>
                 <div class="cr-badge-row">
@@ -823,15 +813,17 @@
                 </div>
 
                 <div class="cr-field cr-reportar">
-                  <div class="cr-field-label" style="font-size:8.5px;">Reportar À:</div>
+                  <div class="cr-field-label">Reportar À:</div>
                   <div class="cr-field-value" id="cr-reportar"></div>
                   <div class="cr-field-line"></div>
                   <div class="cr-field-line"></div>
                 </div>
 
-                <div class="cr-wax-area">
-                  <div class="cr-wax">☠</div>
+                <div class="cr-rank-stamp" id="cr-rank-stamp">
+                  <span class="cr-rank-letter" id="cr-rank-letter">—</span>
+                  <span class="cr-rank-label">Rank</span>
                 </div>
+
 
               </div>
             </div>
@@ -900,6 +892,8 @@
   <!-- Bibliotecas de exportação -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+  <!-- html-to-image: captura com fontes web embutidas automaticamente -->
+  <script src="https://cdn.jsdelivr.net/npm/html-to-image@1.11.11/dist/html-to-image.js"></script>
 
   <script>
   (function () {
@@ -1079,61 +1073,85 @@
     backFormBtn  && backFormBtn.addEventListener('click', function() { showStep('form'); });
 
     /* ========================
-       CAPTURA COM html2canvas
+       CAPTURA — pré-busca as fontes Google e inline-as como base64
+       antes de chamar html-to-image, garantindo que qualquer peso/família
+       declarada no <link> apareça corretamente no PNG/PDF exportado.
     ======================== */
-    function capture() {
-      loading.style.display = 'block';
-      previewWrap.style.opacity = '0.4';
+    var _contractFontCSS = null; /* cache entre exports */
 
-      const render = document.getElementById('contract-render');
+    function fetchAndInlineFonts() {
+      if (_contractFontCSS) return Promise.resolve(_contractFontCSS);
 
-      /* Clonar para fora de qualquer scroll/flex container.
-         CRÍTICO: não usar visibility:hidden — o html2canvas respeita
-         essa propriedade e não renderiza o conteúdo. Usamos opacity:0
-         e posicionamos fora da tela visível. */
-      const clone = render.cloneNode(true);
-      clone.style.cssText = [
-        'position:absolute',
-        'top:-99999px',
-        'left:0',
-        'width:900px',
-        'min-width:900px',
-        'opacity:1',
-        'pointer-events:none',
-      ].join(';');
-      document.body.appendChild(clone);
+      var linkEl = document.querySelector('link[href*="fonts.googleapis.com/css"]');
+      if (!linkEl) return Promise.resolve('');
 
-      /* Aguardar um frame para o browser calcular layout e fontes */
-      return new Promise(function(resolve) { requestAnimationFrame(function() { setTimeout(resolve, 120); }); })
-        .then(function() {
-          return html2canvas(clone, {
-            scale: 2,
-            useCORS: true,
-            allowTaint: false,
-            backgroundColor: '#b58a40',
-            logging: false,
-            width:  900,
-            height: clone.offsetHeight,
-            x: 0,
-            y: 0,
-            scrollX: 0,
-            scrollY: -clone.getBoundingClientRect().top,
-            windowWidth: 1200,
-            windowHeight: clone.offsetHeight + 200,
+      return fetch(linkEl.href)
+        .then(function(r) { return r.text(); })
+        .then(function(css) {
+          /* Extrair todas as URLs de arquivo de fonte (fonts.gstatic.com) */
+          var urlRe = /url\((https:\/\/fonts\.gstatic\.com[^)]+)\)/g;
+          var urls = [], m;
+          while ((m = urlRe.exec(css)) !== null) urls.push(m[1]);
+
+          /* Baixar cada arquivo e converter para data-URL base64 */
+          return Promise.all(urls.map(function(url) {
+            return fetch(url)
+              .then(function(r) { return r.blob(); })
+              .then(function(blob) {
+                return new Promise(function(res) {
+                  var fr = new FileReader();
+                  fr.onload = function(e) { res({ url: url, b64: e.target.result }); };
+                  fr.readAsDataURL(blob);
+                });
+              });
+          })).then(function(fonts) {
+            /* Substituir as URLs remotas pelos dados base64 no CSS */
+            var inlined = css;
+            fonts.forEach(function(f) {
+              inlined = inlined.split('url(' + f.url + ')').join('url(' + f.b64 + ')');
+            });
+            _contractFontCSS = inlined;
+            return inlined;
           });
         })
-        .then(function(canvas) {
-          document.body.removeChild(clone);
-          return canvas;
-        })
-        .catch(function(err) {
-          if (document.body.contains(clone)) document.body.removeChild(clone);
-          throw err;
-        })
-        .finally(function() {
+        .catch(function() { return ''; }); /* se falhar, exporta sem inline */
+    }
+
+    function capture() {
+      return new Promise(function(resolve, reject) {
+        loading.style.display = 'block';
+        var render = document.getElementById('contract-render');
+        var injected = null;
+
+        function finish() {
+          if (injected) injected.remove();
           loading.style.display = 'none';
-          previewWrap.style.opacity = '1';
-        });
+        }
+
+        fetchAndInlineFonts()
+          .then(function(fontCSS) {
+            if (fontCSS) {
+              injected = document.createElement('style');
+              injected.id = 'contract-font-embed';
+              injected.textContent = fontCSS;
+              document.head.appendChild(injected);
+            }
+
+            return htmlToImage.toCanvas(render, {
+              pixelRatio: 2,
+              backgroundColor: null,
+              skipFonts: false,
+            });
+          })
+          .then(function(canvas) {
+            finish();
+            resolve(canvas);
+          })
+          .catch(function(err) {
+            finish();
+            reject(err);
+          });
+      });
     }
 
     /* ========================
