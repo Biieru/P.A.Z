@@ -7,7 +7,7 @@
   <link rel="icon" type="image/png" href="/assets/images/logo-paz.png" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@400;700;900&family=Cinzel:wght@400;500;600;700;900&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@400;700;900&family=Cinzel:wght@400;500;600;700&family=EB+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="/css/style.css" />
   <link rel="stylesheet" href="/css/responsive.css" />
   <style>
@@ -186,83 +186,184 @@
     .contract-export-png { color: var(--ghost-cyan); border-color: rgba(74,192,255,0.4); background: rgba(74,192,255,0.08); }
     .contract-export-back { color: var(--bone-dim); border-color: rgba(255,255,255,0.15); background: transparent; }
     .contract-export-note { font-family: var(--font-body); font-style: italic; font-size: 13px; color: var(--bone-dim); }
-    .contract-preview-wrap { overflow-x: auto; border: 1px solid rgba(201,169,97,0.2); background: #1a1208; padding: 20px; display: flex; justify-content: center; }
+    .contract-preview-wrap { overflow-x: auto; border: 1px solid rgba(201,169,97,0.2); background: #1a1208; padding: 20px; display: flex; justify-content: center; position: relative; }
+    #contract-render-preview-image { display: none; width: 900px; min-width: 900px; height: auto; }
+    .contract-preview-wrap.is-frozen #contract-render { display: none; }
+    .contract-preview-wrap.is-frozen #contract-render-preview-image { display: block; }
     #contract-loading { display: none; text-align: center; padding: 40px; font-family: var(--font-head); font-size: 12px; letter-spacing: 0.35em; color: var(--bone-dim); text-transform: uppercase; }
 
     /* === CONTRATO VISUAL — pergaminho === */
-    #contract-render {
-      width: 900px; min-width: 900px;
-      background: linear-gradient(rgba(40,18,4,0.30), rgba(40,18,4,0.30)), url('/assets/images/pergaminho.png') center center / 130% auto no-repeat;
-      padding: 44px 48px 36px;
-      font-family: "Cormorant Garamond", "EB Garamond", Georgia, serif;
-      position: relative; overflow: hidden; box-sizing: border-box;
-    }
-    .cr-border { position: absolute; inset: 10px; border: 1.5px solid rgba(80,45,8,0.35); pointer-events: none; z-index: 2; }
-    .cr-border-inner { position: absolute; inset: 14px; border: 0.5px solid rgba(80,45,8,0.18); pointer-events: none; z-index: 2; }
-    .cr-header { display: flex; align-items: center; gap: 16px; margin-bottom: 10px; }
-    .cr-logo { width: 90px; height: 90px; object-fit: contain; flex-shrink: 0; filter: sepia(0.4) brightness(0.75); }
-    .cr-header-center { flex: 1; text-align: center; }
-    .cr-title { font-family: "Cinzel Decorative", "Cinzel", serif; font-size: 48px; font-weight: 900; letter-spacing: 0.08em; color: #180b02; line-height: 1; margin: 0 0 4px; text-shadow: 2px 3px 6px rgba(0,0,0,0.35); }
-    .cr-subtitle { font-family: "Cinzel", serif; font-size: 13px; font-weight: 700; letter-spacing: 0.45em; text-transform: uppercase; color: #2e1604; margin: 0 0 7px; }
-    .cr-badge-row { display: flex; align-items: center; justify-content: center; gap: 8px; }
-    .cr-badge-line { flex: 1; height: 1px; background: rgba(30,12,2,0.55); }
-    .cr-badge-text { font-family: "Cinzel", serif; font-size: 12px; font-weight: 700; letter-spacing: 0.38em; text-transform: uppercase; color: #1e0e02; white-space: nowrap; }
-    .cr-stamp { width: 116px; height: 116px; flex-shrink: 0; border: 2.5px solid rgba(80,20,5,0.82); border-radius: 50%; display: flex; flex-direction: column; align-items: center; justify-content: center; background: radial-gradient(circle, rgba(180,60,20,0.18) 0%, rgba(140,40,10,0.10) 100%); position: relative; text-align: center; padding: 14px; box-sizing: border-box; transform: rotate(-8deg); }
-    .cr-stamp::before { content: ""; position: absolute; inset: 5px; border: 1.5px dashed rgba(80,20,5,0.65); border-radius: 50%; }
-    .cr-stamp-line { font-family: "Cinzel", serif; font-size: 10px; font-weight: 700; letter-spacing: 0.22em; text-transform: uppercase; color: rgba(70,15,2,0.92); line-height: 1.6; position: relative; z-index: 1; }
-    .cr-stamp-logo { font-family: "Cinzel Decorative", serif; font-size: 18px; font-weight: 900; color: rgba(70,15,2,0.96); position: relative; z-index: 1; letter-spacing: 0.05em; }
-    .cr-divider { height: 1.5px; background: linear-gradient(90deg, transparent, rgba(30,12,2,0.6), rgba(30,12,2,0.85), rgba(30,12,2,0.6), transparent); margin: 10px 0 14px; }
-    .cr-body { display: flex; gap: 24px; }
-    .cr-left { flex: 1; }
-    .cr-right { width: 220px; flex-shrink: 0; display: flex; flex-direction: column; gap: 14px; }
-    .cr-field { margin-bottom: 14px; }
-    .cr-field-label { display: flex; align-items: center; gap: 7px; font-family: "Cinzel", serif; font-size: 12px; letter-spacing: 0.32em; text-transform: uppercase; color: #160802; font-weight: 700; margin-bottom: 5px; }
-    .cr-field-icon { font-size: 14px; opacity: 0.8; }
-    .cr-field-value { font-family: "Cormorant Garamond", serif; font-size: 18px; font-weight: 700; color: #0e0602; line-height: 1.55; padding: 2px 0 4px; border-bottom: 1px solid rgba(40,18,2,0.45); min-height: 24px; word-break: break-word; }
-    .cr-field-line { border-bottom: 1px solid rgba(40,18,2,0.38); min-height: 20px; margin-bottom: 4px; }
-    .cr-alvo-box { border: 1.5px solid rgba(40,18,2,0.6); background: rgba(60,30,5,0.08); min-height: 200px; display: flex; flex-direction: column; overflow: hidden; }
-    .cr-alvo-title { font-family: "Cinzel", serif; font-size: 12px; font-weight: 700; letter-spacing: 0.45em; text-transform: uppercase; color: #f0e8d0; background: rgba(40,15,2,0.85); text-align: center; padding: 6px 8px; flex-shrink: 0; }
-    .cr-alvo-img-area { flex: 1; display: flex; align-items: center; justify-content: center; min-height: 170px; overflow: hidden; }
-    .cr-alvo-img-area img { width: 100%; height: 100%; object-fit: cover; display: block; }
-    .cr-alvo-empty { color: rgba(60,30,5,0.4); font-size: 14px; font-style: italic; font-family: "Cormorant Garamond", serif; padding: 16px; text-align: center; }
-    .cr-recompensa-box { border: 1.5px solid rgba(40,18,2,0.55); padding: 8px 12px; margin-top: 4px; min-height: 44px; font-family: "Cormorant Garamond", serif; font-size: 18px; font-weight: 700; color: #0e0602; line-height: 1.5; word-break: break-word; }
-    .cr-wax-area { display: flex; justify-content: flex-end; align-items: flex-end; flex: 1; padding-top: 8px; }
-    .cr-wax { width: 56px; height: 56px; border-radius: 50%; background: radial-gradient(circle at 38% 35%, #c0302a, #7a1010); display: flex; align-items: center; justify-content: center; box-shadow: 0 3px 10px rgba(100,10,10,0.5), inset 0 -2px 6px rgba(0,0,0,0.4); font-size: 22px; color: rgba(255,200,180,0.7); }
-    .cr-footer { display: flex; gap: 16px; margin-top: 14px; border-top: 1.5px solid rgba(30,12,2,0.55); padding-top: 12px; }
-    .cr-clausula { flex: 1; text-align: center; }
-    .cr-clausula-title { font-family: "Cinzel", serif; font-size: 12px; font-weight: 700; letter-spacing: 0.35em; text-transform: uppercase; color: #160802; margin-bottom: 6px; }
-    .cr-clausula-text { font-family: "Cormorant Garamond", serif; font-size: 15px; font-weight: 700; color: #160802; line-height: 1.6; }
-    .cr-atencao { width: 220px; flex-shrink: 0; border: 1.5px solid rgba(80,20,4,0.7); padding: 10px 12px; box-sizing: border-box; }
-    .cr-atencao-title { font-family: "Cinzel", serif; font-size: 11px; font-weight: 700; letter-spacing: 0.35em; text-transform: uppercase; color: #3a0e02; text-align: center; margin-bottom: 6px; }
-    .cr-atencao-text { font-family: "Cinzel", serif; font-size: 11px; font-weight: 700; letter-spacing: 0.05em; color: #3a0e02; line-height: 1.6; text-align: center; text-transform: uppercase; }
+    /* ============================================================
+       CONTRATO — Template com alfa
+       O PNG do template fica acima da foto do alvo e abaixo
+       dos textos dinâmicos, preservando a moldura transparente.
+       Container fixo: 900 × 1271px (proporção 1055×1491)
+       ============================================================ */
 
-    /* === CARIMBO DE RANK === */
-    .cr-rank-stamp {
-      position: relative; z-index: 10;
-      width: 152px; height: 152px; border-radius: 50%;
-      border: 3.5px solid rgba(100,15,5,0.72);
-      background: transparent;
-      display: flex; flex-direction: column; align-items: center; justify-content: center;
-      transform: rotate(14deg);
-      align-self: center; margin: 6px auto;
+    #contract-render,
+    .contract-render-surface {
+      width: 900px; min-width: 900px; height: 1271px;
+      position: relative; overflow: hidden; isolation: isolate;
+      box-sizing: border-box;
+      background: #d7c19a;
+      font-family: "EB Garamond", "Cormorant Garamond", Georgia, serif;
     }
-    .cr-rank-stamp::before {
-      content: ""; position: absolute; inset: 8px;
-      border: 2px dashed rgba(100,15,5,0.48); border-radius: 50%;
+
+    #cr-template-overlay {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      z-index: 2;
+      pointer-events: none;
+      user-select: none;
+    }
+
+    /* Imagem do alvo por trás do template com alfa (janela transparente do PNG) */
+    #cr-alvo-img-area {
+      position: absolute;
+      left: 60.05%;
+      top: 23.1%;
+      width: 32.95%;
+      height: 27.9%;
+      overflow: hidden;
+      z-index: 1;
+      background: #c5af86;
+    }
+    #cr-alvo-img-area img {
+      width: 100%;
+      height: 100%;
+      object-fit: fill;
+      object-position: center center;
+      transform: scale(1.06);
+      filter: sepia(0.08) contrast(1.02) brightness(0.95);
+    }
+
+    /* Textos preenchíveis */
+    .cr-sec-val {
+      position: absolute;
+      z-index: 3;
+      font-family: "EB Garamond", serif;
+      color: #120800;
+      text-rendering: optimizeLegibility;
+      word-break: break-word;
+    }
+
+    #cr-tipo,
+    #cr-alvo,
+    #cr-participantes,
+    #cr-tempo {
+      font-size: 22px;
+      line-height: 1.08;
+    }
+
+    #cr-tipo {
+      left: 9.2%;
+      top: calc(24.95% - 8px);
+      width: 39%;
+    }
+
+    #cr-alvo {
+      left: 9.2%;
+      top: calc(31.75% - 8px);
+      width: 39%;
+    }
+
+    #cr-descricao {
+      left: 9.2%;
+      top: calc(39.4% - 8px);
+      width: 39.5%;
+      max-height: 11.95%;
+      overflow: hidden;
+      font-size: 20px;
+      line-height: 1.18;
+    }
+    #cr-descricao p { margin: 0 0 5px; }
+
+    #cr-dicas {
+      left: 9.55%;
+      top: calc(57.15% - 8px);
+      width: 38%;
+      max-height: 10.8%;
+      overflow: hidden;
+      font-size: 19px;
+      line-height: 1.18;
+    }
+    #cr-dicas p { margin: 0 0 6px; }
+
+    #cr-participantes {
+      left: 18.25%;
+      top: calc(74.15% - 8px);
+      width: 18%;
+      font-size: 19px;
+      line-height: 1.08;
+      text-align: center;
+      transform: translateX(-50%);
+    }
+    #cr-tempo {
+      left: 42.95%;
+      top: calc(74.15% - 8px);
+      width: 15%;
+      font-size: 19px;
+      line-height: 1.08;
+      text-align: center;
+      transform: translateX(-50%);
+    }
+
+    #cr-recompensa {
+      left: 8.85%;
+      top: 80.25%;
+      width: 43.9%;
+      text-align: center;
+      z-index: 3;
+      font-family: "Cinzel Decorative", "Cinzel", serif;
+      font-size: 21px;
+      font-weight: 700;
+      color: #0e0600;
+      letter-spacing: 0.01em;
+      line-height: 1.04;
+    }
+
+    #cr-reportar {
+      left: 62.35%;
+      top: calc(57.75% - 8px);
+      width: 18.9%;
+      font-size: 18px;
+      line-height: 1.02;
+      font-weight: 700;
+      text-decoration: none;
+    }
+
+    /* RANK — sobreposto ao círculo pré-desenhado */
+    #cr-rank-stamp {
+      position: absolute;
+      left: 60.95%;
+      top: calc(61.8% + 12px);
+      width: 31.8%;
+      height: 15.8%;
+      z-index: 3;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      transform: rotate(-8deg);
+      transform-origin: center center;
     }
     .cr-rank-letter {
+      position: relative;
+      top: auto;
+      left: auto;
+      right: auto;
+      text-align: center;
       font-family: "Cinzel Decorative", "Cinzel", serif;
-      font-size: 82px; font-weight: 900; line-height: 1;
-      color: rgba(110,15,5,0.76);
-      text-shadow: 1px 1px 0 rgba(80,10,3,0.35);
-      position: relative; z-index: 1;
+      font-size: 88px;
+      font-weight: 900;
+      line-height: 0.9;
+      transform: translate(9px, 0);
+      color: rgba(105,12,6,0.90);
+      text-shadow: 2px 2px 0 rgba(75,6,3,0.3);
     }
-    .cr-rank-label {
-      font-family: "Cinzel", serif; font-size: 13px; font-weight: 700; letter-spacing: 0.55em;
-      text-transform: uppercase; color: rgba(100,15,5,0.75);
-      position: relative; z-index: 1; margin-top: -4px;
-    }
-
     @media (max-width: 640px) {
       .gs-contract-cta__inner { flex-direction: column; align-items: flex-start; }
       .contract-form-grid { grid-template-columns: 1fr; }
@@ -308,7 +409,7 @@
           <li><a href="/pages/aliancas.html"     class="nav__link" data-link>Alianças</a></li>
           <li><a href="/pages/big-news.html"     class="nav__link" data-link>Big News</a></li>
           <li><a href="/pages/vault.html"        class="nav__link" data-link>Seas Vault</a></li>
-          <li><a href="/pages/grande-salao.html" class="nav__link" data-link>Grande Salão</a></li>
+          <li><a href="/pages/grande-salao.html" class="nav__link">Grande Salão</a></li>
         </ul>
       </nav>
       <button class="nav-toggle" aria-label="Abrir menu" aria-expanded="false" id="navToggle">
@@ -368,7 +469,7 @@
               <h3 class="gs-contract-cta__title">Emitir Novo Contrato de Missão</h3>
               <p class="gs-contract-cta__desc">Gere um contrato oficial da P.A.Z preenchido e pronto para exportar em PDF ou PNG.</p>
             </div>
-            <button class="gs-contract-btn" id="gs-open-contract">
+            <button type="button" class="gs-contract-btn" id="gs-open-contract">
               <span class="gs-contract-btn__corner gs-contract-btn__corner--tl"></span>
               <span class="gs-contract-btn__corner gs-contract-btn__corner--tr"></span>
               <span class="gs-contract-btn__corner gs-contract-btn__corner--bl"></span>
@@ -622,12 +723,12 @@
           <h2 class="contract-modal__title">☩ Gerador de Contrato de Missão</h2>
           <p class="contract-modal__sub">Quadro de Contratos Abissais — P.A.Z</p>
         </div>
-        <button class="contract-close-btn" id="contractClose">✕ Fechar</button>
+        <button type="button" class="contract-close-btn" id="contractClose">✕ Fechar</button>
       </div>
 
       <div class="contract-steps">
-        <button class="contract-step-btn active" data-step="form">① Preencher Dados</button>
-        <button class="contract-step-btn" data-step="preview">② Visualizar & Exportar</button>
+        <button type="button" class="contract-step-btn active" data-step="form">① Preencher Dados</button>
+        <button type="button" class="contract-step-btn" data-step="preview">② Visualizar & Exportar</button>
       </div>
 
       <!-- PASSO 1: FORMULÁRIO -->
@@ -710,143 +811,45 @@
 
         </div>
         <div class="contract-form-actions">
-          <button class="contract-preview-btn" id="contract-go-preview">Gerar Pré-visualização →</button>
+          <button type="button" class="contract-preview-btn" id="contract-go-preview">Gerar Pré-visualização →</button>
         </div>
       </div>
 
       <!-- PASSO 2: PREVIEW & EXPORT -->
       <div class="contract-step-panel" id="contract-panel-preview">
         <div class="contract-export-actions">
-          <button class="contract-export-btn contract-export-pdf" id="contract-dl-pdf">⎙ Baixar PDF</button>
-          <button class="contract-export-btn contract-export-png" id="contract-dl-png">⬇ Baixar PNG</button>
-          <button class="contract-export-btn contract-export-back" id="contract-back-form">← Editar Dados</button>
+          <button type="button" class="contract-export-btn contract-export-pdf" id="contract-dl-pdf">⎙ Baixar PDF</button>
+          <button type="button" class="contract-export-btn contract-export-png" id="contract-dl-png">⬇ Baixar PNG</button>
+          <button type="button" class="contract-export-btn contract-export-back" id="contract-back-form">← Editar Dados</button>
+          <span class="contract-export-note">Fontes carregadas via Google Fonts — pode levar 1–2s para renderizar.</span>
         </div>
         <div id="contract-loading">Gerando contrato...</div>
         <div class="contract-preview-wrap" id="contract-preview-wrap">
+          <img id="contract-render-preview-image" alt="Pré-visualização do contrato" />
           <!-- CONTRATO RENDERIZÁVEL -->
-          <div id="contract-render">
-            <div class="cr-border"></div>
-            <div class="cr-border-inner"></div>
+          <div id="contract-render" class="contract-render-surface">
+            <div id="cr-alvo-img-area" aria-hidden="true"></div>
 
-            <!-- Cabeçalho -->
-            <div class="cr-header">
-              <img src="/assets/images/logo-paz.png" class="cr-logo" alt="P.A.Z" />
-              <div class="cr-header-center">
-                <div class="cr-title">P.A.Z</div>
-                <div class="cr-badge-row">
-                  <div class="cr-badge-line"></div>
-                  <div class="cr-badge-text">✦ Quadro de Contratos Abissais ✦</div>
-                  <div class="cr-badge-line"></div>
-                </div>
-              </div>
-              <div class="cr-stamp">
-                <span class="cr-stamp-line">A Névoa</span>
-                <span class="cr-stamp-line">É Nossa</span>
-                <span class="cr-stamp-logo">P.A.Z</span>
-                <span class="cr-stamp-line">O Abismo</span>
-                <span class="cr-stamp-line">É Nosso</span>
-              </div>
+            <div class="cr-sec-val" id="cr-tipo">—</div>
+            <div class="cr-sec-val" id="cr-alvo">—</div>
+            <div class="cr-sec-val" id="cr-descricao"></div>
+            <div class="cr-sec-val" id="cr-dicas"></div>
+            <div class="cr-sec-val" id="cr-participantes">—</div>
+            <div class="cr-sec-val" id="cr-tempo">—</div>
+            <div class="cr-sec-val" id="cr-recompensa">—</div>
+            <div class="cr-sec-val" id="cr-reportar">—</div>
+
+            <div id="cr-rank-stamp">
+              <div class="cr-rank-letter" id="cr-rank-letter">—</div>
             </div>
 
-            <div class="cr-divider"></div>
-
-            <!-- Corpo: dois painéis -->
-            <div class="cr-body">
-
-              <!-- PAINEL ESQUERDO -->
-              <div class="cr-left">
-
-                <div class="cr-field">
-                  <div class="cr-field-label"><span class="cr-field-icon">✕</span> Tipo de Trabalho:</div>
-                  <div class="cr-field-value" id="cr-tipo"></div>
-                </div>
-
-                <div class="cr-field">
-                  <div class="cr-field-label"><span class="cr-field-icon">⊕</span> Alvo / Objetivo:</div>
-                  <div class="cr-field-value" id="cr-alvo"></div>
-                </div>
-
-                <div class="cr-field">
-                  <div class="cr-field-label"><span class="cr-field-icon">≡</span> Descrição da Missão:</div>
-                  <div class="cr-field-value" id="cr-descricao" style="white-space:pre-line; border-bottom:none;">
-                    <div class="cr-field-line"></div>
-                    <div class="cr-field-line"></div>
-                    <div class="cr-field-line"></div>
-                  </div>
-                </div>
-
-                <div class="cr-field">
-                  <div class="cr-field-label"><span class="cr-field-icon">✦</span> Dicas e Informações:</div>
-                  <div class="cr-field-value" id="cr-dicas" style="white-space:pre-line; border-bottom:none;">
-                    <div class="cr-field-line"></div>
-                    <div class="cr-field-line"></div>
-                    <div class="cr-field-line"></div>
-                  </div>
-                </div>
-
-                <div style="display:flex; gap: 24px; flex-wrap: wrap; margin-top: 4px;">
-                  <div class="cr-field" style="flex:1; min-width: 140px;">
-                    <div class="cr-field-label"><span class="cr-field-icon">⚑</span> Nº de Participantes:</div>
-                    <div class="cr-field-value" id="cr-participantes"></div>
-                  </div>
-                  <div class="cr-field" style="flex:1; min-width: 140px;">
-                    <div class="cr-field-label">Tempo Limite:</div>
-                    <div class="cr-field-value" id="cr-tempo"></div>
-                  </div>
-                </div>
-
-                <div class="cr-field" style="margin-top: 6px;">
-                  <div class="cr-field-label"><span class="cr-field-icon">⊗</span> Recompensa:</div>
-                  <div class="cr-recompensa-box" id="cr-recompensa"></div>
-                </div>
-
-              </div>
-
-              <!-- PAINEL DIREITO -->
-              <div class="cr-right">
-
-                <div class="cr-alvo-box">
-                  <div class="cr-alvo-title">Alvo</div>
-                  <div class="cr-alvo-img-area" id="cr-alvo-img-area">
-                    <div class="cr-alvo-empty">Sem imagem</div>
-                  </div>
-                </div>
-
-                <div class="cr-field cr-reportar">
-                  <div class="cr-field-label">Reportar À:</div>
-                  <div class="cr-field-value" id="cr-reportar"></div>
-                  <div class="cr-field-line"></div>
-                  <div class="cr-field-line"></div>
-                </div>
-
-                <div class="cr-rank-stamp" id="cr-rank-stamp">
-                  <span class="cr-rank-letter" id="cr-rank-letter">—</span>
-                  <span class="cr-rank-label">Rank</span>
-                </div>
-
-
-              </div>
-            </div>
-
-            <!-- Rodapé contratual -->
-            <div class="cr-footer">
-              <div class="cr-clausula">
-                <div class="cr-clausula-title">→ Cláusula Abissal ←</div>
-                <div class="cr-clausula-text">
-                  Ao aceitar este contrato, o mercenário da P.A.Z assume total responsabilidade pela missão.<br/>
-                  Desistências sem justificativa resultarão em multa, perda de reputação ou banimento temporário do quadro de contratos.
-                </div>
-              </div>
-              <div class="cr-atencao">
-                <div class="cr-atencao-title">⚠ Atenção ⚠</div>
-                <div class="cr-atencao-text">
-                  Uma vez aceito e confirmado,<br/>
-                  a desistência resultará em<br/>
-                  multa por quebra de contrato.
-                </div>
-                <div style="text-align:center; margin-top:8px; font-size:16px; color:rgba(90,26,4,0.6);">☠</div>
-              </div>
-            </div>
+            <img
+              id="cr-template-overlay"
+              src="/assets/images/template.png?v=20260526-04"
+              crossorigin="anonymous"
+              alt=""
+              aria-hidden="true"
+            />
 
           </div><!-- #contract-render -->
         </div><!-- .contract-preview-wrap -->
@@ -892,310 +895,242 @@
   <!-- Bibliotecas de exportação -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
-  <!-- html-to-image: captura com fontes web embutidas automaticamente -->
-  <script src="https://cdn.jsdelivr.net/npm/html-to-image@1.11.11/dist/html-to-image.js"></script>
 
-  <script>
+  <script type="text/plain" data-disabled="moved-to-js">
+  /* ============================================================
+     GERADOR DE CONTRATOS — PAZ
+     Todas as funções usam document.getElementById() no momento
+     da chamada para ser SPA-safe (sem variáveis capturadas).
+     ============================================================ */
   (function () {
     'use strict';
 
-    /* ---- Elementos ---- */
-    const overlay      = document.getElementById('contractOverlay');
-    const openBtn      = document.getElementById('gs-open-contract');
-    const closeBtn     = document.getElementById('contractClose');
-    const stepBtns     = document.querySelectorAll('.contract-step-btn');
-    const panelForm    = document.getElementById('contract-panel-form');
-    const panelPreview = document.getElementById('contract-panel-preview');
-    const goPreviewBtn = document.getElementById('contract-go-preview');
-    const backFormBtn  = document.getElementById('contract-back-form');
-    const dlPdfBtn     = document.getElementById('contract-dl-pdf');
-    const dlPngBtn     = document.getElementById('contract-dl-png');
-    const loading      = document.getElementById('contract-loading');
-    const previewWrap  = document.getElementById('contract-preview-wrap');
+    var resolvedImgSrc = null;
 
-    /* ---- Campos do form ---- */
-    const fields = {
-      tipo:         document.getElementById('cf-tipo'),
-      alvo:         document.getElementById('cf-alvo'),
-      descricao:    document.getElementById('cf-descricao'),
-      dicas:        document.getElementById('cf-dicas'),
-      participantes:document.getElementById('cf-participantes'),
-      tempo:        document.getElementById('cf-tempo'),
-      recompensa:   document.getElementById('cf-recompensa'),
-      reportar:     document.getElementById('cf-reportar'),
-      imgUrl:       document.getElementById('cf-img-url'),
-      imgFile:      document.getElementById('cf-img-file'),
-      imgPreview:   document.getElementById('cf-img-preview'),
-      rank:         document.getElementById('cf-rank'),
-    };
+    /* ── Helpers de DOM (sempre buscam na hora) ── */
+    function el(id)  { return document.getElementById(id); }
+    function qsa(sel){ return document.querySelectorAll(sel); }
 
-    /* ---- Campos do contrato renderizado ---- */
-    const cr = {
-      tipo:         document.getElementById('cr-tipo'),
-      alvo:         document.getElementById('cr-alvo'),
-      descricao:    document.getElementById('cr-descricao'),
-      dicas:        document.getElementById('cr-dicas'),
-      participantes:document.getElementById('cr-participantes'),
-      tempo:        document.getElementById('cr-tempo'),
-      recompensa:   document.getElementById('cr-recompensa'),
-      reportar:     document.getElementById('cr-reportar'),
-      alvoImgArea:  document.getElementById('cr-alvo-img-area'),
-    };
-
-    let resolvedImgSrc = null; // data-url ou url resolvida
-
-    /* ========================
-       ABRIR / FECHAR MODAL
-    ======================== */
+    /* ── Abrir / Fechar modal ── */
     function openModal() {
-      overlay.classList.add('is-open');
+      var ov = el('contractOverlay');
+      if (!ov) return;
+      ov.classList.add('is-open');
       document.body.style.overflow = 'hidden';
       showStep('form');
     }
     function closeModal() {
-      overlay.classList.remove('is-open');
+      var ov = el('contractOverlay');
+      if (!ov) return;
+      ov.classList.remove('is-open');
       document.body.style.overflow = '';
     }
 
-    openBtn  && openBtn.addEventListener('click', openModal);
-    closeBtn && closeBtn.addEventListener('click', closeModal);
-    overlay.addEventListener('click', function(e) {
-      if (e.target === overlay) closeModal();
+    /* ── Mostrar step ── */
+    function showStep(step) {
+      qsa('.contract-step-btn').forEach(function(btn) {
+        btn.classList.toggle('active', btn.dataset.step === step);
+      });
+      var pf = el('contract-panel-form');
+      var pp = el('contract-panel-preview');
+      if (pf) pf.classList.toggle('active', step === 'form');
+      if (pp) pp.classList.toggle('active', step === 'preview');
+    }
+
+    /* ── Preview de imagem do formulário ── */
+    function setImgPreview(src) {
+      var prev = el('cf-img-preview');
+      if (!prev) return;
+      if (src) { prev.src = src; prev.style.display = 'block'; }
+      else      { prev.src = ''; prev.style.display = 'none';  }
+    }
+
+    /* ── Construir preview do contrato ── */
+    function buildPreview() {
+      /* Rank stamp */
+      var rankVal   = (el('cf-rank')  || {}).value || '';
+      var rankEl    = el('cr-rank-letter');
+      var rankStamp = el('cr-rank-stamp');
+      if (rankEl && rankStamp) {
+        if (rankVal) {
+          rankEl.textContent = rankVal;
+          rankEl.style.fontSize = rankVal.length > 1 ? '58px' : '82px';
+          rankEl.style.top      = rankVal.length > 1 ? '14%'  : '8%';
+          rankStamp.style.display = 'block';
+        } else {
+          rankStamp.style.display = 'none';
+        }
+      }
+
+      /* Campos simples */
+      function setVal(crId, cfId) {
+        var crEl = el(crId);
+        var cfEl = el(cfId);
+        if (crEl) crEl.textContent = (cfEl && cfEl.value) ? cfEl.value : '—';
+      }
+      setVal('cr-tipo',          'cf-tipo');
+      setVal('cr-alvo',          'cf-alvo');
+      setVal('cr-participantes', 'cf-participantes');
+      setVal('cr-tempo',         'cf-tempo');
+      setVal('cr-recompensa',    'cf-recompensa');
+      setVal('cr-reportar',      'cf-reportar');
+
+      /* Descrição */
+      var descEl  = el('cr-descricao');
+      var descVal = (el('cf-descricao') || {}).value || '';
+      if (descEl) {
+        if (descVal.trim()) {
+          descEl.innerHTML = descVal.trim().split('\n')
+            .filter(function(l) { return l.trim(); })
+            .map(function(l) {
+              return '<p style="margin:0 0 4px;font-family:EB Garamond,serif;font-size:15px;color:#120800;line-height:1.58;">' + l.trim() + '</p>';
+            }).join('');
+        } else {
+          descEl.innerHTML = '';
+        }
+      }
+
+      /* Dicas */
+      var dicasEl  = el('cr-dicas');
+      var dicasVal = (el('cf-dicas') || {}).value || '';
+      if (dicasEl) {
+        if (dicasVal.trim()) {
+          dicasEl.innerHTML = dicasVal.trim().split('\n')
+            .filter(function(l) { return l.trim(); })
+            .map(function(l) {
+              return '<p style="margin:0 0 7px;font-family:EB Garamond,serif;font-size:14.5px;color:#120800;line-height:1.5;padding-left:22px;">' + l.trim() + '</p>';
+            }).join('');
+        } else {
+          dicasEl.innerHTML = '';
+        }
+      }
+
+      /* Imagem do alvo */
+      var imgArea = el('cr-alvo-img-area');
+      if (imgArea) {
+        if (resolvedImgSrc) {
+          imgArea.innerHTML = '<img src="' + resolvedImgSrc + '" alt="Alvo" />';
+        } else {
+          imgArea.innerHTML = '<div class="cr-alvo-empty-txt">Sem imagem</div>';
+        }
+      }
+    }
+
+    /* ── Capturar e baixar ── */
+    function captureAndDownload(format) {
+      var loading   = el('contract-loading');
+      var prevWrap  = el('contract-preview-wrap');
+      if (loading)  loading.style.display = 'block';
+      if (prevWrap) prevWrap.style.visibility = 'hidden';
+
+      var render = el('contract-render');
+      if (!render) {
+        if (loading)  loading.style.display = 'none';
+        if (prevWrap) prevWrap.style.visibility = 'visible';
+        return;
+      }
+
+      var parent  = render.parentNode;
+      var nextSib = render.nextSibling;
+      document.body.appendChild(render);
+      render.style.setProperty('position', 'fixed',  'important');
+      render.style.setProperty('top',      '0',      'important');
+      render.style.setProperty('left',     '0',      'important');
+      render.style.setProperty('z-index',  '-9999',  'important');
+      render.style.setProperty('margin',   '0',      'important');
+
+      function restore() {
+        render.style.removeProperty('position');
+        render.style.removeProperty('top');
+        render.style.removeProperty('left');
+        render.style.removeProperty('z-index');
+        render.style.removeProperty('margin');
+        if (parent) parent.insertBefore(render, nextSib);
+        if (loading)  loading.style.display = 'none';
+        if (prevWrap) prevWrap.style.visibility = 'visible';
+      }
+
+      setTimeout(function() {
+        if (typeof html2canvas !== 'function') {
+          restore();
+          alert('html2canvas não carregou. Verifique sua conexão com a internet.');
+          return;
+        }
+        html2canvas(render, {
+          scale: 2, useCORS: true, backgroundColor: '#c8a870', logging: false
+        }).then(function(canvas) {
+          restore();
+          if (format === 'png') {
+            var link = document.createElement('a');
+            link.download = 'contrato-paz-' + Date.now() + '.png';
+            link.href = canvas.toDataURL('image/png');
+            link.click();
+          } else {
+            if (!window.jspdf) { alert('jsPDF não carregou. Use PNG.'); return; }
+            var jsPDF    = window.jspdf.jsPDF;
+            var PX_PER_MM = 96 / 25.4;
+            var wMm = (canvas.width  / 2) / PX_PER_MM;
+            var hMm = (canvas.height / 2) / PX_PER_MM;
+            var pdf = new jsPDF({ orientation: wMm > hMm ? 'l' : 'p', unit: 'mm', format: [wMm, hMm] });
+            pdf.addImage(canvas.toDataURL('image/jpeg', 0.95), 'JPEG', 0, 0, wMm, hMm);
+            pdf.save('contrato-paz-' + Date.now() + '.pdf');
+          }
+        }).catch(function(err) {
+          restore();
+          console.error('Captura falhou:', err);
+          alert('Erro ao capturar. Tente novamente.');
+        });
+      }, 200);
+    }
+
+    /* ── Delegação de cliques no document (SPA-safe) ── */
+    document.addEventListener('click', function(e) {
+      if (e.target.closest('#gs-open-contract'))   { openModal();                      return; }
+      if (e.target.closest('#contractClose'))       { closeModal();                     return; }
+      if (e.target.id === 'contractOverlay')        { closeModal();                     return; }
+      if (e.target.closest('#contract-go-preview')) { showStep('preview'); buildPreview(); return; }
+      if (e.target.closest('#contract-back-form'))  { showStep('form');                 return; }
+      if (e.target.closest('#contract-dl-png'))     { captureAndDownload('png');        return; }
+      if (e.target.closest('#contract-dl-pdf'))     { captureAndDownload('pdf');        return; }
+      var sb = e.target.closest('.contract-step-btn');
+      if (sb) {
+        if (sb.dataset.step === 'preview') { showStep('preview'); buildPreview(); }
+        else showStep('form');
+        return;
+      }
     });
+
     document.addEventListener('keydown', function(e) {
       if (e.key === 'Escape') closeModal();
     });
 
-    /* ========================
-       ABAS DE ETAPA
-    ======================== */
-    function showStep(step) {
-      stepBtns.forEach(btn => btn.classList.toggle('active', btn.dataset.step === step));
-      panelForm.classList.toggle('active', step === 'form');
-      panelPreview.classList.toggle('active', step === 'preview');
-    }
-
-    stepBtns.forEach(btn => {
-      btn.addEventListener('click', function() {
-        if (btn.dataset.step === 'preview') buildPreview();
-        else showStep('form');
-      });
-    });
-
-    /* ========================
-       IMAGEM DO ALVO
-    ======================== */
-    function setImgPreview(src) {
-      if (!src) {
-        fields.imgPreview.style.display = 'none';
-        fields.imgPreview.src = '';
-        return;
-      }
-      fields.imgPreview.src = src;
-      fields.imgPreview.style.display = 'block';
-    }
-
-    fields.imgUrl.addEventListener('input', function() {
-      const url = fields.imgUrl.value.trim();
-      if (url) {
-        resolvedImgSrc = url;
-        setImgPreview(url);
-        fields.imgFile.value = '';
-      } else {
-        resolvedImgSrc = null;
-        setImgPreview(null);
-      }
-    });
-
-    fields.imgFile.addEventListener('change', function() {
-      const file = fields.imgFile.files[0];
+    /* ── Listeners do campo de imagem (opcionais, só se os campos existem) ── */
+    document.addEventListener('change', function(e) {
+      if (!e.target.matches('#cf-img-file')) return;
+      var file = e.target.files[0];
       if (!file) return;
-      const reader = new FileReader();
-      reader.onload = function(e) {
-        resolvedImgSrc = e.target.result;
-        setImgPreview(e.target.result);
-        fields.imgUrl.value = '';
+      var reader = new FileReader();
+      reader.onload = function(ev) {
+        resolvedImgSrc = ev.target.result;
+        setImgPreview(ev.target.result);
+        var urlField = el('cf-img-url');
+        if (urlField) urlField.value = '';
       };
       reader.readAsDataURL(file);
     });
 
-    /* ========================
-       MONTAR PREVIEW
-    ======================== */
-    function buildPreview() {
-      showStep('preview');
-
-      /* Preencher campos de texto */
-      /* Rank stamp */
-      var rankVal = fields.rank.value || '';
-      var rankEl  = document.getElementById('cr-rank-letter');
-      var rankStamp = document.getElementById('cr-rank-stamp');
-      if (rankVal) {
-        rankEl.textContent = rankVal;
-        rankStamp.style.display = 'flex';
+    document.addEventListener('input', function(e) {
+      if (!e.target.matches('#cf-img-url')) return;
+      var url = e.target.value.trim();
+      if (url) {
+        resolvedImgSrc = url;
+        setImgPreview(url);
+        var fileField = el('cf-img-file');
+        if (fileField) fileField.value = '';
       } else {
-        rankStamp.style.display = 'none';
+        resolvedImgSrc = null;
+        setImgPreview(null);
       }
-
-      cr.tipo.textContent         = fields.tipo.value         || '—';
-      cr.alvo.textContent         = fields.alvo.value         || '—';
-      cr.participantes.textContent= fields.participantes.value || '—';
-      cr.tempo.textContent        = fields.tempo.value        || '—';
-      cr.recompensa.textContent   = fields.recompensa.value   || '—';
-      cr.reportar.textContent     = fields.reportar.value     || '—';
-
-      /* Campos multilinha */
-      const desc = fields.descricao.value.trim();
-      if (desc) {
-        cr.descricao.style.whiteSpace = 'pre-line';
-        cr.descricao.textContent = desc;
-      } else {
-        cr.descricao.innerHTML = '<div class="cr-field-line"></div><div class="cr-field-line"></div><div class="cr-field-line"></div>';
-      }
-
-      const dicas = fields.dicas.value.trim();
-      if (dicas) {
-        cr.dicas.style.whiteSpace = 'pre-line';
-        cr.dicas.textContent = dicas;
-      } else {
-        cr.dicas.innerHTML = '<div class="cr-field-line"></div><div class="cr-field-line"></div><div class="cr-field-line"></div>';
-      }
-
-      /* Imagem do alvo */
-      if (resolvedImgSrc) {
-        cr.alvoImgArea.innerHTML = '<img src="' + resolvedImgSrc + '" alt="Alvo" crossorigin="anonymous" />';
-      } else {
-        cr.alvoImgArea.innerHTML = '<div class="cr-alvo-empty">Sem imagem</div>';
-      }
-    }
-
-    goPreviewBtn && goPreviewBtn.addEventListener('click', buildPreview);
-    backFormBtn  && backFormBtn.addEventListener('click', function() { showStep('form'); });
-
-    /* ========================
-       CAPTURA — pré-busca as fontes Google e inline-as como base64
-       antes de chamar html-to-image, garantindo que qualquer peso/família
-       declarada no <link> apareça corretamente no PNG/PDF exportado.
-    ======================== */
-    var _contractFontCSS = null; /* cache entre exports */
-
-    function fetchAndInlineFonts() {
-      if (_contractFontCSS) return Promise.resolve(_contractFontCSS);
-
-      var linkEl = document.querySelector('link[href*="fonts.googleapis.com/css"]');
-      if (!linkEl) return Promise.resolve('');
-
-      return fetch(linkEl.href)
-        .then(function(r) { return r.text(); })
-        .then(function(css) {
-          /* Extrair todas as URLs de arquivo de fonte (fonts.gstatic.com) */
-          var urlRe = /url\((https:\/\/fonts\.gstatic\.com[^)]+)\)/g;
-          var urls = [], m;
-          while ((m = urlRe.exec(css)) !== null) urls.push(m[1]);
-
-          /* Baixar cada arquivo e converter para data-URL base64 */
-          return Promise.all(urls.map(function(url) {
-            return fetch(url)
-              .then(function(r) { return r.blob(); })
-              .then(function(blob) {
-                return new Promise(function(res) {
-                  var fr = new FileReader();
-                  fr.onload = function(e) { res({ url: url, b64: e.target.result }); };
-                  fr.readAsDataURL(blob);
-                });
-              });
-          })).then(function(fonts) {
-            /* Substituir as URLs remotas pelos dados base64 no CSS */
-            var inlined = css;
-            fonts.forEach(function(f) {
-              inlined = inlined.split('url(' + f.url + ')').join('url(' + f.b64 + ')');
-            });
-            _contractFontCSS = inlined;
-            return inlined;
-          });
-        })
-        .catch(function() { return ''; }); /* se falhar, exporta sem inline */
-    }
-
-    function capture() {
-      return new Promise(function(resolve, reject) {
-        loading.style.display = 'block';
-        var render = document.getElementById('contract-render');
-        var injected = null;
-
-        function finish() {
-          if (injected) injected.remove();
-          loading.style.display = 'none';
-        }
-
-        fetchAndInlineFonts()
-          .then(function(fontCSS) {
-            if (fontCSS) {
-              injected = document.createElement('style');
-              injected.id = 'contract-font-embed';
-              injected.textContent = fontCSS;
-              document.head.appendChild(injected);
-            }
-
-            return htmlToImage.toCanvas(render, {
-              pixelRatio: 2,
-              backgroundColor: null,
-              skipFonts: false,
-            });
-          })
-          .then(function(canvas) {
-            finish();
-            resolve(canvas);
-          })
-          .catch(function(err) {
-            finish();
-            reject(err);
-          });
-      });
-    }
-
-    /* ========================
-       DOWNLOAD PNG
-    ======================== */
-    dlPngBtn && dlPngBtn.addEventListener('click', function() {
-      capture().then(function(canvas) {
-        const link = document.createElement('a');
-        link.download = 'contrato-paz-' + Date.now() + '.png';
-        link.href = canvas.toDataURL('image/png');
-        link.click();
-      }).catch(function(err) {
-        console.error('Erro ao gerar PNG:', err);
-        alert('Erro ao gerar PNG. Verifique o console para detalhes.');
-      });
-    });
-
-    /* ========================
-       DOWNLOAD PDF
-    ======================== */
-    dlPdfBtn && dlPdfBtn.addEventListener('click', function() {
-      capture().then(function(canvas) {
-        const { jsPDF } = window.jspdf;
-
-        /* Converter dimensões do canvas (px a 2× escala) para mm
-           usando 96 DPI de tela como referência */
-        const PX_PER_MM = 96 / 25.4;
-        const wMm = (canvas.width  / 2) / PX_PER_MM;
-        const hMm = (canvas.height / 2) / PX_PER_MM;
-
-        /* PDF com tamanho exato do contrato — sem margens, sem distorção */
-        const pdf = new jsPDF({
-          orientation: wMm > hMm ? 'l' : 'p',
-          unit: 'mm',
-          format: [wMm, hMm],
-        });
-
-        const imgData = canvas.toDataURL('image/jpeg', 0.95);
-        pdf.addImage(imgData, 'JPEG', 0, 0, wMm, hMm);
-        pdf.save('contrato-paz-' + Date.now() + '.pdf');
-      }).catch(function(err) {
-        console.error('Erro ao gerar PDF:', err);
-        alert('Erro ao gerar PDF. Verifique o console para detalhes.');
-      });
     });
 
   })();
