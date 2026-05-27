@@ -7,10 +7,20 @@
   <link rel="icon" type="image/png" href="/assets/images/logo-paz.png" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@400;700;900&family=Cinzel:wght@400;500;600;700&family=EB+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@400;700;900&family=Cinzel:wght@400;500;600;700&family=EB+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="/css/style.css" />
   <link rel="stylesheet" href="/css/responsive.css" />
   <style>
+    @font-face {
+      font-family: "Cinzel Black";
+      src: local("Cinzel Black"),
+           local("Cinzel-Black"),
+           url("/assets/fonts/Cinzel-Black.ttf") format("truetype");
+      font-weight: 900;
+      font-style: normal;
+      font-display: swap;
+    }
+
     .gs-page { max-width:1200px; margin:0 auto; padding:clamp(40px,7vw,90px) var(--gutter) 100px; }
 
     /* ---- LOGIN ---- */
@@ -185,7 +195,6 @@
     .contract-export-pdf { color: var(--gold); border-color: var(--gold-deep); background: rgba(201,169,97,0.08); }
     .contract-export-png { color: var(--ghost-cyan); border-color: rgba(74,192,255,0.4); background: rgba(74,192,255,0.08); }
     .contract-export-back { color: var(--bone-dim); border-color: rgba(255,255,255,0.15); background: transparent; }
-    .contract-export-note { font-family: var(--font-body); font-style: italic; font-size: 13px; color: var(--bone-dim); }
     .contract-preview-wrap { overflow-x: auto; border: 1px solid rgba(201,169,97,0.2); background: #1a1208; padding: 20px; display: flex; justify-content: center; position: relative; }
     #contract-render-preview-image { display: none; width: 900px; min-width: 900px; height: auto; }
     .contract-preview-wrap.is-frozen #contract-render { display: none; }
@@ -223,20 +232,22 @@
     /* Imagem do alvo por trás do template com alfa (janela transparente do PNG) */
     #cr-alvo-img-area {
       position: absolute;
-      left: 60.05%;
-      top: 23.1%;
-      width: 32.95%;
-      height: 27.9%;
+      left: 60.28%;
+      top: 25.57%;
+      width: 31.28%;
+      height: 28.99%;
       overflow: hidden;
       z-index: 1;
       background: #c5af86;
     }
     #cr-alvo-img-area img {
+      display: block;
       width: 100%;
       height: 100%;
-      object-fit: fill;
+      object-fit: cover;
       object-position: center center;
-      transform: scale(1.06);
+      transform: scale(1.08);
+      transform-origin: center center;
       filter: sepia(0.08) contrast(1.02) brightness(0.95);
     }
 
@@ -244,8 +255,9 @@
     .cr-sec-val {
       position: absolute;
       z-index: 3;
-      font-family: "EB Garamond", serif;
-      color: #120800;
+      font-family: "Cormorant Garamond", Georgia, serif;
+      font-weight: 700;
+      color: #0C1F31;
       text-rendering: optimizeLegibility;
       word-break: break-word;
     }
@@ -270,31 +282,37 @@
       width: 39%;
     }
 
+    #cr-descricao,
+    #cr-dicas {
+      font-size: 24px;
+      font-weight: 600;
+      color: #091D30;
+      line-height: 1.18;
+    }
+
     #cr-descricao {
       left: 9.2%;
       top: calc(39.4% - 8px);
       width: 39.5%;
-      max-height: 11.95%;
+      height: calc(53.5% - 39.4% + 8px);
+      max-height: none;
       overflow: hidden;
-      font-size: 20px;
-      line-height: 1.18;
     }
-    #cr-descricao p { margin: 0 0 5px; }
+    #cr-descricao p,
+    #cr-dicas p { margin: 0 0 5px; }
 
     #cr-dicas {
       left: 9.55%;
-      top: calc(57.15% - 8px);
+      top: calc(57.15% + 2px);
       width: 38%;
-      max-height: 10.8%;
+      height: calc(71.7% - 57.15% - 2px);
+      max-height: none;
       overflow: hidden;
-      font-size: 19px;
-      line-height: 1.18;
     }
-    #cr-dicas p { margin: 0 0 6px; }
 
     #cr-participantes {
       left: 18.25%;
-      top: calc(74.15% - 8px);
+      top: calc(74.15% - 6px);
       width: 18%;
       font-size: 19px;
       line-height: 1.08;
@@ -303,7 +321,7 @@
     }
     #cr-tempo {
       left: 42.95%;
-      top: calc(74.15% - 8px);
+      top: calc(74.15% - 6px);
       width: 15%;
       font-size: 19px;
       line-height: 1.08;
@@ -313,23 +331,23 @@
 
     #cr-recompensa {
       left: 8.85%;
-      top: 80.25%;
+      top: calc(80.25% + 5px);
       width: 43.9%;
       text-align: center;
       z-index: 3;
-      font-family: "Cinzel Decorative", "Cinzel", serif;
+      font-family: "Cinzel", serif;
       font-size: 21px;
       font-weight: 700;
-      color: #0e0600;
+      color: #ffffff;
       letter-spacing: 0.01em;
       line-height: 1.04;
     }
 
     #cr-reportar {
       left: 62.35%;
-      top: calc(57.75% - 8px);
+      top: calc(57.75% + 21px);
       width: 18.9%;
-      font-size: 18px;
+      font-size: 38px;
       line-height: 1.02;
       font-weight: 700;
       text-decoration: none;
@@ -347,7 +365,7 @@
       flex-direction: column;
       align-items: center;
       justify-content: center;
-      transform: rotate(-8deg);
+      transform: translate(27px, 3px) rotate(20deg);
       transform-origin: center center;
     }
     .cr-rank-letter {
@@ -356,12 +374,12 @@
       left: auto;
       right: auto;
       text-align: center;
-      font-family: "Cinzel Decorative", "Cinzel", serif;
+      font-family: "Cinzel Black", "Cinzel", serif;
       font-size: 88px;
       font-weight: 900;
       line-height: 0.9;
       transform: translate(9px, 0);
-      color: rgba(105,12,6,0.90);
+      color: #560F0B;
       text-shadow: 2px 2px 0 rgba(75,6,3,0.3);
     }
     @media (max-width: 640px) {
@@ -821,7 +839,6 @@
           <button type="button" class="contract-export-btn contract-export-pdf" id="contract-dl-pdf">⎙ Baixar PDF</button>
           <button type="button" class="contract-export-btn contract-export-png" id="contract-dl-png">⬇ Baixar PNG</button>
           <button type="button" class="contract-export-btn contract-export-back" id="contract-back-form">← Editar Dados</button>
-          <span class="contract-export-note">Fontes carregadas via Google Fonts — pode levar 1–2s para renderizar.</span>
         </div>
         <div id="contract-loading">Gerando contrato...</div>
         <div class="contract-preview-wrap" id="contract-preview-wrap">

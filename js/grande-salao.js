@@ -321,8 +321,10 @@ function gsContractWaitForFonts() {
 
   var loads = [
     document.fonts.load('16px "EB Garamond"'),
-    document.fonts.load('16px "Cinzel"'),
-    document.fonts.load('16px "Cinzel Decorative"')
+    document.fonts.load('700 16px "Cinzel"'),
+    document.fonts.load('900 88px "Cinzel Black"'),
+    document.fonts.load('700 16px "Cormorant Garamond"'),
+    document.fonts.load('600 16px "Cormorant Garamond"')
   ];
 
   return Promise.all(loads.concat([document.fonts.ready])).catch(function() {
@@ -469,12 +471,14 @@ function gsContractSetPreviewTips(targetId, value) {
   if (!target) return;
   target.innerHTML = "";
 
+  var paragraphStyle = "margin:0 0 5px;font-family:Cormorant Garamond,Georgia,serif;font-size:24px;font-weight:600;color:#091D30;line-height:1.18;";
   var lines = (value || "").trim().split("\n").filter(function(line) {
     return line.trim();
   });
 
   lines.forEach(function(line) {
     var p = document.createElement("p");
+    p.style.cssText = paragraphStyle;
     p.textContent = line.trim();
     target.appendChild(p);
   });
@@ -546,7 +550,7 @@ function gsContractBuildPreview() {
   gsContractSetPreviewParagraphs(
     "cr-descricao",
     (gsContractEl("cf-descricao") || {}).value || "",
-    "margin:0 0 5px;font-family:EB Garamond,serif;font-size:20px;color:#120800;line-height:1.18;"
+    "margin:0 0 5px;font-family:Cormorant Garamond,Georgia,serif;font-size:24px;font-weight:600;color:#091D30;line-height:1.18;"
   );
   gsContractSetPreviewTips(
     "cr-dicas",
@@ -558,7 +562,7 @@ function gsContractBuildPreview() {
   gsContractApplyTextFit(gsContractEl("cr-participantes"), "19px", "17px", "15px");
   gsContractApplyTextFit(gsContractEl("cr-tempo"), "19px", "17px", "15px");
   gsContractApplyTextFit(gsContractEl("cr-recompensa"), "21px", "18px", "16px");
-  gsContractApplyTextFit(gsContractEl("cr-reportar"), "18px", "16px", "13.8px");
+  gsContractApplyTextFit(gsContractEl("cr-reportar"), "38px", "32px", "26px");
 
   var imgArea = gsContractEl("cr-alvo-img-area");
   if (imgArea) {
@@ -575,8 +579,8 @@ function gsContractBuildPreview() {
   }
 
   gsContractBuildPromise = gsContractWaitForFonts().then(function() {
-    gsContractFitBlockItems("cr-descricao", "p", 20, 14.2, 0.4, "1.18");
-    gsContractFitBlockItems("cr-dicas", "p", 19, 13.8, 0.4, "1.18");
+    gsContractFitBlockItems("cr-descricao", "p", 24, 16, 0.3, "1.18");
+    gsContractFitBlockItems("cr-dicas", "p", 24, 16, 0.3, "1.18");
     return new Promise(function(resolve) {
       requestAnimationFrame(resolve);
     });
