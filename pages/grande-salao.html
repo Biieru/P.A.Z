@@ -130,6 +130,20 @@
     .gs-contract-btn__corner--br { bottom:-2px; right:-2px; border-left:none; border-top:none; }
     .gs-contract-btn:hover .gs-contract-btn__corner { width: 18px; height: 18px; }
     .gs-contract-btn__icon { font-size: 18px; opacity: 0.85; }
+    .gs-contract-cta__actions {
+      display: flex;
+      flex-direction: column;
+      align-items: stretch;
+      gap: 12px;
+      flex-shrink: 0;
+    }
+    .gs-contract-cta__actions .gs-contract-btn {
+      justify-content: center;
+      min-width: 300px;
+      padding: 15px 28px;
+      letter-spacing: 0.16em;
+      font-size: 12px;
+    }
 
     /* ---- Modal de Contrato ---- */
     .contract-overlay {
@@ -154,6 +168,14 @@
     .contract-steps { display: flex; border-bottom: 1px solid rgba(201,169,97,0.15); }
     .contract-step-btn { flex: 1; padding: 13px 16px; font-family: var(--font-head); font-size: 10.5px; letter-spacing: 0.3em; text-transform: uppercase; color: var(--bone-dim); background: none; border: none; cursor: pointer; border-bottom: 2px solid transparent; transition: color .25s, border-color .25s; }
     .contract-step-btn.active { color: var(--gold-bright); border-bottom-color: var(--gold); }
+    .contract-step-btn--embed-only { display: none; }
+    .contract-overlay[data-contract-mode="embed"] .contract-step-btn--embed-only { display: block; }
+    .contract-overlay[data-contract-mode="embed"] .contract-step-btn--export-only { display: none; }
+    .contract-overlay[data-contract-mode="embed"] .contract-step-btn {
+      font-size: 9px;
+      letter-spacing: 0.14em;
+      padding: 13px 8px;
+    }
     .contract-step-panel { display: none; padding: 28px; }
     .contract-step-panel.active { display: block; }
     .contract-form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
@@ -181,6 +203,35 @@
     }
     .contract-img-file-label:hover { filter: brightness(1.2); }
     .contract-img-preview { margin-top: 10px; max-height: 120px; max-width: 200px; border: 1px solid rgba(201,169,97,0.2); display: none; }
+    .contract-field--embed-only { display: none; }
+    #contract-panel-form.is-embed-form .contract-field--embed-only { display: flex; }
+    #contract-panel-form.is-embed-form .contract-img-file-label { display: none; }
+    .contract-color-row {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    #cf-embed-color {
+      width: 56px;
+      height: 42px;
+      padding: 4px;
+      border: 1px solid rgba(201,169,97,0.35);
+      background: rgba(5,8,16,0.9);
+      cursor: pointer;
+    }
+    #cf-embed-color-hex {
+      flex: 1;
+      max-width: 120px;
+      background: rgba(5,8,16,0.9);
+      border: 1px solid rgba(201,169,97,0.25);
+      color: var(--bone);
+      font-family: Consolas, "Courier New", monospace;
+      font-size: 14px;
+      padding: 10px 12px;
+      outline: none;
+      text-transform: uppercase;
+    }
+    #cf-embed-color-hex:focus { border-color: var(--gold-bright); }
     .contract-form-actions { display: flex; gap: 10px; justify-content: flex-end; margin-top: 24px; flex-wrap: wrap; }
     .contract-preview-btn {
       padding: 12px 32px; font-family: var(--font-head); font-size: 11px; letter-spacing: 0.28em;
@@ -194,11 +245,220 @@
     .contract-export-btn:hover { filter: brightness(1.15); transform: translateY(-1px); }
     .contract-export-pdf { color: var(--gold); border-color: var(--gold-deep); background: rgba(201,169,97,0.08); }
     .contract-export-png { color: var(--ghost-cyan); border-color: rgba(74,192,255,0.4); background: rgba(74,192,255,0.08); }
+    .contract-export-embed { color: #8ce0ff; border-color: rgba(74,192,255,0.45); background: rgba(74,192,255,0.1); }
     .contract-export-back { color: var(--bone-dim); border-color: rgba(255,255,255,0.15); background: transparent; }
+    .contract-export-actions.is-embed-mode #contract-dl-pdf,
+    .contract-export-actions.is-embed-mode #contract-dl-png { display: none; }
+    .contract-export-actions:not(.is-embed-mode) #contract-copy-embed { display: none; }
     .contract-preview-wrap { overflow-x: auto; border: 1px solid rgba(201,169,97,0.2); background: #1a1208; padding: 20px; display: flex; justify-content: center; position: relative; }
     #contract-render-preview-image { display: none; width: 900px; min-width: 900px; height: auto; }
     .contract-preview-wrap.is-frozen #contract-render { display: none; }
     .contract-preview-wrap.is-frozen #contract-render-preview-image { display: block; }
+    .contract-preview-wrap.is-embed-mode #contract-render,
+    .contract-preview-wrap.is-embed-mode #contract-render-preview-image { display: none !important; }
+    .contract-preview-wrap.is-embed-mode #contract-embed-preview { display: block; }
+    #contract-embed-preview { display: none; width: 100%; max-width: 640px; }
+    .contract-embed-card {
+      background: #2b2d31;
+      border-left: 4px solid #c9a961;
+      border-radius: 4px;
+      padding: 16px 18px 14px;
+      color: #dbdee1;
+      font-family: "Segoe UI", "Helvetica Neue", Arial, sans-serif;
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.35);
+    }
+    .contract-embed-card__author {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 10px;
+    }
+    .contract-embed-card__author img {
+      width: 24px;
+      height: 24px;
+      border-radius: 50%;
+      object-fit: cover;
+    }
+    .contract-embed-card__author-name {
+      font-size: 13px;
+      font-weight: 600;
+      color: #fff;
+    }
+    .contract-embed-card__title {
+      font-size: 16px;
+      font-weight: 700;
+      color: #fff;
+      margin: 0 0 8px;
+    }
+    .contract-embed-card__fields {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 10px 16px;
+      margin-top: 8px;
+    }
+    .contract-embed-card__field { min-width: 0; }
+    .contract-embed-card__field--full { grid-column: 1 / -1; }
+    .contract-embed-card__field-name {
+      font-size: 12px;
+      font-weight: 700;
+      color: #fff;
+      margin-bottom: 2px;
+    }
+    .contract-embed-card__field-value {
+      font-size: 13px;
+      line-height: 1.45;
+      color: #dbdee1;
+      white-space: pre-wrap;
+      word-break: break-word;
+    }
+    .contract-embed-card__image {
+      margin-top: 12px;
+      max-width: 100%;
+      border-radius: 4px;
+      border: 1px solid rgba(255,255,255,0.08);
+    }
+    .contract-embed-card__footer {
+      margin-top: 12px;
+      font-size: 11px;
+      color: #949ba4;
+    }
+    .contract-embed-note {
+      margin: 14px 0 0;
+      font-family: var(--font-body);
+      font-size: 13px;
+      font-style: italic;
+      color: #ffb347;
+    }
+    .contract-embed-json-label {
+      display: block;
+      margin: 18px 0 8px;
+      font-family: var(--font-head);
+      font-size: 10px;
+      letter-spacing: 0.28em;
+      text-transform: uppercase;
+      color: var(--bone-dim);
+    }
+    #contract-embed-json {
+      width: 100%;
+      min-height: 220px;
+      box-sizing: border-box;
+      background: rgba(5,8,16,0.95);
+      border: 1px solid rgba(201,169,97,0.25);
+      color: #d8cba8;
+      font-family: Consolas, "Courier New", monospace;
+      font-size: 12px;
+      line-height: 1.5;
+      padding: 14px;
+      resize: vertical;
+    }
+    .contract-markdown-label {
+      display: block;
+      margin: 0 0 8px;
+      font-family: var(--font-head);
+      font-size: 10px;
+      letter-spacing: 0.28em;
+      text-transform: uppercase;
+      color: var(--bone-dim);
+    }
+    .contract-markdown-wrap {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+      gap: 20px;
+      align-items: start;
+    }
+    .contract-markdown-preview-pane,
+    .contract-markdown-code-pane {
+      min-width: 0;
+    }
+    .contract-markdown-preview {
+      min-height: 420px;
+      box-sizing: border-box;
+      background: #313338;
+      border: 1px solid rgba(201,169,97,0.2);
+      border-radius: 4px;
+      padding: 16px 18px;
+      color: #dbdee1;
+      font-family: "Segoe UI", "Helvetica Neue", Arial, sans-serif;
+      font-size: 14px;
+      line-height: 1.45;
+    }
+    .contract-md-quote {
+      border-left: 4px solid #4e5058;
+      padding-left: 12px;
+    }
+    .contract-md-quote + .contract-md-quote { margin-top: 14px; }
+    .contract-md-kicker {
+      font-size: 12px;
+      color: #949ba4;
+      margin-bottom: 8px;
+    }
+    .contract-md-section {
+      font-size: 16px;
+      font-weight: 700;
+      color: #fff;
+      margin: 0 0 8px;
+    }
+    .contract-md-field {
+      margin: 0 0 8px;
+    }
+    .contract-md-field strong {
+      display: block;
+      color: #fff;
+      font-weight: 700;
+      margin-bottom: 2px;
+    }
+    .contract-md-inline {
+      display: inline-block;
+      background: #1e1f22;
+      border-radius: 3px;
+      padding: 1px 5px;
+      font-family: Consolas, "Courier New", monospace;
+      font-size: 13px;
+      color: #dbdee1;
+    }
+    .contract-md-clause {
+      margin-top: 14px;
+      background: #1e1f22;
+      border: 1px solid rgba(255,255,255,0.08);
+      border-radius: 4px;
+      padding: 12px 14px;
+      font-family: Consolas, "Courier New", monospace;
+      font-size: 12px;
+      line-height: 1.5;
+      color: #b5bac1;
+      white-space: pre-wrap;
+    }
+    .contract-md-alvo {
+      margin-top: 14px;
+      font-size: 15px;
+      font-weight: 700;
+      color: #fff;
+      word-break: break-word;
+    }
+    .contract-md-alvo img {
+      display: block;
+      margin-top: 8px;
+      max-width: 100%;
+      border-radius: 4px;
+      border: 1px solid rgba(255,255,255,0.08);
+    }
+    #contract-markdown-output {
+      width: 100%;
+      min-height: 420px;
+      box-sizing: border-box;
+      background: rgba(5,8,16,0.95);
+      border: 1px solid rgba(201,169,97,0.25);
+      color: #d8cba8;
+      font-family: Consolas, "Courier New", monospace;
+      font-size: 12px;
+      line-height: 1.55;
+      padding: 14px;
+      resize: vertical;
+      white-space: pre;
+    }
+    @media (max-width: 900px) {
+      .contract-markdown-wrap { grid-template-columns: 1fr; }
+    }
     #contract-loading { display: none; text-align: center; padding: 40px; font-family: var(--font-head); font-size: 12px; letter-spacing: 0.35em; color: var(--bone-dim); text-transform: uppercase; }
 
     /* === CONTRATO VISUAL — pergaminho === */
@@ -384,6 +644,8 @@
     }
     @media (max-width: 640px) {
       .gs-contract-cta__inner { flex-direction: column; align-items: flex-start; }
+      .gs-contract-cta__actions { width: 100%; }
+      .gs-contract-cta__actions .gs-contract-btn { min-width: 0; width: 100%; }
       .contract-form-grid { grid-template-columns: 1fr; }
       .contract-field--full { grid-column: 1; }
     }
@@ -485,16 +747,26 @@
             <div class="gs-contract-cta__text">
               <p class="gs-contract-cta__eyebrow">Quadro de Contratos Abissais</p>
               <h3 class="gs-contract-cta__title">Emitir Novo Contrato de Missão</h3>
-              <p class="gs-contract-cta__desc">Gere um contrato oficial da P.A.Z preenchido e pronto para exportar em PDF ou PNG.</p>
+              <p class="gs-contract-cta__desc">Gere um contrato oficial da P.A.Z, exporte-o em PNG, PDF ou até mesmo TEXTO e EMBED.</p>
             </div>
-            <button type="button" class="gs-contract-btn" id="gs-open-contract">
-              <span class="gs-contract-btn__corner gs-contract-btn__corner--tl"></span>
-              <span class="gs-contract-btn__corner gs-contract-btn__corner--tr"></span>
-              <span class="gs-contract-btn__corner gs-contract-btn__corner--bl"></span>
-              <span class="gs-contract-btn__corner gs-contract-btn__corner--br"></span>
-              <span class="gs-contract-btn__icon">☩</span>
-              <span class="gs-contract-btn__label">Gerar Contrato</span>
-            </button>
+            <div class="gs-contract-cta__actions">
+              <button type="button" class="gs-contract-btn" id="gs-open-contract-export" data-contract-mode="export">
+                <span class="gs-contract-btn__corner gs-contract-btn__corner--tl"></span>
+                <span class="gs-contract-btn__corner gs-contract-btn__corner--tr"></span>
+                <span class="gs-contract-btn__corner gs-contract-btn__corner--bl"></span>
+                <span class="gs-contract-btn__corner gs-contract-btn__corner--br"></span>
+                <span class="gs-contract-btn__icon">☩</span>
+                <span class="gs-contract-btn__label">Gerar Contrato PNG/PDF</span>
+              </button>
+              <button type="button" class="gs-contract-btn" id="gs-open-contract-embed" data-contract-mode="embed">
+                <span class="gs-contract-btn__corner gs-contract-btn__corner--tl"></span>
+                <span class="gs-contract-btn__corner gs-contract-btn__corner--tr"></span>
+                <span class="gs-contract-btn__corner gs-contract-btn__corner--bl"></span>
+                <span class="gs-contract-btn__corner gs-contract-btn__corner--br"></span>
+                <span class="gs-contract-btn__icon">☩</span>
+                <span class="gs-contract-btn__label">Gerar Contrato Embed</span>
+              </button>
+            </div>
           </div>
         </div>
       </div>
@@ -739,14 +1011,16 @@
       <div class="contract-modal__header">
         <div>
           <h2 class="contract-modal__title">☩ Gerador de Contrato de Missão</h2>
-          <p class="contract-modal__sub">Quadro de Contratos Abissais — P.A.Z</p>
+          <p class="contract-modal__sub" id="contract-modal-sub">Exportação PNG/PDF — Quadro de Contratos Abissais — P.A.Z</p>
         </div>
         <button type="button" class="contract-close-btn" id="contractClose">✕ Fechar</button>
       </div>
 
       <div class="contract-steps">
         <button type="button" class="contract-step-btn active" data-step="form">① Preencher Dados</button>
-        <button type="button" class="contract-step-btn" data-step="preview">② Visualizar & Exportar</button>
+        <button type="button" class="contract-step-btn contract-step-btn--export-only" data-step="preview" id="contract-step-preview">② Visualizar & Exportar</button>
+        <button type="button" class="contract-step-btn contract-step-btn--embed-only" data-step="preview" id="contract-step-embed">② Visualizar & Copiar Embed</button>
+        <button type="button" class="contract-step-btn contract-step-btn--embed-only" data-step="markdown" id="contract-step-markdown">③ Visualizar & Copiar Discord (Markdown)</button>
       </div>
 
       <!-- PASSO 1: FORMULÁRIO -->
@@ -815,8 +1089,16 @@
             <input type="text" id="cf-reportar" placeholder="Nome ou cargo do responsável..." />
           </div>
 
+          <div class="contract-field contract-field--full contract-field--embed-only">
+            <label for="cf-embed-color">Cor do Embed</label>
+            <div class="contract-color-row">
+              <input type="color" id="cf-embed-color" value="#0c1f31" aria-label="Selecionar cor do embed" />
+              <input type="text" id="cf-embed-color-hex" value="#0C1F31" maxlength="7" spellcheck="false" aria-label="Código hexadecimal da cor" />
+            </div>
+          </div>
+
           <div class="contract-field contract-field--full">
-            <label>Imagem do Alvo</label>
+            <label for="cf-img-url">Imagem do Alvo</label>
             <div class="contract-img-row">
               <input type="text" id="cf-img-url" class="contract-img-url" placeholder="Cole a URL de uma imagem..." />
               <label class="contract-img-file-label" for="cf-img-file">
@@ -835,14 +1117,21 @@
 
       <!-- PASSO 2: PREVIEW & EXPORT -->
       <div class="contract-step-panel" id="contract-panel-preview">
-        <div class="contract-export-actions">
+        <div class="contract-export-actions" id="contract-export-actions">
           <button type="button" class="contract-export-btn contract-export-pdf" id="contract-dl-pdf">⎙ Baixar PDF</button>
           <button type="button" class="contract-export-btn contract-export-png" id="contract-dl-png">⬇ Baixar PNG</button>
+          <button type="button" class="contract-export-btn contract-export-embed" id="contract-copy-embed">⎘ Copiar Embed</button>
           <button type="button" class="contract-export-btn contract-export-back" id="contract-back-form">← Editar Dados</button>
         </div>
         <div id="contract-loading">Gerando contrato...</div>
         <div class="contract-preview-wrap" id="contract-preview-wrap">
           <img id="contract-render-preview-image" alt="Pré-visualização do contrato" />
+          <div id="contract-embed-preview" aria-live="polite">
+            <div class="contract-embed-card" id="contract-embed-card"></div>
+            <p class="contract-embed-note" id="contract-embed-note" hidden></p>
+            <label class="contract-embed-json-label" for="contract-embed-json">JSON do Embed (Discord)</label>
+            <textarea id="contract-embed-json" readonly spellcheck="false"></textarea>
+          </div>
           <!-- CONTRATO RENDERIZÁVEL -->
           <div id="contract-render" class="contract-render-surface">
             <div id="cr-alvo-img-area" aria-hidden="true"></div>
@@ -870,6 +1159,24 @@
 
           </div><!-- #contract-render -->
         </div><!-- .contract-preview-wrap -->
+      </div>
+
+      <!-- PASSO 3: MARKDOWN DISCORD -->
+      <div class="contract-step-panel" id="contract-panel-markdown">
+        <div class="contract-export-actions is-embed-mode">
+          <button type="button" class="contract-export-btn contract-export-embed" id="contract-copy-markdown">⎘ Copiar Markdown</button>
+          <button type="button" class="contract-export-btn contract-export-back" id="contract-back-form-md">← Editar Dados</button>
+        </div>
+        <div class="contract-markdown-wrap">
+          <div class="contract-markdown-preview-pane">
+            <span class="contract-markdown-label">Pré-visualização (Discord)</span>
+            <div class="contract-markdown-preview" id="contract-markdown-preview" aria-live="polite"></div>
+          </div>
+          <div class="contract-markdown-code-pane">
+            <label class="contract-markdown-label" for="contract-markdown-output">Markdown do Contrato (Discord)</label>
+            <textarea id="contract-markdown-output" readonly spellcheck="false"></textarea>
+          </div>
+        </div>
       </div>
 
     </div><!-- .contract-modal -->

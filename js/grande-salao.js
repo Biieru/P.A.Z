@@ -207,11 +207,16 @@ function gsExportPDF() { gsExportSectionPDF("gs-tables-area", "grande-salao-comp
 var GS_CONTRACT_HTML2CANVAS = "https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js";
 var GS_CONTRACT_JSPDF = "https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js";
 var GS_CONTRACT_TEMPLATE_URL = "/assets/images/template.png?v=20260526-04";
+var GS_CONTRACT_EMBED_ICON_URL = "https://i.imgur.com/EZWCQ4s.png";
+var GS_CONTRACT_MARKDOWN_CLAUSE = "Abandono resulta em consquências graves, que vão desde multas, perda temporária de acesso ao quadro de contratos, caçadas ou expulsão. A liderança da P.A.Z não se responsabiliza por perdas causadas por imprudência ou abandono de formação. Porém traições serão diretamente resolvidas pelo alto escalão da P.A.Z.";
 var gsContractResolvedImgSrc = null;
 var gsContractCaptureBusy = false;
 var gsContractBuildPromise = null;
 var gsContractPreviewCanvas = null;
 var gsContractPreviewPromise = null;
+var gsContractMode = "export";
+var gsContractEmbedPayload = null;
+var gsContractMarkdownContent = null;
 
 function gsContractEl(id) { return document.getElementById(id); }
 function gsContractEls(sel) { return document.querySelectorAll(sel); }
@@ -258,13 +263,82 @@ function gsContractShowStep(step) {
   });
   var panelForm = gsContractEl("contract-panel-form");
   var panelPreview = gsContractEl("contract-panel-preview");
+  var panelMarkdown = gsContractEl("contract-panel-markdown");
   if (panelForm) panelForm.classList.toggle("active", step === "form");
   if (panelPreview) panelPreview.classList.toggle("active", step === "preview");
+  if (panelMarkdown) panelMarkdown.classList.toggle("active", step === "markdown");
 }
 
-function gsContractOpenModal() {
+function gsContractApplyModalMode() {
+  var overlay = gsContractEl("contractOverlay");
+  var sub = gsContractEl("contract-modal-sub");
+  var exportActions = gsContractEl("contract-export-actions");
+  var previewWrap = gsContractEl("contract-preview-wrap");
+  var panelForm = gsContractEl("contract-panel-form");
+  var loading = gsContractEl("contract-loading");
+  var imgUrlField = gsContractEl("cf-img-url");
+  var isEmbed = gsContractMode === "embed";
+
+  if (overlay) overlay.dataset.contractMode = gsContractMode;
+  if (panelForm) panelForm.classList.toggle("is-embed-form", isEmbed);
+  if (exportActions) exportActions.classList.toggle("is-embed-mode", isEmbed);
+  if (previewWrap) previewWrap.classList.toggle("is-embed-mode", isEmbed);
+  if (loading) loading.textContent = isEmbed ? "Gerando contrato..." : "Gerando contrato...";
+  if (imgUrlField) {
+    imgUrlField.placeholder = isEmbed
+      ? "Cole a URL pública (https://) da imagem do alvo..."
+      : "Cole a URL de uma imagem...";
+  }
+  if (sub) {
+    sub.textContent = isEmbed
+      ? "Formato Embed — Quadro de Contratos Abissais — P.A.Z"
+      : "Exportação PNG/PDF — Quadro de Contratos Abissais — P.A.Z";
+  }
+}
+
+function gsContractClearEmbedLocalImage() {
+  var fileField = gsContractEl("cf-img-file");
+  if (fileField) fileField.value = "";
+  if (gsContractResolvedImgSrc && gsContractResolvedImgSrc.indexOf("data:") === 0) {
+    gsContractResolvedImgSrc = null;
+    gsContractSetImgPreview(null);
+  }
+}
+
+function gsContractSyncEmbedColorFromPicker() {
+  var picker = gsContractEl("cf-embed-color");
+  var hex = gsContractEl("cf-embed-color-hex");
+  if (picker && hex) hex.value = picker.value.toUpperCase();
+}
+
+function gsContractSyncEmbedColorFromHex() {
+  var picker = gsContractEl("cf-embed-color");
+  var hex = gsContractEl("cf-embed-color-hex");
+  if (!picker || !hex) return;
+  var value = hex.value.trim();
+  if (/^#[0-9A-Fa-f]{6}$/.test(value)) {
+    picker.value = value.toLowerCase();
+    hex.value = value.toUpperCase();
+  }
+}
+
+function gsContractGetEmbedColor() {
+  var picker = gsContractEl("cf-embed-color");
+  if (picker && /^#[0-9A-Fa-f]{6}$/.test(picker.value)) return picker.value.toUpperCase();
+  return "#0C1F31";
+}
+
+function gsContractHexToDiscordColor(hex) {
+  var cleaned = (hex || "#0C1F31").replace("#", "");
+  return parseInt(cleaned, 16);
+}
+
+function gsContractOpenModal(mode) {
+  gsContractMode = mode === "embed" ? "embed" : "export";
   var overlay = gsContractEl("contractOverlay");
   if (!overlay) return;
+  if (gsContractMode === "embed") gsContractClearEmbedLocalImage();
+  gsContractApplyModalMode();
   overlay.classList.add("is-open");
   document.body.style.overflow = "hidden";
   gsContractShowStep("form");
@@ -395,10 +469,351 @@ function gsContractCanvasLooksBlank(canvas) {
   return samples > 0 && nearBg / samples > 0.96;
 }
 
+function gsContractAbsoluteUrl(path) {
+  if (!path) return "";
+  if (/^https?:\/\//i.test(path)) return path;
+  var origin = window.location.origin || "";
+  return origin + (path.charAt(0) === "/" ? path : "/" + path);
+}
+
+function gsContractFieldValue(formId) {
+  var field = gsContractEl(formId);
+  var value = field && field.value ? field.value.trim() : "";
+  return value || "—";
+}
+
+function gsContractTruncate(value, max) {
+  var text = (value || "").trim();
+  if (!text) return "—";
+  if (text.length <= max) return text;
+  return text.slice(0, max - 1) + "…";
+}
+
+function gsContractResolvePublicImageUrl() {
+  var urlField = gsContractEl("cf-img-url");
+  var urlValue = urlField && urlField.value ? urlField.value.trim() : "";
+
+  if (/^https?:\/\//i.test(urlValue)) return urlValue;
+  if (gsContractMode !== "embed" && gsContractResolvedImgSrc && /^https?:\/\//i.test(gsContractResolvedImgSrc)) {
+    return gsContractResolvedImgSrc;
+  }
+  return "";
+}
+
+function gsContractReadFormData() {
+  return {
+    tipo: gsContractFieldValue("cf-tipo"),
+    rank: gsContractFieldValue("cf-rank"),
+    alvo: gsContractFieldValue("cf-alvo"),
+    descricao: gsContractFieldValue("cf-descricao"),
+    dicas: gsContractFieldValue("cf-dicas"),
+    participantes: gsContractFieldValue("cf-participantes"),
+    tempo: gsContractFieldValue("cf-tempo"),
+    recompensa: gsContractFieldValue("cf-recompensa"),
+    reportar: gsContractFieldValue("cf-reportar"),
+    embedColor: gsContractGetEmbedColor(),
+    imageUrl: gsContractResolvePublicImageUrl()
+  };
+}
+
+function gsContractBuildDiscordEmbed(data) {
+  var embed = {
+    title: "☩ P.A.Z — Contrato de Missão Abissal",
+    color: gsContractHexToDiscordColor(data.embedColor),
+    author: {
+      name: "Quadro de Contratos Abissais",
+      icon_url: GS_CONTRACT_EMBED_ICON_URL
+    },
+    fields: [
+      { name: "Tipo de Trabalho", value: gsContractTruncate(data.tipo, 256), inline: true },
+      { name: "Rank da Missão", value: data.rank !== "—" ? "**Rank " + data.rank + "**" : "—", inline: true },
+      { name: "Alvo / Objetivo", value: gsContractTruncate(data.alvo, 1024), inline: false },
+      { name: "Descrição da Missão", value: gsContractTruncate(data.descricao, 1024), inline: false },
+      { name: "Dicas e Informações", value: gsContractTruncate(data.dicas, 1024), inline: false },
+      { name: "Nº de Participantes", value: gsContractTruncate(data.participantes, 256), inline: true },
+      { name: "Tempo Limite", value: gsContractTruncate(data.tempo, 256), inline: true },
+      { name: "Recompensa", value: gsContractTruncate(data.recompensa, 1024), inline: false },
+      { name: "Reportar À", value: gsContractTruncate(data.reportar, 256), inline: false }
+    ],
+    footer: {
+      text: "P.A.Z — Predators of the Abyssal Zone · Cláusula Abissal: abandono resulta em caçada."
+    },
+    timestamp: new Date().toISOString()
+  };
+
+  if (data.imageUrl) {
+    embed.image = { url: data.imageUrl };
+  }
+
+  return embed;
+}
+
+function gsContractBuildEmbedPayload(data) {
+  return { embeds: [gsContractBuildDiscordEmbed(data)] };
+}
+
+function gsContractEscapeHtml(value) {
+  return String(value || "")
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;")
+    .replace(/"/g, "&quot;");
+}
+
+function gsContractFormatEmbedPreviewValue(value) {
+  return gsContractEscapeHtml(value || "—").replace(/\*\*(.+?)\*\*/g, "<strong>$1</strong>");
+}
+
+function gsContractRenderEmbedPreview(payload, data) {
+  var card = gsContractEl("contract-embed-card");
+  var jsonField = gsContractEl("contract-embed-json");
+  var note = gsContractEl("contract-embed-note");
+  var wrap = gsContractEl("contract-preview-wrap");
+  if (!card || !jsonField || !wrap) return;
+
+  var embed = payload.embeds[0];
+  var fieldsHtml = embed.fields.map(function(field) {
+    var full = field.inline ? "" : " contract-embed-card__field--full";
+    return (
+      '<div class="contract-embed-card__field' + full + '">' +
+        '<div class="contract-embed-card__field-name">' + gsContractEscapeHtml(field.name) + '</div>' +
+        '<div class="contract-embed-card__field-value">' + gsContractFormatEmbedPreviewValue(field.value) + '</div>' +
+      '</div>'
+    );
+  }).join("");
+
+  var imageHtml = embed.image && embed.image.url
+    ? '<img class="contract-embed-card__image" src="' + gsContractEscapeHtml(embed.image.url) + '" alt="Imagem do alvo" />'
+    : "";
+
+  card.innerHTML =
+    '<div class="contract-embed-card__author">' +
+      '<img src="' + gsContractEscapeHtml(embed.author.icon_url) + '" alt="" />' +
+      '<div class="contract-embed-card__author-name">' + gsContractEscapeHtml(embed.author.name) + '</div>' +
+    '</div>' +
+    '<div class="contract-embed-card__title">' + gsContractEscapeHtml(embed.title) + '</div>' +
+    '<div class="contract-embed-card__fields">' + fieldsHtml + '</div>' +
+    imageHtml +
+    '<div class="contract-embed-card__footer">' + gsContractEscapeHtml(embed.footer.text) + '</div>';
+
+  card.style.borderLeftColor = data.embedColor || "#0C1F31";
+  jsonField.value = JSON.stringify(payload, null, 2);
+  gsContractEmbedPayload = payload;
+
+  if (note) {
+    note.hidden = true;
+    note.textContent = "";
+  }
+
+  wrap.classList.add("is-embed-mode");
+  wrap.classList.remove("is-frozen");
+}
+
+function gsContractCopyText(text) {
+  if (navigator.clipboard && navigator.clipboard.writeText) {
+    return navigator.clipboard.writeText(text);
+  }
+
+  return new Promise(function(resolve, reject) {
+    var area = document.createElement("textarea");
+    area.value = text;
+    area.setAttribute("readonly", "");
+    area.style.position = "fixed";
+    area.style.left = "-9999px";
+    document.body.appendChild(area);
+    area.select();
+    try {
+      document.execCommand("copy");
+      resolve();
+    } catch (err) {
+      reject(err);
+    } finally {
+      document.body.removeChild(area);
+    }
+  });
+}
+
+function gsContractCopyEmbed() {
+  var jsonField = gsContractEl("contract-embed-json");
+  var text = jsonField && jsonField.value ? jsonField.value : (gsContractEmbedPayload ? JSON.stringify(gsContractEmbedPayload, null, 2) : "");
+  if (!text) {
+    alert("Gere a pré-visualização antes de copiar o embed.");
+    return;
+  }
+
+  gsContractCopyText(text).then(function() {
+    gsShowLoading("EMBED COPIADO");
+    setTimeout(function() { gsShowLoading(""); }, 1800);
+  }).catch(function() {
+    alert("Não foi possível copiar automaticamente. Selecione e copie o JSON manualmente.");
+  });
+}
+
+function gsContractFormatMarkdownInline(value) {
+  var text = (value || "").trim();
+  if (!text || text === "—") return "X";
+  return text.replace(/`/g, "'");
+}
+
+function gsContractFormatMarkdownRank(rank) {
+  if (!rank || rank === "—") return "X";
+  if (/^rank\s+/i.test(rank)) return rank;
+  return "Rank " + rank;
+}
+
+function gsContractMarkdownBlockValue(value) {
+  var text = (value || "").trim();
+  if (!text || text === "—") return "X";
+  return text.replace(/\s+/g, " ").replace(/`/g, "'");
+}
+
+function gsContractMarkdownCodeLine(value) {
+  return "> `" + gsContractFormatMarkdownInline(value) + "`";
+}
+
+function gsContractBuildDiscordMarkdown(data) {
+  var descricao = gsContractMarkdownBlockValue(data.descricao === "—" ? "" : data.descricao);
+  var dicas = gsContractMarkdownBlockValue(data.dicas === "—" ? "" : data.dicas);
+  var imageValue = data.imageUrl || "X";
+
+  return [
+    "> -# Quadro de Contrato Abissal P.A.Z",
+    "> ## Identificação da Missão",
+    "> **Tipo de Trabalho**  ",
+    gsContractMarkdownCodeLine(data.tipo),
+    "> **Rank da Missão**  ",
+    "> `" + gsContractFormatMarkdownRank(data.rank) + "`",
+    "> **Alvo / Objetivo**  ",
+    gsContractMarkdownCodeLine(data.alvo),
+    "> ",
+    "> ## Descrição da Missão",
+    "> `" + descricao + "`",
+    "> ",
+    "> ## Informações Relevantes",
+    "> `" + dicas + "`",
+    "> ",
+    "> ## Requisitos Operacionais",
+    "> **Número de Participantes:** `" + gsContractFormatMarkdownInline(data.participantes) + "`  ",
+    "> **Tempo Limite:** `" + gsContractFormatMarkdownInline(data.tempo) + "`  ",
+    "> **Recompensa:** `" + gsContractFormatMarkdownInline(data.recompensa) + "`  ",
+    "> **Responsável pelo Relatório:** `" + gsContractFormatMarkdownInline(data.reportar) + "`",
+    "```yaml",
+    "#Cláusula Abissal: ",
+    GS_CONTRACT_MARKDOWN_CLAUSE,
+    "```",
+    "> ### Alvo: " + imageValue
+  ].join("\n");
+}
+
+function gsContractRenderMarkdownBlock(value) {
+  return '<div class="contract-md-field"><span class="contract-md-inline">' +
+    gsContractEscapeHtml(gsContractMarkdownBlockValue(value === "—" ? "" : value)) +
+  "</span></div>";
+}
+
+function gsContractRenderMarkdownPreviewCard(data) {
+  var preview = gsContractEl("contract-markdown-preview");
+  if (!preview) return;
+
+  var imageValue = data.imageUrl || "X";
+  var imageHtml = /^https?:\/\//i.test(imageValue)
+    ? '<div class="contract-md-alvo">Alvo: <a href="' + gsContractEscapeHtml(imageValue) + '" target="_blank" rel="noopener noreferrer">' +
+      gsContractEscapeHtml(imageValue) + '</a><img src="' + gsContractEscapeHtml(imageValue) + '" alt="Imagem do alvo" /></div>'
+    : '<div class="contract-md-alvo">Alvo: ' + gsContractEscapeHtml(imageValue) + "</div>";
+
+  preview.innerHTML =
+    '<div class="contract-md-quote">' +
+      '<div class="contract-md-kicker">Quadro de Contrato Abissal P.A.Z</div>' +
+      '<div class="contract-md-section">Identificação da Missão</div>' +
+      '<div class="contract-md-field"><strong>Tipo de Trabalho</strong><span class="contract-md-inline">' + gsContractEscapeHtml(gsContractFormatMarkdownInline(data.tipo)) + "</span></div>" +
+      '<div class="contract-md-field"><strong>Rank da Missão</strong><span class="contract-md-inline">' + gsContractEscapeHtml(gsContractFormatMarkdownRank(data.rank)) + "</span></div>" +
+      '<div class="contract-md-field"><strong>Alvo / Objetivo</strong><span class="contract-md-inline">' + gsContractEscapeHtml(gsContractFormatMarkdownInline(data.alvo)) + "</span></div>" +
+    "</div>" +
+    '<div class="contract-md-quote">' +
+      '<div class="contract-md-section">Descrição da Missão</div>' +
+      gsContractRenderMarkdownBlock(data.descricao) +
+    "</div>" +
+    '<div class="contract-md-quote">' +
+      '<div class="contract-md-section">Informações Relevantes</div>' +
+      gsContractRenderMarkdownBlock(data.dicas) +
+    "</div>" +
+    '<div class="contract-md-quote">' +
+      '<div class="contract-md-section">Requisitos Operacionais</div>' +
+      '<div class="contract-md-field"><strong>Número de Participantes:</strong> <span class="contract-md-inline">' + gsContractEscapeHtml(gsContractFormatMarkdownInline(data.participantes)) + "</span></div>" +
+      '<div class="contract-md-field"><strong>Tempo Limite:</strong> <span class="contract-md-inline">' + gsContractEscapeHtml(gsContractFormatMarkdownInline(data.tempo)) + "</span></div>" +
+      '<div class="contract-md-field"><strong>Recompensa:</strong> <span class="contract-md-inline">' + gsContractEscapeHtml(gsContractFormatMarkdownInline(data.recompensa)) + "</span></div>" +
+      '<div class="contract-md-field"><strong>Responsável pelo Relatório:</strong> <span class="contract-md-inline">' + gsContractEscapeHtml(gsContractFormatMarkdownInline(data.reportar)) + "</span></div>" +
+    "</div>" +
+    '<div class="contract-md-clause">#Cláusula Abissal: \n' + gsContractEscapeHtml(GS_CONTRACT_MARKDOWN_CLAUSE) + "</div>" +
+    imageHtml;
+}
+
+function gsContractRenderMarkdownPreview(data, markdown) {
+  var field = gsContractEl("contract-markdown-output");
+  if (field) field.value = markdown;
+  gsContractMarkdownContent = markdown;
+  gsContractRenderMarkdownPreviewCard(data);
+}
+
+function gsContractOpenMarkdownPreviewStep() {
+  gsContractApplyModalMode();
+  gsContractShowStep("markdown");
+
+  return new Promise(function(resolve) {
+    requestAnimationFrame(function() {
+      var data = gsContractReadFormData();
+      var markdown = gsContractBuildDiscordMarkdown(data);
+      gsContractRenderMarkdownPreview(data, markdown);
+      resolve(markdown);
+    });
+  });
+}
+
+function gsContractCopyMarkdown() {
+  var field = gsContractEl("contract-markdown-output");
+  var text = field && field.value ? field.value : (gsContractMarkdownContent || "");
+  if (!text) {
+    alert("Gere a pré-visualização antes de copiar o markdown.");
+    return;
+  }
+
+  gsContractCopyText(text).then(function() {
+    gsShowLoading("MARKDOWN COPIADO");
+    setTimeout(function() { gsShowLoading(""); }, 1800);
+  }).catch(function() {
+    alert("Não foi possível copiar automaticamente. Selecione e copie o markdown manualmente.");
+  });
+}
+
+function gsContractOpenEmbedPreviewStep() {
+  var loading = gsContractEl("contract-loading");
+  var wrap = gsContractEl("contract-preview-wrap");
+
+  gsContractShowStep("preview");
+  gsContractSetLivePreviewMode();
+  gsContractPreviewCanvas = null;
+  gsContractApplyModalMode();
+
+  if (loading) loading.style.display = "block";
+
+  return new Promise(function(resolve) {
+    requestAnimationFrame(function() {
+      var data = gsContractReadFormData();
+      var payload = gsContractBuildEmbedPayload(data);
+      gsContractRenderEmbedPreview(payload, data);
+      if (loading) loading.style.display = "none";
+      resolve(payload);
+    });
+  });
+}
+
 function gsContractSetLivePreviewMode() {
   var wrap = gsContractEl("contract-preview-wrap");
   var img = gsContractEl("contract-render-preview-image");
-  if (wrap) wrap.classList.remove("is-frozen");
+  if (wrap) {
+    wrap.classList.remove("is-frozen");
+    if (gsContractMode !== "embed") wrap.classList.remove("is-embed-mode");
+  }
   if (img) img.removeAttribute("src");
 }
 
@@ -590,12 +1005,22 @@ function gsContractBuildPreview() {
 }
 
 function gsContractOpenPreviewStep() {
+  gsContractApplyModalMode();
+
+  if (gsContractMode === "embed") {
+    gsContractPreviewPromise = gsContractOpenEmbedPreviewStep();
+    return gsContractPreviewPromise;
+  }
+
   var loading = gsContractEl("contract-loading");
   var render = gsContractEl("contract-render");
+  var wrap = gsContractEl("contract-preview-wrap");
 
   gsContractShowStep("preview");
   gsContractSetLivePreviewMode();
   gsContractPreviewCanvas = null;
+  gsContractEmbedPayload = null;
+  if (wrap) wrap.classList.remove("is-embed-mode");
 
   if (!render) return Promise.resolve(null);
   if (loading) loading.style.display = "block";
@@ -704,16 +1129,38 @@ function gsContractResetState() {
   gsContractResolvedImgSrc = null;
   gsContractPreviewCanvas = null;
   gsContractPreviewPromise = null;
+  gsContractEmbedPayload = null;
+  gsContractMarkdownContent = null;
   gsContractSetLivePreviewMode();
   gsContractSetImgPreview(null);
   var urlField = gsContractEl("cf-img-url");
   var fileField = gsContractEl("cf-img-file");
   var loading = gsContractEl("contract-loading");
   var prevWrap = gsContractEl("contract-preview-wrap");
+  var embedCard = gsContractEl("contract-embed-card");
+  var embedJson = gsContractEl("contract-embed-json");
+  var embedNote = gsContractEl("contract-embed-note");
+  var markdownField = gsContractEl("contract-markdown-output");
+  var markdownPreview = gsContractEl("contract-markdown-preview");
+  var colorPicker = gsContractEl("cf-embed-color");
+  var colorHex = gsContractEl("cf-embed-color-hex");
   if (urlField) urlField.value = "";
   if (fileField) fileField.value = "";
+  if (colorPicker) colorPicker.value = "#0c1f31";
+  if (colorHex) colorHex.value = "#0C1F31";
   if (loading) loading.style.display = "none";
-  if (prevWrap) prevWrap.style.opacity = "1";
+  if (prevWrap) {
+    prevWrap.style.opacity = "1";
+    prevWrap.classList.remove("is-embed-mode");
+  }
+  if (embedCard) embedCard.innerHTML = "";
+  if (embedJson) embedJson.value = "";
+  if (markdownField) markdownField.value = "";
+  if (markdownPreview) markdownPreview.innerHTML = "";
+  if (embedNote) {
+    embedNote.hidden = true;
+    embedNote.textContent = "";
+  }
   gsContractShowStep("form");
 }
 
@@ -738,7 +1185,8 @@ document.addEventListener("click", function(e) {
   if (secPDF) { gsExportSectionPDF(secPDF.dataset.section, secPDF.dataset.name); return; }
   var secPNG = e.target.closest(".gs-sec-png");
   if (secPNG) { gsExportSectionPNG(secPNG.dataset.section, secPNG.dataset.name); return; }
-  if (e.target.closest("#gs-open-contract"))   { gsContractOpenModal(); return; }
+  if (e.target.closest("#gs-open-contract-export")) { gsContractOpenModal("export"); return; }
+  if (e.target.closest("#gs-open-contract-embed"))   { gsContractOpenModal("embed"); return; }
   if (e.target.closest("#contractClose"))      { gsContractCloseModal(); return; }
   if (e.target.id === "contractOverlay")       { gsContractCloseModal(); return; }
   if (e.target.closest("#contract-go-preview")) {
@@ -746,12 +1194,17 @@ document.addEventListener("click", function(e) {
     return;
   }
   if (e.target.closest("#contract-back-form")) { gsContractShowStep("form"); return; }
+  if (e.target.closest("#contract-back-form-md")) { gsContractShowStep("form"); return; }
+  if (e.target.closest("#contract-copy-embed"))  { gsContractCopyEmbed(); return; }
+  if (e.target.closest("#contract-copy-markdown")) { gsContractCopyMarkdown(); return; }
   if (e.target.closest("#contract-dl-png"))    { gsContractCaptureAndDownload("png"); return; }
   if (e.target.closest("#contract-dl-pdf"))    { gsContractCaptureAndDownload("pdf"); return; }
   var stepBtn = e.target.closest(".contract-step-btn");
   if (stepBtn) {
     if (stepBtn.dataset.step === "preview") {
       gsContractOpenPreviewStep();
+    } else if (stepBtn.dataset.step === "markdown") {
+      gsContractOpenMarkdownPreviewStep();
     } else {
       gsContractShowStep("form");
     }
@@ -763,7 +1216,15 @@ document.addEventListener("keydown", function(e) {
 });
 
 document.addEventListener("change", function(e) {
+  if (e.target.matches("#cf-embed-color")) {
+    gsContractSyncEmbedColorFromPicker();
+    return;
+  }
   if (!e.target.matches("#cf-img-file")) return;
+  if (gsContractMode === "embed") {
+    e.target.value = "";
+    return;
+  }
   var file = e.target.files[0];
   if (!file) return;
   var reader = new FileReader();
@@ -777,6 +1238,14 @@ document.addEventListener("change", function(e) {
 });
 
 document.addEventListener("input", function(e) {
+  if (e.target.matches("#cf-embed-color")) {
+    gsContractSyncEmbedColorFromPicker();
+    return;
+  }
+  if (e.target.matches("#cf-embed-color-hex")) {
+    gsContractSyncEmbedColorFromHex();
+    return;
+  }
   if (!e.target.matches("#cf-img-url")) return;
   var url = e.target.value.trim();
   if (url) {
