@@ -651,19 +651,19 @@ function gsContractCopyEmbed() {
 
 function gsContractFormatMarkdownInline(value) {
   var text = (value || "").trim();
-  if (!text || text === "—") return "X";
+  if (!text || text === "—") return "—";
   return text.replace(/`/g, "'");
 }
 
 function gsContractFormatMarkdownRank(rank) {
-  if (!rank || rank === "—") return "X";
+  if (!rank || rank === "—") return "—";
   if (/^rank\s+/i.test(rank)) return rank;
   return "Rank " + rank;
 }
 
 function gsContractMarkdownBlockValue(value) {
   var text = (value || "").trim();
-  if (!text || text === "—") return "X";
+  if (!text || text === "—") return "—";
   return text.replace(/\s+/g, " ").replace(/`/g, "'");
 }
 
@@ -674,7 +674,7 @@ function gsContractMarkdownCodeLine(value) {
 function gsContractBuildDiscordMarkdown(data) {
   var descricao = gsContractMarkdownBlockValue(data.descricao === "—" ? "" : data.descricao);
   var dicas = gsContractMarkdownBlockValue(data.dicas === "—" ? "" : data.dicas);
-  var imageValue = data.imageUrl || "X";
+  var imageValue = data.imageUrl || "—";
 
   return [
     "> -# Quadro de Contrato Abissal P.A.Z",
@@ -715,7 +715,7 @@ function gsContractRenderMarkdownPreviewCard(data) {
   var preview = gsContractEl("contract-markdown-preview");
   if (!preview) return;
 
-  var imageValue = data.imageUrl || "X";
+  var imageValue = data.imageUrl || "—";
   var imageHtml = /^https?:\/\//i.test(imageValue)
     ? '<div class="contract-md-alvo">Alvo: <a href="' + gsContractEscapeHtml(imageValue) + '" target="_blank" rel="noopener noreferrer">' +
       gsContractEscapeHtml(imageValue) + '</a><img src="' + gsContractEscapeHtml(imageValue) + '" alt="Imagem do alvo" /></div>'
