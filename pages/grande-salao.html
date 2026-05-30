@@ -92,19 +92,6 @@
     .gs-section__desc { font-family:var(--font-body); font-style:italic; font-size:clamp(14px,1.3vw,16px); color:var(--bone-dim); margin:0 0 14px; border-left:2px solid rgba(201,169,97,0.4); padding-left:12px; }
     .gs-section__note { font-family:var(--font-body); font-size:13.5px; color:var(--bone-dim); font-style:italic; margin-top:10px; }
 
-    /* ---- Navegação interna ---- */
-    .gs-nav {
-      display:flex; flex-wrap:wrap; gap:8px; justify-content:center;
-      margin-bottom:clamp(28px,4vw,40px); padding:14px 16px;
-      background:rgba(5,8,16,0.82); border:1px solid rgba(201,169,97,0.18);
-    }
-    .gs-nav a {
-      font-family:var(--font-head); font-size:10px; letter-spacing:0.18em; text-transform:uppercase;
-      color:var(--bone-dim); padding:8px 14px; border:1px solid rgba(201,169,97,0.22);
-      transition:color .25s,border-color .25s,background .25s;
-    }
-    .gs-nav a:hover { color:var(--gold-bright); border-color:var(--gold-deep); background:rgba(201,169,97,0.06); }
-
     /* ---- Destaques e pilares ---- */
     .gs-callout {
       max-width:760px; margin:20px auto 0; padding:16px 22px; text-align:center;
@@ -203,10 +190,6 @@
     .gs-section[id] { scroll-margin-top:100px; }
 
     @media (max-width:900px) { .gs-pillars { grid-template-columns:1fr; } }
-    @media (max-width:600px) {
-      .gs-nav { justify-content:flex-start; }
-      .gs-nav a { flex:1 1 calc(50% - 8px); text-align:center; font-size:9px; padding:8px 10px; }
-    }
 
     /* ---- Container escuro das tabelas ---- */
     .gs-table-container { background:rgba(5,8,16,0.90); border:1px solid rgba(201,169,97,0.2); padding:16px 20px; }
@@ -784,7 +767,7 @@
     /* ---- Print ---- */
     @media print {
       *{print-color-adjust:exact !important;-webkit-print-color-adjust:exact !important;}
-      .site-header,.audio-player,.gs-actions-row,.gs-section-actions,.atmosphere,.site-footer,.page-transition,.gs-login,.gs-nav,.gs-contract-cta__actions{display:none !important;}
+      .site-header,.audio-player,.gs-actions-row,.gs-section-actions,.atmosphere,.site-footer,.page-transition,.gs-login,.gs-contract-cta__actions{display:none !important;}
       body,.gs-page,.gs-content{background:#050810 !important;}
       .gs-table-container{background:rgba(5,8,16,0.97) !important;border:1px solid rgba(201,169,97,0.3) !important;}
       .gs-table th{background:rgba(20,40,10,0.97) !important;}
@@ -867,16 +850,6 @@
           <p class="gs-callout">Quanto mais você ajuda a tripulação, mais a tripulação ajuda você.</p>
         </div>
       </header>
-
-      <nav class="gs-nav" aria-label="Navegação interna do Grande Salão">
-        <a href="#gs-sec-visao">Visão Geral</a>
-        <a href="#gs-sec-reputacao">Reputação</a>
-        <a href="#gs-sec-beneficios">Benefícios</a>
-        <a href="#gs-sec-salarios">Salários</a>
-        <a href="#gs-sec-medalhas">Medalhas</a>
-        <a href="#gs-sec-filosofia">Filosofia</a>
-        <a href="#gs-sec-arquivo">Arquivo de Contratos</a>
-      </nav>
 
       <div class="gs-actions-row">
         <span class="gs-actions-row-label">Todas as tabelas:</span>
