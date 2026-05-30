@@ -51,14 +51,29 @@
 
     /* ---- CONTEÚDO ---- */
     .gs-content { display:none; }
-    .gs-header { text-align:center; margin-bottom:clamp(36px,5vw,56px); padding-bottom:clamp(24px,4vw,40px); border-bottom:1px solid rgba(201,169,97,0.35); position:relative; }
-    .gs-header__corner { position:absolute; width:18px; height:18px; border:1px solid var(--gold-deep); pointer-events:none; }
-    .gs-header__corner--tl { top:0; left:0; border-right:none; border-bottom:none; }
-    .gs-header__corner--tr { top:0; right:0; border-left:none; border-bottom:none; }
+    .gs-header { text-align:center; margin-bottom:clamp(36px,5vw,56px); }
+    .gs-header__panel {
+      position:relative;
+      padding:clamp(32px,5vw,48px) clamp(24px,4vw,40px);
+      background:
+        radial-gradient(ellipse 90% 55% at 50% 0%, rgba(30,69,102,0.2) 0%, transparent 68%),
+        linear-gradient(180deg, rgba(8,17,30,0.88) 0%, rgba(5,8,16,0.92) 100%);
+      border:1px solid rgba(201,169,97,0.35);
+      box-shadow:var(--shadow-deep), inset 0 0 40px rgba(74,192,255,0.04);
+    }
+    .gs-header__panel::before {
+      content:""; position:absolute; inset:7px;
+      border:1px solid rgba(201,169,97,0.16); pointer-events:none;
+    }
+    .gs-header__corner { position:absolute; width:18px; height:18px; border:1.5px solid var(--gold); pointer-events:none; z-index:1; }
+    .gs-header__corner--tl { top:-2px; left:-2px; border-right:none; border-bottom:none; }
+    .gs-header__corner--tr { top:-2px; right:-2px; border-left:none; border-bottom:none; }
+    .gs-header__corner--bl { bottom:-2px; left:-2px; border-right:none; border-top:none; }
+    .gs-header__corner--br { bottom:-2px; right:-2px; border-left:none; border-top:none; }
     .gs-header__eyebrow { font-family:var(--font-head); font-size:10.5px; letter-spacing:0.55em; color:var(--bone-dim); text-transform:uppercase; margin:0 0 10px; }
     .gs-header__title { font-family:var(--font-display); font-size:clamp(36px,6vw,68px); font-weight:700; letter-spacing:0.12em; margin:0 0 12px; background:linear-gradient(180deg,#f4ebd0 0%,#d5c79e 35%,#8e7a4a 80%); -webkit-background-clip:text; background-clip:text; -webkit-text-fill-color:transparent; }
     .gs-header__subtitle { font-family:var(--font-body); font-style:italic; font-size:clamp(15px,1.4vw,18px); color:var(--bone-dim); margin:0 0 20px; max-width:600px; margin-left:auto; margin-right:auto; }
-    .gs-header__intro { font-family:var(--font-body); font-size:clamp(15px,1.3vw,17px); color:var(--text); line-height:1.75; max-width:760px; margin:0 auto; text-align:left; }
+    .gs-header__intro { font-family:var(--font-body); font-size:clamp(15px,1.3vw,17px); color:var(--text); line-height:1.75; max-width:760px; margin:0 auto; text-align:center; }
 
     /* ---- Barra global ---- */
     .gs-actions-row { display:flex; flex-wrap:wrap; gap:10px; align-items:center; margin-bottom:32px; padding:14px 18px; background:rgba(5,8,16,0.80); border:1px solid rgba(201,169,97,0.18); }
@@ -76,6 +91,122 @@
     .gs-section__title { font-family:var(--font-display); font-size:clamp(20px,2.5vw,28px); font-weight:700; letter-spacing:0.08em; color:var(--gold-bright); margin:0; }
     .gs-section__desc { font-family:var(--font-body); font-style:italic; font-size:clamp(14px,1.3vw,16px); color:var(--bone-dim); margin:0 0 14px; border-left:2px solid rgba(201,169,97,0.4); padding-left:12px; }
     .gs-section__note { font-family:var(--font-body); font-size:13.5px; color:var(--bone-dim); font-style:italic; margin-top:10px; }
+
+    /* ---- Navegação interna ---- */
+    .gs-nav {
+      display:flex; flex-wrap:wrap; gap:8px; justify-content:center;
+      margin-bottom:clamp(28px,4vw,40px); padding:14px 16px;
+      background:rgba(5,8,16,0.82); border:1px solid rgba(201,169,97,0.18);
+    }
+    .gs-nav a {
+      font-family:var(--font-head); font-size:10px; letter-spacing:0.18em; text-transform:uppercase;
+      color:var(--bone-dim); padding:8px 14px; border:1px solid rgba(201,169,97,0.22);
+      transition:color .25s,border-color .25s,background .25s;
+    }
+    .gs-nav a:hover { color:var(--gold-bright); border-color:var(--gold-deep); background:rgba(201,169,97,0.06); }
+
+    /* ---- Destaques e pilares ---- */
+    .gs-callout {
+      max-width:760px; margin:20px auto 0; padding:16px 22px; text-align:center;
+      font-family:var(--font-head); font-size:clamp(14px,1.2vw,16px); font-style:italic;
+      letter-spacing:0.06em; color:var(--gold-bright);
+      border:1px solid rgba(201,169,97,0.35); background:rgba(201,169,97,0.06);
+      box-shadow:inset 0 0 24px rgba(74,192,255,0.05);
+    }
+    .gs-pillars {
+      display:grid; grid-template-columns:repeat(3,1fr); gap:18px; margin-top:24px;
+    }
+    .gs-pillar {
+      position:relative; padding:22px 20px 24px;
+      background:linear-gradient(180deg,rgba(13,31,51,0.55) 0%,rgba(8,17,30,0.88) 100%);
+      border:1px solid rgba(201,169,97,0.28);
+    }
+    .gs-pillar::before,.gs-pillar::after {
+      content:''; position:absolute; width:12px; height:12px; border:1px solid var(--gold); pointer-events:none;
+    }
+    .gs-pillar::before { top:-1px; left:-1px; border-right:none; border-bottom:none; }
+    .gs-pillar::after  { bottom:-1px; right:-1px; border-left:none; border-top:none; }
+    .gs-pillar__title {
+      font-family:var(--font-display); font-size:clamp(17px,1.6vw,21px); font-weight:700;
+      letter-spacing:0.08em; color:var(--gold-bright); margin:0 0 10px; text-align:center;
+    }
+    .gs-pillar__text {
+      font-family:var(--font-body); font-size:15px; color:var(--text); line-height:1.6; margin:0 0 14px;
+    }
+    .gs-pillar__list {
+      margin:0; padding-left:18px; font-family:var(--font-body); font-size:14.5px; color:var(--text-dim); line-height:1.55;
+    }
+    .gs-pillar__list li { margin-bottom:6px; }
+    .gs-pillar__list li:last-child { margin-bottom:0; }
+
+    /* ---- Subseções ---- */
+    .gs-subsection { margin-top:clamp(24px,3vw,36px); }
+    .gs-subsection__title {
+      font-family:var(--font-head); font-size:clamp(15px,1.4vw,18px); font-weight:600;
+      letter-spacing:0.14em; text-transform:uppercase; color:var(--ghost-cyan); margin:0 0 8px;
+    }
+    .gs-priority-list {
+      margin:12px 0 0; padding:18px 22px; list-style:none; counter-reset:gs-priority;
+      background:rgba(5,8,16,0.55); border:1px solid rgba(201,169,97,0.2);
+    }
+    .gs-priority-list li {
+      counter-increment:gs-priority; position:relative; padding:8px 0 8px 36px;
+      font-family:var(--font-head); font-size:13px; letter-spacing:0.1em; color:var(--bone);
+      border-bottom:1px solid rgba(201,169,97,0.1);
+    }
+    .gs-priority-list li:last-child { border-bottom:none; }
+    .gs-priority-list li::before {
+      content:counter(gs-priority); position:absolute; left:0; top:50%; transform:translateY(-50%);
+      width:24px; height:24px; display:flex; align-items:center; justify-content:center;
+      font-size:11px; color:var(--gold-bright); border:1px solid rgba(201,169,97,0.35);
+    }
+
+    /* ---- Medalhas placeholders ---- */
+    .gs-medal-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(180px,1fr)); gap:14px; margin-top:18px; }
+    .gs-medal-placeholder {
+      padding:18px 14px; text-align:center; min-height:92px;
+      border:1px dashed rgba(201,169,97,0.35); background:rgba(5,8,16,0.45);
+      font-family:var(--font-head); font-size:11px; letter-spacing:0.12em; text-transform:uppercase; color:var(--bone-dim);
+    }
+    .gs-medal-notice {
+      margin-top:16px; padding:14px 18px; font-family:var(--font-body); font-size:14.5px; font-style:italic;
+      color:var(--bone-dim); border-left:2px solid rgba(201,169,97,0.4); background:rgba(5,8,16,0.4);
+    }
+
+    /* ---- Filosofia ---- */
+    .gs-philosophy { text-align:center; }
+    .gs-philosophy p {
+      font-family:var(--font-body); font-size:clamp(16px,1.3vw,18px); color:var(--text); line-height:1.75;
+      max-width:760px; margin:0 auto 14px;
+    }
+    .gs-philosophy .gs-callout { margin-top:28px; font-family:var(--font-display); font-style:normal; font-weight:700; letter-spacing:0.1em; }
+
+    /* ---- Accordion arquivo ---- */
+    .gs-archive-intro {
+      font-family:var(--font-body); font-size:15px; color:var(--text); line-height:1.65; margin-bottom:18px;
+    }
+    .gs-accordion { display:flex; flex-direction:column; gap:10px; margin-top:18px; }
+    .gs-accordion__item {
+      border:1px solid rgba(201,169,97,0.22); background:rgba(5,8,16,0.55);
+    }
+    .gs-accordion__item > summary {
+      list-style:none; cursor:pointer; padding:14px 18px;
+      font-family:var(--font-head); font-size:12px; letter-spacing:0.16em; text-transform:uppercase;
+      color:var(--ghost-cyan); background:rgba(8,17,30,0.85);
+      border-bottom:1px solid transparent; transition:background .2s,color .2s;
+    }
+    .gs-accordion__item > summary::-webkit-details-marker { display:none; }
+    .gs-accordion__item > summary::after { content:'＋'; float:right; color:var(--gold); font-size:14px; }
+    .gs-accordion__item[open] > summary { border-bottom-color:rgba(201,169,97,0.18); color:var(--gold-bright); }
+    .gs-accordion__item[open] > summary::after { content:'—'; }
+    .gs-accordion__body { padding:18px 16px 20px; }
+    .gs-section[id] { scroll-margin-top:100px; }
+
+    @media (max-width:900px) { .gs-pillars { grid-template-columns:1fr; } }
+    @media (max-width:600px) {
+      .gs-nav { justify-content:flex-start; }
+      .gs-nav a { flex:1 1 calc(50% - 8px); text-align:center; font-size:9px; padding:8px 10px; }
+    }
 
     /* ---- Container escuro das tabelas ---- */
     .gs-table-container { background:rgba(5,8,16,0.90); border:1px solid rgba(201,169,97,0.2); padding:16px 20px; }
@@ -653,7 +784,7 @@
     /* ---- Print ---- */
     @media print {
       *{print-color-adjust:exact !important;-webkit-print-color-adjust:exact !important;}
-      .site-header,.audio-player,.gs-actions-row,.gs-section-actions,.atmosphere,.site-footer,.page-transition,.gs-login{display:none !important;}
+      .site-header,.audio-player,.gs-actions-row,.gs-section-actions,.atmosphere,.site-footer,.page-transition,.gs-login,.gs-nav,.gs-contract-cta__actions{display:none !important;}
       body,.gs-page,.gs-content{background:#050810 !important;}
       .gs-table-container{background:rgba(5,8,16,0.97) !important;border:1px solid rgba(201,169,97,0.3) !important;}
       .gs-table th{background:rgba(20,40,10,0.97) !important;}
@@ -724,13 +855,28 @@
     <!-- CONTEÚDO PROTEGIDO -->
     <section id="gs-content" class="gs-content">
       <header class="gs-header">
-        <span class="gs-header__corner gs-header__corner--tl"></span>
-        <span class="gs-header__corner gs-header__corner--tr"></span>
-        <p class="gs-header__eyebrow">P.A.Z — Economia Interna</p>
-        <h2 class="gs-header__title">Grande Salão</h2>
-        <p class="gs-header__subtitle">Área restrita da P.A.Z para consulta de salários, recompensas de atividades e preços oficiais da loja.</p>
-        <p class="gs-header__intro">A economia da P.A.Z funciona com três bases principais: salário semanal, recompensas por atividades e loja da crew. O salário semanal representa a posição do jogador dentro da hierarquia. Já as atividades são a principal forma de enriquecer, incentivando participação, missões, eventos, combate, exploração e trabalho em equipe.</p>
+        <div class="gs-header__panel">
+          <span class="gs-header__corner gs-header__corner--tl"></span>
+          <span class="gs-header__corner gs-header__corner--tr"></span>
+          <span class="gs-header__corner gs-header__corner--bl"></span>
+          <span class="gs-header__corner gs-header__corner--br"></span>
+          <p class="gs-header__eyebrow">P.A.Z — Documento Oficial da Tripulação</p>
+          <h2 class="gs-header__title">Grande Salão</h2>
+          <p class="gs-header__subtitle">Sistema de Progressão e Economia da P.A.Z</p>
+          <p class="gs-header__intro">A economia da Predators of the Abyssal Zone foi criada para recompensar todos os membros que contribuem para a tripulação, independentemente da quantidade de tempo disponível para jogar. O sistema é dividido em três pilares principais: Dobrões Abissais, Reputação Abissal e Benefícios de Cargo.</p>
+          <p class="gs-callout">Quanto mais você ajuda a tripulação, mais a tripulação ajuda você.</p>
+        </div>
       </header>
+
+      <nav class="gs-nav" aria-label="Navegação interna do Grande Salão">
+        <a href="#gs-sec-visao">Visão Geral</a>
+        <a href="#gs-sec-reputacao">Reputação</a>
+        <a href="#gs-sec-beneficios">Benefícios</a>
+        <a href="#gs-sec-salarios">Salários</a>
+        <a href="#gs-sec-medalhas">Medalhas</a>
+        <a href="#gs-sec-filosofia">Filosofia</a>
+        <a href="#gs-sec-arquivo">Arquivo de Contratos</a>
+      </nav>
 
       <div class="gs-actions-row">
         <span class="gs-actions-row-label">Todas as tabelas:</span>
@@ -773,8 +919,220 @@
 
       <div id="gs-tables-area">
 
+        <!-- VISÃO GERAL — PILARES -->
+        <div class="gs-section" id="gs-sec-visao">
+          <div class="gs-section-header">
+            <h3 class="gs-section__title">Visão Geral — Três Pilares</h3>
+          </div>
+          <div class="gs-pillars">
+            <article class="gs-pillar">
+              <h4 class="gs-pillar__title">Dobrões Abissais</h4>
+              <p class="gs-pillar__text">Os Dobrões Abissais são a moeda oficial da tripulação. Eles podem ser usados para adquirir itens, participar de leilões, contratar serviços e trocar por recompensas disponibilizadas pela administração.</p>
+              <ul class="gs-pillar__list">
+                <li>Missões e contratos</li>
+                <li>Eventos da tripulação</li>
+                <li>Salários de cargos</li>
+                <li>Venda de recursos e materiais</li>
+                <li>Recompensas especiais</li>
+                <li>Sorteios e competições</li>
+              </ul>
+            </article>
+            <article class="gs-pillar">
+              <h4 class="gs-pillar__title">Reputação Abissal</h4>
+              <p class="gs-pillar__text">A Reputação representa o reconhecimento conquistado dentro da tripulação. Diferente dos dobrões, a reputação não pode ser comprada. Ela mede dedicação, participação e contribuição real.</p>
+              <ul class="gs-pillar__list">
+                <li>Conclusão de missões</li>
+                <li>Participação em eventos</li>
+                <li>Doação de recursos para a tripulação</li>
+                <li>Participação em guerras e operações</li>
+                <li>Contribuições relevantes para a comunidade</li>
+              </ul>
+            </article>
+            <article class="gs-pillar">
+              <h4 class="gs-pillar__title">Benefícios de Cargo</h4>
+              <p class="gs-pillar__text">Os cargos não servem apenas como decoração. Eles representam confiança, dedicação e histórico dentro da P.A.Z. Quanto maior o cargo, maiores os benefícios dentro da tripulação.</p>
+              <ul class="gs-pillar__list">
+                <li>Entradas extras em sorteios</li>
+                <li>Salários maiores</li>
+                <li>Prioridade em missões especiais</li>
+                <li>Descontos comerciais</li>
+                <li>Reconhecimento interno</li>
+              </ul>
+            </article>
+          </div>
+        </div>
 
-        <!-- 1. NÍVEIS DE DIFICULDADE -->
+        <!-- REPUTAÇÃO -->
+        <div class="gs-section" id="gs-sec-reputacao">
+          <div class="gs-section-header">
+            <h3 class="gs-section__title">Hierarquia da Reputação</h3>
+            <div class="gs-section-actions"><button class="gs-btn-sm gs-pdf-btn gs-sec-pdf" data-section="gs-sec-reputacao" data-name="hierarquia-reputacao">⎙ PDF</button><button class="gs-btn-sm gs-png-btn gs-sec-png" data-section="gs-sec-reputacao" data-name="hierarquia-reputacao">⬇ PNG</button></div>
+          </div>
+          <p class="gs-section__desc">A progressão de cargos da tripulação é determinada pela Reputação Abissal acumulada pelo membro. Quanto mais o membro participa, contribui e cumpre missões, mais reconhecimento ele recebe.</p>
+          <div class="gs-table-container"><div class="gs-table-wrap">
+            <table class="gs-table">
+              <thead><tr><th>Cargo</th><th>Reputação Necessária</th></tr></thead>
+              <tbody>
+                <tr><td>Náufrago</td><td class="sal-fixed">0</td></tr>
+                <tr><td>Tripulante</td><td class="sal-fixed">250</td></tr>
+                <tr><td>Marujo</td><td class="sal-fixed">750</td></tr>
+                <tr><td>Predador</td><td class="sal-fixed">1.050</td></tr>
+                <tr><td>Ser Abissal</td><td class="sal-fixed">2.250</td></tr>
+                <tr><td>Caçador Abissal</td><td class="sal-fixed">4.500</td></tr>
+                <tr><td>Lenda do Abismo</td><td class="sal-fixed">9.000</td></tr>
+              </tbody>
+            </table>
+          </div></div>
+
+          <div class="gs-subsection">
+            <h4 class="gs-subsection__title">Como Ganhar Reputação — Missões</h4>
+            <p class="gs-section__desc">Missões oficiais concedem Reputação Abissal de acordo com o rank da missão. Missões mais difíceis representam maior risco, maior contribuição e maior reconhecimento.</p>
+            <div class="gs-table-container"><div class="gs-table-wrap">
+              <table class="gs-table">
+                <thead><tr><th>Rank da Missão</th><th>Reputação</th></tr></thead>
+                <tbody>
+                  <tr><td class="diff-mf">RANK F</td><td class="sal-fixed">20</td></tr>
+                  <tr><td class="diff-f">RANK E</td><td class="sal-fixed">50</td></tr>
+                  <tr><td class="diff-mef">RANK D</td><td class="sal-fixed">150</td></tr>
+                  <tr><td class="diff-m">RANK C</td><td class="sal-fixed">400</td></tr>
+                  <tr><td class="diff-md">RANK B</td><td class="sal-fixed">1.000</td></tr>
+                  <tr><td class="diff-d">RANK A</td><td class="sal-fixed">2.500</td></tr>
+                  <tr><td class="diff-di">RANK S</td><td class="sal-fixed">3.000</td></tr>
+                  <tr><td class="diff-i">RANK SS</td><td class="sal-fixed">6.000</td></tr>
+                </tbody>
+              </table>
+            </div></div>
+          </div>
+
+          <div class="gs-subsection">
+            <h4 class="gs-subsection__title">Como Ganhar Reputação — Eventos</h4>
+            <div class="gs-table-container"><div class="gs-table-wrap">
+              <table class="gs-table">
+                <thead><tr><th>Atividade</th><th>Reputação</th></tr></thead>
+                <tbody>
+                  <tr><td>Participar de evento da tripulação</td><td class="sal-fixed">+15 REP</td></tr>
+                  <tr><td>Vencer torneio interno</td><td class="sal-fixed">+100 REP</td></tr>
+                </tbody>
+              </table>
+            </div></div>
+          </div>
+        </div>
+
+        <!-- BENEFÍCIOS -->
+        <div class="gs-section" id="gs-sec-beneficios">
+          <div class="gs-section-header">
+            <h3 class="gs-section__title">Benefícios dos Cargos</h3>
+            <div class="gs-section-actions"><button class="gs-btn-sm gs-pdf-btn gs-sec-pdf" data-section="gs-sec-beneficios" data-name="beneficios-cargos">⎙ PDF</button><button class="gs-btn-sm gs-png-btn gs-sec-png" data-section="gs-sec-beneficios" data-name="beneficios-cargos">⬇ PNG</button></div>
+          </div>
+          <p class="gs-section__desc">Cada cargo libera vantagens internas. Esses benefícios existem para reconhecer membros que ajudam a tripulação, participam de eventos, cumprem missões e fortalecem a P.A.Z.</p>
+
+          <div class="gs-subsection">
+            <h4 class="gs-subsection__title">Sorteios</h4>
+            <p class="gs-section__desc">Cada cargo recebe entradas extras em sorteios oficiais. Quanto maior o cargo, maiores as chances de vitória.</p>
+            <div class="gs-table-container"><div class="gs-table-wrap">
+              <table class="gs-table">
+                <thead><tr><th>Cargo</th><th>Entradas Extras</th></tr></thead>
+                <tbody>
+                  <tr><td>Náufrago</td><td class="sal-mult">+0</td></tr>
+                  <tr><td>Tripulante</td><td class="sal-mult">+1</td></tr>
+                  <tr><td>Marujo</td><td class="sal-mult">+2</td></tr>
+                  <tr><td>Predador</td><td class="sal-mult">+3</td></tr>
+                  <tr><td>Ser Abissal</td><td class="sal-mult">+4</td></tr>
+                  <tr><td>Caçador Abissal</td><td class="sal-mult">+5</td></tr>
+                  <tr><td>Lenda do Abismo</td><td class="sal-mult">+6</td></tr>
+                </tbody>
+              </table>
+            </div></div>
+          </div>
+
+          <div class="gs-subsection" id="gs-sec-salarios">
+            <h4 class="gs-subsection__title">Salários</h4>
+            <p class="gs-section__desc">Todos os cargos da tripulação recebem salários periódicos em Dobrões Abissais. Cargos superiores recebem pagamentos maiores por representarem membros mais experientes, ativos e confiáveis.</p>
+            <div class="gs-table-container"><div class="gs-table-wrap">
+              <table class="gs-table">
+                <thead><tr><th>Cargo</th><th>Salário</th></tr></thead>
+                <tbody>
+                  <tr><td>Náufrago</td><td class="sal-fixed">0</td></tr>
+                  <tr><td>Tripulante</td><td class="sal-fixed">2.500</td></tr>
+                  <tr><td>Marujo</td><td class="sal-fixed">4.500</td></tr>
+                  <tr><td>Predador</td><td class="sal-fixed">8.000</td></tr>
+                  <tr><td>Ser Abissal</td><td class="sal-fixed">12.000</td></tr>
+                  <tr><td>Caçador Abissal</td><td class="sal-fixed">20.000</td></tr>
+                  <tr><td>Lenda do Abismo</td><td class="sal-fixed">25.000</td></tr>
+                  <tr><td>Executor Abissal</td><td class="sal-fixed">35.000</td></tr>
+                  <tr><td>Capitão Abissal</td><td class="sal-fixed">45.000</td></tr>
+                </tbody>
+              </table>
+            </div></div>
+            <p class="gs-section__note">Executor Abissal e Capitão Abissal são cargos superiores ligados à administração, liderança ou funções especiais da tripulação.</p>
+          </div>
+
+          <div class="gs-subsection">
+            <h4 class="gs-subsection__title">Prioridade em Missões</h4>
+            <p class="gs-section__desc">Missões especiais e contratos limitados possuem vagas restritas. Em situações de disputa por vaga, a prioridade será definida pela hierarquia.</p>
+            <ol class="gs-priority-list">
+              <li>Lenda do Abismo</li>
+              <li>Caçador Abissal</li>
+              <li>Ser Abissal</li>
+              <li>Predador</li>
+              <li>Marujo</li>
+              <li>Tripulante</li>
+            </ol>
+          </div>
+
+          <div class="gs-subsection">
+            <h4 class="gs-subsection__title">Benefícios Comerciais</h4>
+            <p class="gs-section__desc">Membros veteranos recebem vantagens em negociações realizadas pela tripulação. Os descontos são mantidos baixos para preservar o equilíbrio da economia interna.</p>
+            <div class="gs-table-container"><div class="gs-table-wrap">
+              <table class="gs-table">
+                <thead><tr><th>Cargo</th><th>Desconto</th></tr></thead>
+                <tbody>
+                  <tr><td>Marujo</td><td class="sal-mult">2%</td></tr>
+                  <tr><td>Predador</td><td class="sal-mult">4%</td></tr>
+                  <tr><td>Ser Abissal</td><td class="sal-mult">6%</td></tr>
+                  <tr><td>Caçador Abissal</td><td class="sal-mult">8%</td></tr>
+                  <tr><td>Lenda do Abismo</td><td class="sal-mult">10%</td></tr>
+                </tbody>
+              </table>
+            </div></div>
+          </div>
+        </div>
+
+        <!-- MEDALHAS -->
+        <div class="gs-section" id="gs-sec-medalhas">
+          <div class="gs-section-header">
+            <h3 class="gs-section__title">Medalhas e Títulos</h3>
+          </div>
+          <p class="gs-section__desc">Medalhas e títulos servem como reconhecimento permanente da história construída pelo membro dentro da P.A.Z. Eles registram feitos, participação, vitórias, contribuições e momentos importantes da trajetória do jogador na tripulação.</p>
+          <div class="gs-medal-grid">
+            <div class="gs-medal-placeholder">Medalhas de Guerra</div>
+            <div class="gs-medal-placeholder">Medalhas de Evento</div>
+            <div class="gs-medal-placeholder">Títulos de Contribuição</div>
+            <div class="gs-medal-placeholder">Títulos Especiais</div>
+            <div class="gs-medal-placeholder">Honrarias da Tripulação</div>
+          </div>
+          <p class="gs-medal-notice">Sistema em organização. Novas medalhas e títulos serão adicionados conforme a evolução da tripulação.</p>
+        </div>
+
+        <!-- FILOSOFIA -->
+        <div class="gs-section gs-philosophy" id="gs-sec-filosofia">
+          <div class="gs-section-header">
+            <h3 class="gs-section__title">Filosofia da P.A.Z</h3>
+          </div>
+          <p>A P.A.Z não exige que seus membros joguem o dia inteiro. Acreditamos que cada pessoa possui sua própria rotina.</p>
+          <p>O objetivo da tripulação é criar um ambiente onde todos possam evoluir, contribuir e serem recompensados de forma justa.</p>
+          <p>Aqui, presença importa. Contribuição importa. Respeito ao tempo de cada membro também importa.</p>
+          <p class="gs-callout">A Névoa é Nossa. O Abismo é Nosso.</p>
+        </div>
+
+        <!-- ARQUIVO DE CONTRATOS -->
+        <div class="gs-section" id="gs-sec-arquivo">
+          <div class="gs-section-header">
+            <h3 class="gs-section__title">Arquivo de Recompensas por Contrato</h3>
+          </div>
+          <p class="gs-archive-intro">Essas tabelas servem como referência de recompensas por tipo de contrato e podem ser ajustadas pela administração conforme o equilíbrio da economia.</p>
+
+        <!-- NÍVEIS DE DIFICULDADE -->
         <div class="gs-section" id="gs-sec-dificuldade">
           <div class="gs-section-header">
             <h3 class="gs-section__title">Níveis de Dificuldade</h3>
@@ -797,32 +1155,7 @@
           </div></div>
         </div>
 
-        <!-- 2. SALÁRIOS -->
-        <div class="gs-section" id="gs-sec-salarios">
-          <div class="gs-section-header">
-            <h3 class="gs-section__title">Salários Semanais por Cargo</h3>
-            <div class="gs-section-actions"><button class="gs-btn-sm gs-pdf-btn gs-sec-pdf" data-section="gs-sec-salarios" data-name="salarios-semanais">⎙ PDF</button><button class="gs-btn-sm gs-png-btn gs-sec-png" data-section="gs-sec-salarios" data-name="salarios-semanais">⬇ PNG</button></div>
-          </div>
-          <div class="gs-table-container"><div class="gs-table-wrap">
-            <table class="gs-table">
-              <thead><tr><th>Cargo</th><th>Salário Semanal Fixo</th><th>Multiplicador de Atividade</th></tr></thead>
-              <tbody>
-                <tr><td>Náufrago</td>        <td class="sal-fixed">0</td>       <td class="sal-mult">1,0×</td></tr>
-                <tr><td>Tripulante</td>       <td class="sal-fixed">2.500</td>   <td class="sal-mult">1,0×</td></tr>
-                <tr><td>Marujo</td>           <td class="sal-fixed">4.500</td>   <td class="sal-mult">1,2×</td></tr>
-                <tr><td>Predador</td>         <td class="sal-fixed">8.000</td>   <td class="sal-mult">1,4×</td></tr>
-                <tr><td>Besta Abissal</td>    <td class="sal-fixed">10.000</td>  <td class="sal-mult">1,5×</td></tr>
-                <tr><td>Caçador Abissal</td>  <td class="sal-fixed">20.000</td>  <td class="sal-mult">1,8×</td></tr>
-                <tr><td>Lenda do Abismo</td>  <td class="sal-fixed">25.000</td>  <td class="sal-mult">2,0×</td></tr>
-                <tr><td>Executor Abissal</td> <td class="sal-fixed">35.000</td>  <td class="sal-mult">2,5×</td></tr>
-                <tr><td>Capitão Abissal</td>  <td class="sal-fixed">45.000</td>  <td class="sal-mult">3,0×</td></tr>
-              </tbody>
-            </table>
-          </div></div>
-          <p class="gs-section__note">* Títulos especiais como VIP, Booster, Administração e outros continuam somando bônus conforme as regras internas da crew.</p>
-        </div>
-
-        <!-- 3. LOJA -->
+        <!-- LOJA -->
         <div class="gs-section" id="gs-sec-loja">
           <div class="gs-section-header">
             <h3 class="gs-section__title">Loja da Crew</h3>
@@ -845,11 +1178,11 @@
           </div></div>
         </div>
 
-        <!-- 4. ATIVIDADES -->
-        <div class="gs-section">
-          <h3 class="gs-section__title">Atividades</h3>
-        </div>
+        <div class="gs-accordion">
 
+        <details class="gs-accordion__item">
+          <summary>Contrato: Caçada a Criaturas</summary>
+          <div class="gs-accordion__body">
         <div class="gs-section" id="gs-sec-cacada">
           <div class="gs-section-header">
             <h4 class="gs-section__title" style="font-size:clamp(17px,2vw,22px);color:var(--ghost-cyan);">Contrato: Caçada a Criaturas</h4>
@@ -877,7 +1210,12 @@
             </table>
           </div></div>
         </div>
+          </div>
+        </details>
 
+        <details class="gs-accordion__item">
+          <summary>Contrato: Assassinatos</summary>
+          <div class="gs-accordion__body">
         <div class="gs-section" id="gs-sec-assassinatos">
           <div class="gs-section-header">
             <h4 class="gs-section__title" style="font-size:clamp(17px,2vw,22px);color:var(--ghost-cyan);">Contrato: Assassinatos</h4>
@@ -905,7 +1243,12 @@
             </table>
           </div></div>
         </div>
+          </div>
+        </details>
 
+        <details class="gs-accordion__item">
+          <summary>Contrato: Coleta de Material Selvagem</summary>
+          <div class="gs-accordion__body">
         <div class="gs-section" id="gs-sec-coleta">
           <div class="gs-section-header">
             <h4 class="gs-section__title" style="font-size:clamp(17px,2vw,22px);color:var(--ghost-cyan);">Contrato: Coleta de Material Selvagem</h4>
@@ -933,7 +1276,12 @@
             </table>
           </div></div>
         </div>
+          </div>
+        </details>
 
+        <details class="gs-accordion__item">
+          <summary>Contrato: Expedição</summary>
+          <div class="gs-accordion__body">
         <div class="gs-section" id="gs-sec-expedicao">
           <div class="gs-section-header">
             <h4 class="gs-section__title" style="font-size:clamp(17px,2vw,22px);color:var(--ghost-cyan);">Contrato: Expedição</h4>
@@ -961,7 +1309,12 @@
             </table>
           </div></div>
         </div>
+          </div>
+        </details>
 
+        <details class="gs-accordion__item">
+          <summary>Contrato: Proteção</summary>
+          <div class="gs-accordion__body">
         <div class="gs-section" id="gs-sec-protecao">
           <div class="gs-section-header">
             <h4 class="gs-section__title" style="font-size:clamp(17px,2vw,22px);color:var(--ghost-cyan);">Contrato: Proteção</h4>
@@ -989,6 +1342,12 @@
             </table>
           </div></div>
         </div>
+          </div>
+        </details>
+
+        </div><!-- .gs-accordion -->
+
+        </div><!-- #gs-sec-arquivo -->
 
       </div><!-- #gs-tables-area -->
 

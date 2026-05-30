@@ -85,6 +85,12 @@ var GS_CAPTURE_CSS = [
   ".loja-price{color:#d8cba8!important;text-align:right!important}",
   ".loja-rare{color:#c049d4!important;font-weight:600!important}",
   ".em-dash{color:#6a6a6a!important}",
+  ".gs-pillar__title{color:#e8c878!important;font-family:'Cinzel Decorative','Cinzel',Georgia,serif!important}",
+  ".gs-pillar__text,.gs-pillar__list,.gs-archive-intro,.gs-philosophy p{color:#d8cba8!important}",
+  ".gs-callout{color:#e8c878!important;border:1px solid rgba(201,169,97,0.35)!important;background:rgba(201,169,97,0.06)!important}",
+  ".gs-subsection__title{color:#4ac0ff!important}",
+  ".gs-priority-list li{color:#e0d5b5!important;border-bottom:1px solid rgba(201,169,97,0.15)!important}",
+  ".gs-medal-placeholder{color:#a89878!important;border:1px dashed rgba(201,169,97,0.35)!important}",
   ".gs-table{min-width:unset!important;width:100%!important;border-collapse:collapse!important}"
 ].join("\n");
 
