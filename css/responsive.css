@@ -221,6 +221,42 @@
       radial-gradient(ellipse 100% 80% at 50% 50%, transparent 30%, var(--abyss-black) 100%),
       linear-gradient(180deg, rgba(5, 8, 16, 0.45) 0%, transparent 15%, transparent 70%, rgba(5, 8, 16, 0.85) 100%);
   }
+
+  /* --- Sobre Nós --- */
+  .about-us__panel {
+    padding: 28px 20px 32px;
+  }
+
+  .about-us__values {
+    grid-template-columns: 1fr;
+  }
+
+  .about-us__intro {
+    text-align: left;
+    font-size: 17px;
+  }
+
+  .about-us__intro-box {
+    padding: 18px 16px;
+  }
+
+  .value-card__body {
+    max-width: none;
+  }
+
+  .value-card__text {
+    max-width: none;
+  }
+
+  .about-us__motto-box::before,
+  .about-us__motto-box::after {
+    display: none;
+  }
+
+  .about-us__divider::before,
+  .about-us__divider::after {
+    max-width: 48px;
+  }
 }
 
 /* =========================================================
