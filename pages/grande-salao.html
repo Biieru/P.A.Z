@@ -189,7 +189,71 @@
     .gs-accordion__body { padding:18px 16px 20px; }
     .gs-section[id] { scroll-margin-top:100px; }
 
-    @media (max-width:900px) { .gs-pillars { grid-template-columns:1fr; } }
+    /* ---- Armatus, o Banco Abissal ---- */
+    .gs-armatus__intro {
+      padding:18px 20px; margin-bottom:6px;
+      background:rgba(5,8,16,0.75); border:1px solid rgba(201,169,97,0.22);
+    }
+    .gs-armatus__intro p {
+      font-family:var(--font-body); font-size:clamp(15px,1.3vw,17px); color:var(--text);
+      line-height:1.75; margin:0;
+    }
+    .gs-armatus__coins {
+      display:grid; grid-template-columns:repeat(2,1fr); gap:16px;
+      margin:20px 0 12px;
+    }
+    .gs-armatus__coin {
+      padding:18px 20px;
+      background:linear-gradient(180deg,rgba(13,31,51,0.55) 0%,rgba(8,17,30,0.88) 100%);
+      border:1px solid rgba(201,169,97,0.28);
+    }
+    .gs-armatus__coin-label {
+      font-family:var(--font-display); font-size:clamp(16px,1.4vw,19px); font-weight:700;
+      letter-spacing:0.06em; color:var(--gold-bright); margin:0 0 8px;
+    }
+    .gs-armatus__coin p {
+      font-family:var(--font-body); font-size:15px; color:var(--text); line-height:1.65; margin:0;
+    }
+    .gs-armatus__accordion { margin-top:22px; }
+    .gs-armatus__staff-note {
+      padding:12px 16px; margin-bottom:16px;
+      border-left:3px solid rgba(224,80,80,0.55); background:rgba(224,80,80,0.06);
+      font-family:var(--font-body); font-size:14.5px; color:var(--text); font-style:italic; line-height:1.6;
+    }
+    .gs-cmd-block {
+      padding:16px 0; border-bottom:1px solid rgba(201,169,97,0.12);
+    }
+    .gs-cmd-block:first-child { padding-top:0; }
+    .gs-cmd-block:last-child { padding-bottom:0; border-bottom:none; }
+    .gs-cmd {
+      display:inline-block; max-width:100%;
+      font-family:Consolas,"Courier New",monospace; font-size:clamp(13px,1.1vw,15px);
+      color:var(--ghost-cyan); background:rgba(5,8,16,0.92);
+      border:1px solid rgba(74,192,255,0.35); padding:8px 14px;
+      letter-spacing:0.03em; word-break:break-word;
+      box-shadow:inset 0 0 18px rgba(74,192,255,0.06);
+    }
+    .gs-cmd__desc {
+      font-family:var(--font-body); font-size:15px; color:var(--text);
+      line-height:1.65; margin:10px 0 0;
+    }
+    .gs-cmd__label {
+      font-family:var(--font-head); font-size:10px; letter-spacing:0.2em; text-transform:uppercase;
+      color:var(--bone-dim); margin:12px 0 6px;
+    }
+    .gs-cmd__list {
+      margin:0; padding-left:18px;
+      font-family:var(--font-body); font-size:14px; color:var(--text-dim); line-height:1.55;
+    }
+    .gs-cmd__example { margin-top:10px; }
+    .gs-armatus__rules {
+      margin:0; padding-left:18px;
+      font-family:var(--font-body); font-size:15px; color:var(--text); line-height:1.7;
+    }
+    .gs-armatus__rules li { margin-bottom:8px; }
+    .gs-armatus__rules li:last-child { margin-bottom:0; }
+
+    @media (max-width:900px) { .gs-pillars { grid-template-columns:1fr; } .gs-armatus__coins { grid-template-columns:1fr; } }
 
     /* ---- Container escuro das tabelas ---- */
     .gs-table-container { background:rgba(5,8,16,0.90); border:1px solid rgba(201,169,97,0.2); padding:16px 20px; }
@@ -774,6 +838,9 @@
       .gs-table tbody tr{background:rgba(5,8,16,0.97) !important;}
       .gs-table tbody tr:nth-child(even){background:rgba(8,17,30,0.97) !important;}
       .gs-section{page-break-inside:avoid;margin-bottom:20px;}
+      #gs-sec-armatus details { display:block; }
+      #gs-sec-armatus details > summary { list-style:none; }
+      #gs-sec-armatus .gs-cmd { print-color-adjust:exact; -webkit-print-color-adjust:exact; }
       .gs-table-wrap{overflow:visible !important;}
       .gs-table{min-width:unset !important;font-size:10px !important;}
       .gs-table th{font-size:9px !important;padding:6px 8px !important;}
@@ -1068,6 +1135,171 @@
                 </tbody>
               </table>
             </div></div>
+          </div>
+        </div>
+
+        <!-- ARMATUS — BANCO ABISSAL -->
+        <div class="gs-section" id="gs-sec-armatus">
+          <div class="gs-section-header">
+            <h3 class="gs-section__title">Armatus, o Banco Abissal</h3>
+            <div class="gs-section-actions"><button class="gs-btn-sm gs-pdf-btn gs-sec-pdf" data-section="gs-sec-armatus" data-name="armatus-banco-abissal">⎙ PDF</button><button class="gs-btn-sm gs-png-btn gs-sec-png" data-section="gs-sec-armatus" data-name="armatus-banco-abissal">⬇ PNG</button></div>
+          </div>
+          <p class="gs-section__desc">Guia rápido dos comandos do bot de economia da P.A.Z.</p>
+
+          <div class="gs-armatus__intro">
+            <p>O Armatus controla os Dobrões Abissais, a Reputação P.A.Z, salários, transferências, banco interno e registros da economia da tripulação. Ele é o sistema responsável por organizar a movimentação econômica da P.A.Z dentro do servidor.</p>
+          </div>
+
+          <h4 class="gs-subsection__title">Moedas do Sistema</h4>
+          <div class="gs-armatus__coins">
+            <article class="gs-armatus__coin">
+              <h5 class="gs-armatus__coin-label">D.A — Dobrão Abissal</h5>
+              <p>Moeda principal da economia. Usada para salários, transferências, compras futuras e recompensas.</p>
+            </article>
+            <article class="gs-armatus__coin">
+              <h5 class="gs-armatus__coin-label">R.P — Reputação P.A.Z</h5>
+              <p>Pontuação de progressão interna. Usada para reputação, avanço de rank e reconhecimento dentro da tripulação.</p>
+            </article>
+          </div>
+          <p class="gs-section__note">D.A pode circular entre jogadores. R.P não pode ser transferido.</p>
+
+          <div class="gs-accordion gs-armatus__accordion">
+            <details class="gs-accordion__item">
+              <summary>Comandos para Todos os Membros</summary>
+              <div class="gs-accordion__body">
+
+                <div class="gs-cmd-block">
+                  <code class="gs-cmd">A!perfil</code>
+                  <p class="gs-cmd__desc">Mostra seu perfil econômico no Armatus.</p>
+                  <p class="gs-cmd__label">Exibe</p>
+                  <ul class="gs-cmd__list">
+                    <li>D.A atual</li>
+                    <li>R.P atual</li>
+                    <li>Rank atual</li>
+                    <li>Dívida atual</li>
+                    <li>Número de compras realizadas</li>
+                  </ul>
+                </div>
+
+                <div class="gs-cmd-block">
+                  <code class="gs-cmd">A!meusalario</code>
+                  <p class="gs-cmd__desc">Mostra quanto você deve receber no pagamento semanal, com base no seu maior cargo salarial.</p>
+                  <p class="gs-cmd__label">Exibe</p>
+                  <ul class="gs-cmd__list">
+                    <li>Cargo salarial considerado</li>
+                    <li>Salário base</li>
+                    <li>Bônus aplicado</li>
+                    <li>Total semanal previsto</li>
+                    <li>Cargos salariais encontrados</li>
+                    <li>Cargos sem salário encontrados</li>
+                  </ul>
+                  <p class="gs-section__note">O salário usa o maior cargo salarial do jogador. Se o usuário tiver dois cargos salariais, o bot considera apenas o maior.</p>
+                </div>
+
+                <div class="gs-cmd-block">
+                  <code class="gs-cmd">A!transferir @usuario valor</code>
+                  <p class="gs-cmd__desc">Transfere D.A para outro membro.</p>
+                  <p class="gs-cmd__label">Exemplo</p>
+                  <div class="gs-cmd__example"><code class="gs-cmd">A!transferir @Bel 1000</code></div>
+                  <p class="gs-cmd__desc">O destinatário recebe 1000 D.A. Quem enviou paga 1000 D.A mais a taxa de transferência.</p>
+                  <p class="gs-section__note">A taxa atual de transferência é de <span class="gs-armatus__tax-rate">10%</span>. Exemplo: valor enviado de 1000 D.A, taxa de 100 D.A, custo total de 1100 D.A.</p>
+                  <p class="gs-cmd__label">Regras</p>
+                  <ul class="gs-cmd__list">
+                    <li>A taxa vai para o caixa do Banco Abissal.</li>
+                    <li>Não é possível transferir R.P.</li>
+                    <li>Não é possível transferir todo o próprio dinheiro.</li>
+                  </ul>
+                </div>
+
+                <div class="gs-cmd-block">
+                  <code class="gs-cmd">A!banco</code>
+                  <p class="gs-cmd__desc">Mostra o saldo acumulado na caixinha da P.A.Z.</p>
+                  <p class="gs-section__note">Esse saldo vem das taxas de transferência e poderá ser usado futuramente para sorteios, eventos, premiações e recompensas especiais.</p>
+                </div>
+
+                <div class="gs-cmd-block">
+                  <code class="gs-cmd">A!ranking</code>
+                  <p class="gs-cmd__desc">Mostra o ranking de R.P da tripulação.</p>
+                  <p class="gs-section__note">O ranking atual é focado em Reputação P.A.Z, não em dinheiro.</p>
+                </div>
+
+              </div>
+            </details>
+
+            <details class="gs-accordion__item">
+              <summary>Comandos da Staff</summary>
+              <div class="gs-accordion__body">
+                <p class="gs-armatus__staff-note">Apenas membros com permissão de Staff conseguem usar estes comandos.</p>
+
+                <div class="gs-cmd-block">
+                  <code class="gs-cmd">A!addda @usuario valor motivo</code>
+                  <p class="gs-cmd__desc">Adiciona D.A a um membro.</p>
+                  <p class="gs-cmd__label">Exemplo</p>
+                  <div class="gs-cmd__example"><code class="gs-cmd">A!addda @Bel 5000 recompensa de contrato</code></div>
+                  <p class="gs-section__note">Toda adição de D.A é registrada nos logs do Armatus.</p>
+                </div>
+
+                <div class="gs-cmd-block">
+                  <code class="gs-cmd">A!removeda @usuario valor motivo</code>
+                  <p class="gs-cmd__desc">Remove D.A de um membro.</p>
+                  <p class="gs-cmd__label">Exemplo</p>
+                  <div class="gs-cmd__example"><code class="gs-cmd">A!removeda @Bel 2000 multa por contrato falho</code></div>
+                  <p class="gs-section__note">Caso o jogador não tenha saldo suficiente, o valor restante vira dívida.</p>
+                  <p class="gs-cmd__desc">Compras e transferências não geram saldo negativo. Dívida só pode ser criada por ação da staff. Assim, não existe “fiado”.</p>
+                </div>
+
+                <div class="gs-cmd-block">
+                  <code class="gs-cmd">A!removerdivida @usuario valor motivo</code>
+                  <p class="gs-cmd__desc">Remove parte da dívida de um membro.</p>
+                  <p class="gs-cmd__label">Exemplo</p>
+                  <div class="gs-cmd__example"><code class="gs-cmd">A!removerdivida @Bel 1000 pagamento parcial da dívida</code></div>
+                </div>
+
+                <div class="gs-cmd-block">
+                  <code class="gs-cmd">A!addrp @usuario valor motivo</code>
+                  <p class="gs-cmd__desc">Adiciona R.P a um membro.</p>
+                  <p class="gs-cmd__label">Exemplo</p>
+                  <div class="gs-cmd__example"><code class="gs-cmd">A!addrp @Bel 50 contrato concluído</code></div>
+                  <p class="gs-section__note">R.P representa reputação e progressão, não dinheiro.</p>
+                </div>
+
+                <div class="gs-cmd-block">
+                  <code class="gs-cmd">A!removerp @usuario valor motivo</code>
+                  <p class="gs-cmd__desc">Remove R.P de um membro.</p>
+                  <p class="gs-cmd__label">Exemplo</p>
+                  <div class="gs-cmd__example"><code class="gs-cmd">A!removerp @Bel 20 penalidade narrativa</code></div>
+                  <p class="gs-section__note">R.P não gera dívida. Se remover mais do que o jogador tem, ele fica em 0 R.P.</p>
+                </div>
+
+                <div class="gs-cmd-block">
+                  <code class="gs-cmd">A!pagarsemana</code>
+                  <p class="gs-cmd__desc">Executa manualmente o pagamento semanal dos salários.</p>
+                  <p class="gs-cmd__desc">Esse comando verifica os cargos dos membros, calcula o salário pelo maior cargo salarial, paga os D.A correspondentes, abate dívidas automaticamente e registra tudo nos logs.</p>
+                  <ul class="gs-cmd__list">
+                    <li>O pagamento semanal também está programado para acontecer automaticamente aos sábados às 17h.</li>
+                    <li>Se o pagamento da semana já tiver sido feito, o bot bloqueia outro pagamento para evitar duplicação.</li>
+                  </ul>
+                </div>
+
+              </div>
+            </details>
+
+            <details class="gs-accordion__item">
+              <summary>Regras Importantes do Sistema</summary>
+              <div class="gs-accordion__body">
+                <ul class="gs-armatus__rules">
+                  <li>D.A é a moeda principal e pode circular entre jogadores.</li>
+                  <li>R.P é reputação e não pode ser transferida.</li>
+                  <li>O salário semanal considera apenas o maior cargo salarial do jogador.</li>
+                  <li>Transferências possuem taxa de <span class="gs-armatus__tax-rate">10%</span>.</li>
+                  <li>A taxa vai para a caixinha do Banco Abissal.</li>
+                  <li>Compras e transferências não criam saldo negativo.</li>
+                  <li>Dívida só pode ser criada por ação da staff.</li>
+                  <li>O pagamento semanal acontece automaticamente aos sábados às 17h.</li>
+                  <li>O comando <code class="gs-cmd">A!pagarsemana</code> existe para execução manual pela staff, com proteção contra pagamento duplicado.</li>
+                </ul>
+              </div>
+            </details>
           </div>
         </div>
 
