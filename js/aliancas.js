@@ -12,6 +12,13 @@
 
 const ALIANCAS_DATA = [
   {
+    id: 3,
+    name: "Domínio Carmesim",
+    image: "/assets/images/Dominio-Carmesim-Crew.png",
+    discord: "https://discord.gg/javVFyAx8N",
+    body: ""
+  },
+  {
     id: 1,
     name: "The Voids",
     image: "/assets/images/Jolly-The-Voids-Crew.png",
@@ -74,14 +81,24 @@ function openAlliance(crew) {
   const modal    = document.getElementById("aliancasModal");
   const imgEl    = document.getElementById("aliancasModalImg");
   const titleEl  = document.getElementById("aliancasModalTitle");
-  const linkEl   = document.getElementById("aliancasModalDiscord");
-  const bodyEl   = document.getElementById("aliancasModalBody");
+  const linkEl    = document.getElementById("aliancasModalDiscord");
+  const dividerEl = document.getElementById("aliancasModalDivider");
+  const bodyEl    = document.getElementById("aliancasModalBody");
   if (!modal) return;
 
   if (imgEl)   { imgEl.src = crew.image; imgEl.alt = "Logo da " + crew.name; }
   if (titleEl)  titleEl.textContent = crew.name;
   if (linkEl)  { linkEl.href = crew.discord; }
-  if (bodyEl)   bodyEl.innerHTML = crew.body.split("\n\n").map(p => "<p>" + p.replace(/\n/g, "<br>") + "</p>").join("");
+  if (bodyEl) {
+    const hasBody = !!(crew.body && crew.body.trim());
+    if (hasBody) {
+      bodyEl.innerHTML = crew.body.split("\n\n").map(p => "<p>" + p.replace(/\n/g, "<br>") + "</p>").join("");
+    } else {
+      bodyEl.innerHTML = "";
+    }
+    bodyEl.hidden = !hasBody;
+  }
+  if (dividerEl) dividerEl.hidden = !(crew.body && crew.body.trim());
 
   modal.classList.add("is-open");
   document.body.style.overflow = "hidden";

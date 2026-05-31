@@ -215,6 +215,56 @@
       text-align: center;
     }
 
+    /* ---- Bandeiras de aliança lado a lado ---- */
+    .news-alliance-flags {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: clamp(16px, 3vw, 32px);
+      margin: 0 0 28px;
+      padding: clamp(18px, 3vw, 24px);
+      background:
+        radial-gradient(ellipse 70% 60% at 50% 50%, rgba(30, 69, 102, 0.12) 0%, transparent 70%),
+        rgba(5, 8, 16, 0.5);
+      border: 1px solid rgba(201, 169, 97, 0.22);
+    }
+    .news-alliance-flags__item {
+      flex: 1 1 0;
+      max-width: clamp(120px, 22vw, 200px);
+      margin: 0;
+      text-align: center;
+    }
+    .news-alliance-flags__frame {
+      width: 100%;
+      aspect-ratio: 1;
+      background: #050810;
+      border: 1px solid rgba(201, 169, 97, 0.3);
+      padding: 10px;
+      overflow: hidden;
+    }
+    .news-alliance-flags__frame img {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+      display: block;
+    }
+    .news-alliance-flags__label {
+      font-family: var(--font-head);
+      font-size: 10px;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--bone-dim);
+      margin-top: 10px;
+    }
+    .news-alliance-flags__sep {
+      flex-shrink: 0;
+      font-family: var(--font-display);
+      font-size: clamp(18px, 2.5vw, 24px);
+      color: var(--gold-deep);
+      line-height: 1;
+      opacity: 0.85;
+    }
+
     /* Corpo do artigo */
     .news-article__body {
       font-family: var(--font-body);
@@ -421,6 +471,16 @@
         max-width: 260px;
         margin: 0 auto;
       }
+      .news-alliance-flags {
+        gap: 12px;
+        padding: 16px 12px;
+      }
+      .news-alliance-flags__item {
+        max-width: 140px;
+      }
+      .news-alliance-flags__sep {
+        font-size: 16px;
+      }
     }
   </style>
 </head>
@@ -475,6 +535,53 @@
 
     <div class="news-feed">
 
+
+      <!-- =====================================================
+           ARTIGO — P.A.Z formaliza aliança com Domínio Carmesim
+           ===================================================== -->
+      <article class="news-article">
+        <div class="news-article__header">
+          <span class="news-article__category">Anúncio Oficial</span>
+          <span class="news-article__author">Por Greed</span>
+          <span class="news-article__date">Mai 2026</span>
+        </div>
+
+        <h2 class="news-article__title">P.A.Z Formaliza Aliança com a Domínio Carmesim</h2>
+        <p class="news-article__subtitle-text">Fontes das profundezas confirmam que a Predators of the Abyssal Zone se tornou a primeira tripulação aliada da Domínio Carmesim, marcando um novo passo diplomático para ambas as comunidades.</p>
+
+        <div class="news-alliance-flags" aria-label="Bandeiras da aliança P.A.Z e Domínio Carmesim">
+          <figure class="news-alliance-flags__item">
+            <div class="news-alliance-flags__frame">
+              <img src="/assets/images/logo-paz.png" alt="Bandeira da P.A.Z — Predators of the Abyssal Zone" />
+            </div>
+            <figcaption class="news-alliance-flags__label">P.A.Z</figcaption>
+          </figure>
+          <span class="news-alliance-flags__sep" aria-hidden="true">✦</span>
+          <figure class="news-alliance-flags__item">
+            <div class="news-alliance-flags__frame">
+              <img src="/assets/images/Dominio-Carmesim-Crew.png" alt="Bandeira da Domínio Carmesim" />
+            </div>
+            <figcaption class="news-alliance-flags__label">Domínio Carmesim</figcaption>
+          </figure>
+        </div>
+
+        <div class="news-article__body">
+          <p>Fontes das profundezas confirmam que a <strong>P.A.Z</strong>, Predators of the Abyssal Zone, formalizou uma aliança oficial com a <strong>Domínio Carmesim</strong>. Segundo informações apuradas pelo Big News, a P.A.Z se tornou a primeira tripulação aliada da Domínio Carmesim, consolidando um marco importante na trajetória das duas comunidades.</p>
+          <p>A aliança nasce com o objetivo de fortalecer relações, abrir espaço para futuras campanhas conjuntas e criar uma ponte entre grupos que compartilham interesse pelos mares, pelo crescimento coletivo e pela construção de histórias dentro do Rell Seas.</p>
+          <p>Para a P.A.Z, essa parceria representa mais do que diplomacia. Representa presença. Uma tripulação não cresce apenas pela força de seus membros, mas também pelas conexões que constrói, pelas alianças que honra e pela reputação que carrega.</p>
+          <p>A P.A.Z foi criada com uma filosofia simples: nem todos possuem tempo para dominar os mares todos os dias, mas todos podem deixar sua marca neles. A crew segue valorizando companheirismo, lealdade, progresso coletivo, reconhecimento pelo esforço individual e participação em atividades como PvPvE, bosses, exploração, eventos e missões comunitárias.</p>
+          <p>Ser a primeira tripulação aliada da Domínio Carmesim é um marco tanto para a P.A.Z quanto para a própria Domínio Carmesim. Que esta aliança abra caminho para futuras campanhas, conquistas e momentos memoráveis lado a lado.</p>
+          <p class="news-article__closer">O mar é vasto. E agora, seguimos com mais uma força ao nosso lado.</p>
+          <p>
+            <a href="https://discord.gg/javVFyAx8N" target="_blank" rel="noopener noreferrer" style="color:var(--ghost-cyan);">Discord do Domínio Carmesim</a><br>
+            <a href="https://www.roblox.com/share/g/277905568" target="_blank" rel="noopener noreferrer" style="color:var(--ghost-cyan);">Comunidade Roblox P.A.Z</a>
+          </p>
+          <p style="font-style:italic;color:var(--bone-dim);font-size:14px;margin-top:18px;">Fonte: Big News da P.A.Z</p>
+          <p class="news-article__sign-off">Que as notícias ecoem das profundezas.</p>
+        </div>
+      </article>
+
+      <div class="news-rule" aria-hidden="true"><span>Big News</span></div>
 
       <!-- =====================================================
            ARTIGO — Ghost Gang recebe nova Jolly Roger

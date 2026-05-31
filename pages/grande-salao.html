@@ -148,6 +148,21 @@
       font-size:11px; color:var(--gold-bright); border:1px solid rgba(201,169,97,0.35);
     }
 
+    /* ---- Passes da loja ---- */
+    .gs-pass-tier { font-family:var(--font-head); font-weight:600; letter-spacing:0.12em; white-space:nowrap; }
+    .gs-pass-tier--bronze { color:#cd7f32; }
+    .gs-pass-tier--prata { color:#c8d0d8; }
+    .gs-pass-tier--ouro { color:#e8c878; }
+    .gs-pass-tier--diamante { color:#7ec8ff; }
+    .gs-pass-bonus { color:var(--ghost-cyan); font-weight:600; white-space:nowrap; }
+    .gs-pass-extras {
+      margin:0; padding-left:16px; text-align:left; font-family:var(--font-body);
+      font-size:14px; color:var(--text-dim); line-height:1.55;
+    }
+    .gs-pass-extras li { margin-bottom:4px; }
+    .gs-pass-extras li:last-child { margin-bottom:0; }
+    .gs-table td.gs-pass-extras-cell { text-align:left; vertical-align:top; }
+
     /* ---- Medalhas placeholders ---- */
     .gs-medal-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(180px,1fr)); gap:14px; margin-top:18px; }
     .gs-medal-placeholder {
@@ -1099,12 +1114,69 @@
                   <tr><td>Ser Abissal</td><td class="sal-fixed">12.000</td></tr>
                   <tr><td>Caçador Abissal</td><td class="sal-fixed">20.000</td></tr>
                   <tr><td>Lenda do Abismo</td><td class="sal-fixed">25.000</td></tr>
-                  <tr><td>Executor Abissal</td><td class="sal-fixed">35.000</td></tr>
-                  <tr><td>Capitão Abissal</td><td class="sal-fixed">45.000</td></tr>
+                  <tr><td>Executor Abissal</td><td class="sal-fixed">0</td></tr>
+                  <tr><td>Capitão Abissal</td><td class="sal-fixed">0</td></tr>
                 </tbody>
               </table>
             </div></div>
-            <p class="gs-section__note">Executor Abissal e Capitão Abissal são cargos superiores ligados à administração, liderança ou funções especiais da tripulação.</p>
+            <p class="gs-section__note">Executor Abissal e Capitão Abissal são cargos superiores ligados à administração, liderança ou funções especiais da tripulação. Não recebem salário semanal.</p>
+          </div>
+
+          <div class="gs-subsection" id="gs-sec-passes">
+            <h4 class="gs-subsection__title">Bônus de Passe</h4>
+            <p class="gs-section__desc">Passes comprados na loja da crew concedem bônus adicionais ao salário semanal e vantagens extras. O percentual de bônus é aplicado sobre o salário base do membro, calculado pelo maior cargo salarial no pagamento do Armatus.</p>
+            <div class="gs-table-container"><div class="gs-table-wrap">
+              <table class="gs-table">
+                <thead><tr><th>Passe</th><th>Bônus Semanal</th><th>Benefícios Extras</th></tr></thead>
+                <tbody>
+                  <tr>
+                    <td><span class="gs-pass-tier gs-pass-tier--bronze">Bronze</span></td>
+                    <td class="gs-pass-bonus">+5%</td>
+                    <td class="gs-pass-extras-cell">
+                      <ul class="gs-pass-extras">
+                        <li>Cargo visual</li>
+                        <li>Tag / emblema simples</li>
+                      </ul>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td><span class="gs-pass-tier gs-pass-tier--prata">Prata</span></td>
+                    <td class="gs-pass-bonus">+10%</td>
+                    <td class="gs-pass-extras-cell">
+                      <ul class="gs-pass-extras">
+                        <li>Cargo visual</li>
+                        <li>Tag / emblema</li>
+                        <li>Prioridade +2 em sorteios</li>
+                      </ul>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td><span class="gs-pass-tier gs-pass-tier--ouro">Ouro</span></td>
+                    <td class="gs-pass-bonus">+15%</td>
+                    <td class="gs-pass-extras-cell">
+                      <ul class="gs-pass-extras">
+                        <li>Lista de desejo para loja</li>
+                        <li>Prioridade +4 em sorteios</li>
+                      </ul>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td><span class="gs-pass-tier gs-pass-tier--diamante">Diamante</span></td>
+                    <td class="gs-pass-bonus">+20%</td>
+                    <td class="gs-pass-extras-cell">
+                      <ul class="gs-pass-extras">
+                        <li>Lista de desejo para loja</li>
+                        <li>+10% de desconto na loja</li>
+                        <li>Prioridade +8 em sorteios</li>
+                        <li>Emblema / tag</li>
+                        <li>Cargo visual</li>
+                      </ul>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div></div>
+            <p class="gs-section__note">Os bônus de passe somam-se aos benefícios de cargo. Prioridades de sorteio de passe acumulam com as entradas extras concedidas pela hierarquia.</p>
           </div>
 
           <div class="gs-subsection">

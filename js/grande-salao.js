@@ -97,6 +97,12 @@ var GS_CAPTURE_CSS = [
   ".gs-accordion__item{background:#050a10!important;border:1px solid rgba(201,169,97,0.22)!important}",
   ".gs-accordion__item>summary{color:#4ac0ff!important;background:#08101e!important}",
   ".gs-subsection__title{color:#4ac0ff!important}",
+  ".gs-pass-tier--bronze{color:#cd7f32!important}",
+  ".gs-pass-tier--prata{color:#c8d0d8!important}",
+  ".gs-pass-tier--ouro{color:#e8c878!important}",
+  ".gs-pass-tier--diamante{color:#7ec8ff!important}",
+  ".gs-pass-bonus{color:#4ac0ff!important}",
+  ".gs-pass-extras li{color:#a89878!important}",
   ".gs-priority-list li{color:#e0d5b5!important;border-bottom:1px solid rgba(201,169,97,0.15)!important}",
   ".gs-medal-placeholder{color:#a89878!important;border:1px dashed rgba(201,169,97,0.35)!important}",
   ".gs-table{min-width:unset!important;width:100%!important;border-collapse:collapse!important}"
