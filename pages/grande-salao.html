@@ -163,6 +163,63 @@
     .gs-pass-extras li:last-child { margin-bottom:0; }
     .gs-table td.gs-pass-extras-cell { text-align:left; vertical-align:top; }
 
+    /* ---- Tipos de missão / cards informativos ---- */
+    .gs-info-cards {
+      display:grid; grid-template-columns:repeat(auto-fit,minmax(240px,1fr));
+      gap:16px; margin-top:16px;
+    }
+    .gs-info-card {
+      padding:18px 20px;
+      background:linear-gradient(180deg,rgba(13,31,51,0.55) 0%,rgba(8,17,30,0.88) 100%);
+      border:1px solid rgba(201,169,97,0.28);
+    }
+    .gs-info-card__title {
+      font-family:var(--font-display); font-size:clamp(15px,1.3vw,17px); font-weight:700;
+      letter-spacing:0.06em; color:var(--gold-bright); margin:0 0 10px;
+    }
+    .gs-info-card p {
+      font-family:var(--font-body); font-size:14.5px; color:var(--text); line-height:1.65; margin:0;
+    }
+
+    /* ---- Painéis de conteúdo ---- */
+    .gs-panel-stack {
+      display:flex; flex-direction:column; gap:clamp(20px,3vw,28px);
+    }
+    .gs-panel {
+      position:relative;
+      padding:clamp(22px,3vw,32px) clamp(20px,3vw,28px);
+      background:
+        radial-gradient(ellipse 85% 50% at 50% 0%, rgba(30,69,102,0.16) 0%, transparent 68%),
+        linear-gradient(180deg, rgba(8,17,30,0.88) 0%, rgba(5,8,16,0.92) 100%);
+      border:1px solid rgba(201,169,97,0.28);
+      box-shadow:var(--shadow-deep), inset 0 0 32px rgba(74,192,255,0.03);
+    }
+    .gs-panel::before {
+      content:""; position:absolute; inset:7px;
+      border:1px solid rgba(201,169,97,0.14); pointer-events:none;
+    }
+    .gs-panel__corner {
+      position:absolute; width:14px; height:14px; border:1.5px solid var(--gold);
+      pointer-events:none; z-index:1;
+    }
+    .gs-panel__corner--tl { top:-2px; left:-2px; border-right:none; border-bottom:none; }
+    .gs-panel__corner--tr { top:-2px; right:-2px; border-left:none; border-bottom:none; }
+    .gs-panel__corner--bl { bottom:-2px; left:-2px; border-right:none; border-top:none; }
+    .gs-panel__corner--br { bottom:-2px; right:-2px; border-left:none; border-top:none; }
+    .gs-panel__title {
+      font-family:var(--font-display); font-size:clamp(18px,2vw,24px); font-weight:700;
+      letter-spacing:0.08em; margin:0 0 16px; position:relative; z-index:1;
+    }
+    .gs-panel__title--gold { color:var(--gold-bright); }
+    .gs-panel__title--cyan { color:var(--ghost-cyan); }
+    .gs-panel__body { position:relative; z-index:1; }
+    .gs-panel .gs-section__desc:last-of-type { margin-bottom:0; }
+    .gs-panel .gs-section__note {
+      margin-top:16px; padding:12px 16px;
+      border-left:2px solid rgba(201,169,97,0.4); background:rgba(5,8,16,0.35);
+    }
+    .gs-panel .gs-pillar__list { color:var(--text-dim); margin-bottom:0; }
+
     /* ---- Medalhas placeholders ---- */
     .gs-medal-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(180px,1fr)); gap:14px; margin-top:18px; }
     .gs-medal-placeholder {
@@ -268,7 +325,7 @@
     .gs-armatus__rules li { margin-bottom:8px; }
     .gs-armatus__rules li:last-child { margin-bottom:0; }
 
-    @media (max-width:900px) { .gs-pillars { grid-template-columns:1fr; } .gs-armatus__coins { grid-template-columns:1fr; } }
+    @media (max-width:900px) { .gs-pillars { grid-template-columns:1fr; } .gs-armatus__coins { grid-template-columns:1fr; } .gs-info-cards { grid-template-columns:1fr; } }
 
     /* ---- Container escuro das tabelas ---- */
     .gs-table-container { background:rgba(5,8,16,0.90); border:1px solid rgba(201,169,97,0.2); padding:16px 20px; }
@@ -982,61 +1039,119 @@
           <div class="gs-pillars">
             <article class="gs-pillar">
               <h4 class="gs-pillar__title">Dobrões Abissais</h4>
-              <p class="gs-pillar__text">Os Dobrões Abissais são a moeda oficial da tripulação.</p>
-              <p class="gs-pillar__text">Podem ser obtidos através de:</p>
+              <p class="gs-pillar__text">Os Dobrões Abissais são a moeda oficial da P.A.Z.</p>
+              <p class="gs-pillar__text">Podem ser usados para:</p>
               <ul class="gs-pillar__list">
-                <li>Missões e contratos</li>
-                <li>Eventos da tripulação</li>
-                <li>Salários de cargos</li>
-                <li>Venda de recursos e materiais</li>
-                <li>Recompensas especiais</li>
-                <li>Sorteios e competições</li>
+                <li>Comprar itens na loja exclusiva</li>
+                <li>Participar de leilões</li>
+                <li>Contratar serviços</li>
+                <li>Adquirir recompensas especiais</li>
+                <li>Participar de sistemas internos da tripulação</li>
+                <li>Minigame de apostas</li>
               </ul>
-              <p class="gs-pillar__text">Os dobrões podem ser utilizados para adquirir itens, participar de leilões, contratar serviços e trocar por recompensas disponibilizadas pela administração.</p>
+              <p class="gs-pillar__text">Os dobrões são obtidos através de missões, eventos, salários, sorteios, venda de recursos e recompensas especiais.</p>
             </article>
             <article class="gs-pillar">
               <h4 class="gs-pillar__title">Reputação Abissal</h4>
-              <p class="gs-pillar__text">A Reputação representa o reconhecimento conquistado dentro da tripulação. Diferente dos dobrões, a reputação não pode ser comprada.</p>
-              <p class="gs-pillar__text">Ela é obtida através de:</p>
-              <ul class="gs-pillar__list">
-                <li>Conclusão de missões</li>
-                <li>Participação em eventos</li>
-                <li>Doação de recursos para a tripulação</li>
-                <li>Participação em guerras e operações</li>
-                <li>Contribuições relevantes para a comunidade</li>
-              </ul>
-              <p class="gs-pillar__text">A reputação determina a progressão dos cargos da tripulação.</p>
+              <p class="gs-pillar__text">A Reputação representa sua história dentro da P.A.Z. Enquanto os Dobrões podem ser gastos, a Reputação é permanente.</p>
+              <p class="gs-pillar__text">Ela demonstra experiência, participação, confiabilidade e contribuição para a tripulação. A Reputação é o principal fator utilizado para promoções de cargo.</p>
             </article>
             <article class="gs-pillar">
               <h4 class="gs-pillar__title">Benefícios de Cargo</h4>
-              <p class="gs-pillar__text">Os cargos não servem apenas como decoração. Eles representam a confiança e dedicação demonstradas à tripulação.</p>
-              <ul class="gs-pillar__list">
-                <li>Entradas extras em sorteios</li>
-                <li>Salários periódicos</li>
-                <li>Prioridade em missões especiais</li>
-                <li>Descontos comerciais</li>
-                <li>Reconhecimento interno</li>
-              </ul>
+              <p class="gs-pillar__text">Subir de cargo não é apenas uma questão de prestígio. Cada promoção traz benefícios reais: salários, sorteios, descontos comerciais e reconhecimento interno.</p>
             </article>
+          </div>
+        </div>
+
+        <!-- MISSÕES P.A.Z -->
+        <div class="gs-section" id="gs-sec-missoes">
+          <div class="gs-panel-stack">
+
+            <article class="gs-panel">
+              <span class="gs-panel__corner gs-panel__corner--tl"></span>
+              <span class="gs-panel__corner gs-panel__corner--tr"></span>
+              <span class="gs-panel__corner gs-panel__corner--bl"></span>
+              <span class="gs-panel__corner gs-panel__corner--br"></span>
+              <h3 class="gs-panel__title gs-panel__title--gold">O que são as Missões P.A.Z?</h3>
+              <div class="gs-panel__body">
+                <p class="gs-section__desc">As Missões P.A.Z são contratos oficiais criados pela administração e pelos líderes da tripulação.</p>
+                <p class="gs-section__desc">Serão postadas missões em canal específico com diversos objetivos, as quais podem ser aceitas a partir dos gostos, níveis de poder e rank necessário. Elas existem para transformar a ajuda prestada à comunidade em recompensas reais dentro da nossa economia.</p>
+                <p class="gs-cmd__label">Cada missão possui</p>
+                <ul class="gs-pillar__list">
+                  <li>Objetivo específico</li>
+                  <li>Recompensa em Dobrões Abissais</li>
+                  <li>Recompensa em Reputação</li>
+                  <li>Número máximo de participantes</li>
+                  <li>Prazo para conclusão</li>
+                  <li>Responsável pelo contrato</li>
+                </ul>
+                <p class="gs-section__note">Ao concluir uma missão, todos os participantes recebem recompensas proporcionais ao trabalho realizado.</p>
+              </div>
+            </article>
+
+            <article class="gs-panel">
+              <span class="gs-panel__corner gs-panel__corner--tl"></span>
+              <span class="gs-panel__corner gs-panel__corner--tr"></span>
+              <span class="gs-panel__corner gs-panel__corner--bl"></span>
+              <span class="gs-panel__corner gs-panel__corner--br"></span>
+              <h3 class="gs-panel__title gs-panel__title--cyan">Por que as Missões existem?</h3>
+              <div class="gs-panel__body">
+                <p class="gs-section__desc">A P.A.Z foi criada para pessoas que gostam de jogar, mas nem sempre possuem muito tempo disponível. Por isso, nosso sistema não recompensa apenas quem passa horas online.</p>
+                <p class="gs-section__desc">Também recompensa quem ajuda a comunidade, participa de eventos, coopera em operações, fornece recursos, auxilia outros membros e contribui para o crescimento da tripulação. Nosso objetivo é reconhecer todo tipo de contribuição.</p>
+              </div>
+            </article>
+
+          </div>
+
+          <div class="gs-subsection">
+            <h4 class="gs-subsection__title">Tipos Especiais de Missão</h4>
+            <div class="gs-info-cards">
+              <article class="gs-info-card">
+                <h5 class="gs-info-card__title">Missão Relâmpago</h5>
+                <p>Missões de emergência com prazo de 2 horas para completar o objetivo. Recompensa de 2× ou 3× o normal. Se falhar, haverá punição grave. Aceite com cautela.</p>
+              </article>
+              <article class="gs-info-card">
+                <h5 class="gs-info-card__title">Missão Única</h5>
+                <p>Apenas o primeiro a entregar será recompensado com 50% a mais que o normal. Os demais não serão aceitos, mas não há punição.</p>
+              </article>
+              <article class="gs-info-card">
+                <h5 class="gs-info-card__title">Missão em Grupo</h5>
+                <p>Caçada em grande número ou pequenas escaramuças de 3 a 6 jogadores. A recompensa é grande, mas compartilhada entre os membros. É necessário ter grupo para participar.</p>
+              </article>
+            </div>
+          </div>
+
+          <div class="gs-subsection">
+            <h4 class="gs-subsection__title">Níveis de Acesso — Membros Aliados</h4>
+            <div class="gs-table-container"><div class="gs-table-wrap">
+              <table class="gs-table">
+                <thead><tr><th>Nível</th><th>Acesso a Quests</th></tr></thead>
+                <tbody>
+                  <tr><td>Membro Aliado</td><td style="text-align:left">Membros aliados já existentes podem aceitar Quests até o rank C, nível inicial.</td></tr>
+                  <tr><td>Aliado Honorável</td><td style="text-align:left">Pode aceitar Quests do rank B ao S.</td></tr>
+                  <tr><td>Aliado Elite</td><td style="text-align:left">Recebe benefícios e pode aceitar ranks SS e eventos de maior escala exclusivos. Reservado aos aliados mais presentes e de maior confiança mútua.</td></tr>
+                </tbody>
+              </table>
+            </div></div>
           </div>
         </div>
 
         <!-- REPUTAÇÃO -->
         <div class="gs-section" id="gs-sec-reputacao">
           <div class="gs-section-header">
-            <h3 class="gs-section__title">Hierarquia da Reputação</h3>
+            <h3 class="gs-section__title">Como Subir de Cargo?</h3>
             <div class="gs-section-actions"><button class="gs-btn-sm gs-pdf-btn gs-sec-pdf" data-section="gs-sec-reputacao" data-name="hierarquia-reputacao">⎙ PDF</button><button class="gs-btn-sm gs-png-btn gs-sec-png" data-section="gs-sec-reputacao" data-name="hierarquia-reputacao">⬇ PNG</button></div>
           </div>
-          <p class="gs-section__desc">A reputação determina a progressão dos cargos da tripulação.</p>
+          <p class="gs-section__desc">Conforme sua reputação aumenta, você progride automaticamente na hierarquia da tripulação. Cada promoção representa o reconhecimento de sua dedicação à tripulação.</p>
           <div class="gs-table-container"><div class="gs-table-wrap">
             <table class="gs-table">
-              <thead><tr><th>Cargo</th><th>Reputação Necessária</th></tr></thead>
+              <thead><tr><th>Cargo</th><th>Reputação</th></tr></thead>
               <tbody>
                 <tr><td>Náufrago</td><td class="sal-fixed">0</td></tr>
                 <tr><td>Tripulante</td><td class="sal-fixed">250</td></tr>
                 <tr><td>Marujo</td><td class="sal-fixed">1.000</td></tr>
                 <tr><td>Predador</td><td class="sal-fixed">2.500</td></tr>
-                <tr><td>Ser Abissal</td><td class="sal-fixed">4.500</td></tr>
+                <tr><td>Besta Abissal</td><td class="sal-fixed">4.500</td></tr>
                 <tr><td>Caçador Abissal</td><td class="sal-fixed">8.000</td></tr>
                 <tr><td>Lenda do Abismo</td><td class="sal-fixed">15.000</td></tr>
               </tbody>
@@ -1044,11 +1159,39 @@
           </div></div>
 
           <div class="gs-subsection">
-            <h4 class="gs-subsection__title">Recompensa de Missões</h4>
-            <p class="gs-section__desc">Cada rank de missão concede Dobrões Abissais e Reputação P.A.Z ao ser concluída.</p>
+            <h4 class="gs-subsection__title">Como Ganhar Reputação?</h4>
+            <p class="gs-section__desc">A principal forma é através das missões.</p>
             <div class="gs-table-container"><div class="gs-table-wrap">
               <table class="gs-table">
-                <thead><tr><th>Rank da Missão</th><th>Dobrões</th><th>Reputação</th></tr></thead>
+                <thead><tr><th>Rank</th><th>Reputação</th></tr></thead>
+                <tbody>
+                  <tr><td class="diff-mf">F</td><td class="sal-fixed">20</td></tr>
+                  <tr><td class="diff-f">E</td><td class="sal-fixed">50</td></tr>
+                  <tr><td class="diff-mef">D</td><td class="sal-fixed">150</td></tr>
+                  <tr><td class="diff-m">C</td><td class="sal-fixed">250</td></tr>
+                  <tr><td class="diff-md">B</td><td class="sal-fixed">550</td></tr>
+                  <tr><td class="diff-d">A</td><td class="sal-fixed">1.500</td></tr>
+                  <tr><td class="diff-di">S</td><td class="sal-fixed">2.000</td></tr>
+                  <tr><td class="diff-i">SS</td><td class="sal-fixed">4.000</td></tr>
+                </tbody>
+              </table>
+            </div></div>
+            <p class="gs-cmd__label" style="margin-top:18px;">Também é possível obter reputação através de</p>
+            <ul class="gs-pillar__list">
+              <li>Eventos</li>
+              <li>Guerras</li>
+              <li>Operações especiais</li>
+              <li>Doações relevantes</li>
+              <li>Contribuições para a comunidade</li>
+            </ul>
+          </div>
+
+          <div class="gs-subsection">
+            <h4 class="gs-subsection__title">Recompensa de Missões</h4>
+            <p class="gs-section__desc">Quanto mais difícil a missão, maior a recompensa.</p>
+            <div class="gs-table-container"><div class="gs-table-wrap">
+              <table class="gs-table">
+                <thead><tr><th>Rank</th><th>Dobrões</th><th>Reputação</th></tr></thead>
                 <tbody>
                   <tr><td class="diff-mf">F</td><td class="sal-fixed">3.500</td><td class="sal-fixed">20</td></tr>
                   <tr><td class="diff-f">E</td><td class="sal-fixed">7.000</td><td class="sal-fixed">50</td></tr>
@@ -1061,10 +1204,11 @@
                 </tbody>
               </table>
             </div></div>
+            <p class="gs-section__note">Missões SS representam operações de grande importância para a tripulação e podem exigir vários participantes.</p>
           </div>
 
           <div class="gs-subsection">
-            <h4 class="gs-subsection__title">Como Ganhar Reputação — Eventos</h4>
+            <h4 class="gs-subsection__title">Reputação por Eventos</h4>
             <div class="gs-table-container"><div class="gs-table-wrap">
               <table class="gs-table">
                 <thead><tr><th>Atividade</th><th>Reputação</th></tr></thead>
@@ -1187,35 +1331,15 @@
             <h3 class="gs-section__title">Benefícios dos Cargos</h3>
             <div class="gs-section-actions"><button class="gs-btn-sm gs-pdf-btn gs-sec-pdf" data-section="gs-sec-beneficios" data-name="beneficios-cargos">⎙ PDF</button><button class="gs-btn-sm gs-png-btn gs-sec-png" data-section="gs-sec-beneficios" data-name="beneficios-cargos">⬇ PNG</button></div>
           </div>
-          <p class="gs-section__desc">Os cargos não servem apenas como decoração. Eles representam a confiança e dedicação demonstradas à tripulação.</p>
-
-          <div class="gs-subsection">
-            <h4 class="gs-subsection__title">Sorteios</h4>
-            <p class="gs-section__desc">Cada cargo recebe entradas extras em sorteios oficiais. Quanto maior o cargo, maiores as chances de vitória.</p>
-            <div class="gs-table-container"><div class="gs-table-wrap">
-              <table class="gs-table">
-                <thead><tr><th>Cargo</th><th>Entradas Extras</th></tr></thead>
-                <tbody>
-                  <tr><td>Náufrago</td><td class="sal-mult">+0</td></tr>
-                  <tr><td>Tripulante</td><td class="sal-mult">+1</td></tr>
-                  <tr><td>Marujo</td><td class="sal-mult">+2</td></tr>
-                  <tr><td>Predador</td><td class="sal-mult">+3</td></tr>
-                  <tr><td>Besta Abissal</td><td class="sal-mult">+4</td></tr>
-                  <tr><td>Caçador Abissal</td><td class="sal-mult">+5</td></tr>
-                  <tr><td>Lenda do Abismo</td><td class="sal-mult">+6</td></tr>
-                </tbody>
-              </table>
-            </div></div>
-          </div>
+          <p class="gs-section__desc">Subir de cargo não é apenas uma questão de prestígio. Cada promoção traz benefícios reais.</p>
 
           <div class="gs-subsection" id="gs-sec-salarios">
             <h4 class="gs-subsection__title">Salários</h4>
-            <p class="gs-section__desc">Todos os cargos da tripulação recebem salários periódicos em Dobrões Abissais. Cargos superiores recebem pagamentos maiores por representarem membros mais experientes e ativos.</p>
+            <p class="gs-section__desc">Recebidos periodicamente em Dobrões Abissais.</p>
             <div class="gs-table-container"><div class="gs-table-wrap">
               <table class="gs-table">
                 <thead><tr><th>Cargo</th><th>Salário</th></tr></thead>
                 <tbody>
-                  <tr><td>Náufrago</td><td class="sal-fixed">0</td></tr>
                   <tr><td>Tripulante</td><td class="sal-fixed">2.500</td></tr>
                   <tr><td>Marujo</td><td class="sal-fixed">4.500</td></tr>
                   <tr><td>Predador</td><td class="sal-fixed">8.000</td></tr>
@@ -1224,6 +1348,27 @@
                   <tr><td>Lenda do Abismo</td><td class="sal-fixed">25.000</td></tr>
                   <tr><td>Executor Abissal</td><td class="sal-fixed">35.000</td></tr>
                   <tr><td>Capitão Abissal</td><td class="sal-fixed">45.000</td></tr>
+                  <tr><td>Imediato Aliado</td><td class="sal-fixed">35.000</td></tr>
+                  <tr><td>Capitão Aliado</td><td class="sal-fixed">45.000</td></tr>
+                </tbody>
+              </table>
+            </div></div>
+            <p class="gs-section__note">Imediato Aliado e Capitão Aliado utilizam a mesma faixa salarial de Executor Abissal e Capitão Abissal, respectivamente.</p>
+          </div>
+
+          <div class="gs-subsection">
+            <h4 class="gs-subsection__title">Sorteios</h4>
+            <p class="gs-section__desc">Cada cargo recebe entradas adicionais em sorteios oficiais. Quanto maior seu cargo, maiores suas chances.</p>
+            <div class="gs-table-container"><div class="gs-table-wrap">
+              <table class="gs-table">
+                <thead><tr><th>Cargo</th><th>Entradas</th></tr></thead>
+                <tbody>
+                  <tr><td>Tripulante</td><td class="sal-mult">+1</td></tr>
+                  <tr><td>Marujo</td><td class="sal-mult">+2</td></tr>
+                  <tr><td>Predador</td><td class="sal-mult">+3</td></tr>
+                  <tr><td>Besta Abissal</td><td class="sal-mult">+4</td></tr>
+                  <tr><td>Caçador Abissal</td><td class="sal-mult">+5</td></tr>
+                  <tr><td>Lenda do Abismo</td><td class="sal-mult">+6</td></tr>
                 </tbody>
               </table>
             </div></div>
@@ -1245,7 +1390,7 @@
 
           <div class="gs-subsection">
             <h4 class="gs-subsection__title">Benefícios Comerciais</h4>
-            <p class="gs-section__desc">Membros veteranos também recebem vantagens em negociações realizadas pela tripulação.</p>
+            <p class="gs-section__desc">Membros veteranos recebem descontos na loja da tripulação.</p>
             <div class="gs-table-container"><div class="gs-table-wrap">
               <table class="gs-table">
                 <thead><tr><th>Cargo</th><th>Desconto</th></tr></thead>
@@ -1259,6 +1404,55 @@
               </table>
             </div></div>
             <p class="gs-section__note">Esses valores são mantidos baixos para preservar o equilíbrio da economia da tripulação.</p>
+          </div>
+        </div>
+
+        <!-- ALIANÇAS -->
+        <div class="gs-section" id="gs-sec-aliados">
+          <div class="gs-panel-stack">
+
+            <article class="gs-panel">
+              <span class="gs-panel__corner gs-panel__corner--tl"></span>
+              <span class="gs-panel__corner gs-panel__corner--tr"></span>
+              <span class="gs-panel__corner gs-panel__corner--bl"></span>
+              <span class="gs-panel__corner gs-panel__corner--br"></span>
+              <h3 class="gs-panel__title gs-panel__title--gold">Como Funcionam os Aliados?</h3>
+              <div class="gs-panel__body">
+                <p class="gs-section__desc">A P.A.Z reconhece o valor das tripulações parceiras.</p>
+              </div>
+            </article>
+
+            <article class="gs-panel">
+              <span class="gs-panel__corner gs-panel__corner--tl"></span>
+              <span class="gs-panel__corner gs-panel__corner--tr"></span>
+              <span class="gs-panel__corner gs-panel__corner--bl"></span>
+              <span class="gs-panel__corner gs-panel__corner--br"></span>
+              <h3 class="gs-panel__title gs-panel__title--cyan">Líderes Aliados</h3>
+              <div class="gs-panel__body">
+                <p class="gs-section__desc">Capitães e Imediatos de alianças que demonstram confiança, cooperação e apoio contínuo à P.A.Z podem receber cargos diplomáticos especiais: <strong>Capitão Aliado</strong> e <strong>Imediato Aliado</strong>.</p>
+                <p class="gs-section__desc">Esses cargos utilizam a mesma faixa salarial de Capitão Abissal e Executor Abissal. Não são conquistados por reputação, mas sim por confiança construída entre as tripulações.</p>
+              </div>
+            </article>
+
+            <article class="gs-panel">
+              <span class="gs-panel__corner gs-panel__corner--tl"></span>
+              <span class="gs-panel__corner gs-panel__corner--tr"></span>
+              <span class="gs-panel__corner gs-panel__corner--bl"></span>
+              <span class="gs-panel__corner gs-panel__corner--br"></span>
+              <h3 class="gs-panel__title gs-panel__title--cyan">Membros de Tripulações Aliadas</h3>
+              <div class="gs-panel__body">
+                <p class="gs-section__desc">Membros aliados podem participar de atividades e contratos da P.A.Z. Entretanto:</p>
+                <ul class="gs-pillar__list">
+                  <li>Não recebem salários e benefícios de cargos da tripulação.</li>
+                  <li>Podem possuir acesso limitado a missões, a depender do empenho na tripulação aliada.</li>
+                  <li>Missões estratégicas podem exigir autorização da administração.</li>
+                  <li>Recebem recompensas de missões igualmente.</li>
+                  <li>Podem fazer uso das lojas.</li>
+                </ul>
+                <p class="gs-section__note">Dessa forma, preservamos a economia interna sem impedir a cooperação entre aliados.</p>
+              </div>
+            </article>
+
           </div>
         </div>
 
@@ -1448,9 +1642,10 @@
           <div class="gs-section-header">
             <h3 class="gs-section__title">Filosofia da P.A.Z</h3>
           </div>
-          <p>A P.A.Z não exige que seus membros joguem o dia inteiro. Acreditamos que cada pessoa possui sua própria rotina.</p>
-          <p>O objetivo da tripulação é criar um ambiente onde todos possam evoluir, contribuir e serem recompensados de forma justa.</p>
+          <p>A P.A.Z não mede o valor de um membro apenas pelo tempo que ele permanece online.</p>
+          <p>Valorizamos lealdade, cooperação, participação e evolução constante. Acreditamos que cada pessoa possui sua própria rotina. Por isso criamos um sistema onde qualquer membro pode crescer, contribuir e ser recompensado de forma justa.</p>
           <p class="gs-callout">Quanto mais você ajuda a tripulação, mais a tripulação ajuda você.</p>
+          <p class="gs-callout" style="margin-top:16px;font-family:var(--font-display);font-style:normal;font-weight:700;letter-spacing:0.1em;">A Névoa é Nossa. O Abismo é Nosso.</p>
         </div>
 
         <!-- ARQUIVO DE CONTRATOS -->
