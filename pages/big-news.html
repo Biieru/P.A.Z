@@ -339,6 +339,17 @@
       text-align: center;
     }
 
+    .news-article__source {
+      font-style: italic;
+      color: var(--bone-dim);
+      font-size: 14px;
+      margin: 18px 0 0;
+    }
+
+    .news-article__source + .news-article__trust-line {
+      margin-top: 6px;
+    }
+
     .news-article__sign-off {
       font-family: var(--font-body);
       font-style: italic;
@@ -439,6 +450,13 @@
       display: block;
       margin: 18px 0 8px;
     }
+    .news-figure { margin: 22px 0; text-align: center; }
+    .news-figure .news-inline-img { margin-left: auto; margin-right: auto; max-width: min(100%, 720px); }
+    .news-figure-grid {
+      display: grid; grid-template-columns: repeat(2, 1fr); gap: 16px;
+      max-width: 820px; margin: 22px auto 8px;
+    }
+    .news-figure-grid .news-inline-img { max-width: 100%; margin: 0; width: 100%; }
     /* Separador entre artigos */
     .news-rule {
       display: flex;
@@ -481,6 +499,7 @@
       .news-alliance-flags__sep {
         font-size: 16px;
       }
+      .news-figure-grid { grid-template-columns: 1fr; }
     }
   </style>
 </head>
@@ -537,6 +556,58 @@
 
 
       <!-- =====================================================
+           ARTIGO — Dev Notes Mar Dois, Mar Três e conteúdos futuros
+           ===================================================== -->
+      <article class="news-article">
+        <div class="news-article__header">
+          <span class="news-article__category news-article__category--furo">Furo de Última Hora</span>
+          <span class="news-article__author">Por Greed</span>
+          <span class="news-article__date">Jun 2026</span>
+        </div>
+
+        <h2 class="news-article__title">Novas Dev Notes Mostram Progresso no &ldquo;Mar Dois&rdquo;, &ldquo;Mar Três&rdquo; e Conteúdos Futuros</h2>
+        <p class="news-article__subtitle-text">Capt. Badman atualizou a comunidade sobre o trabalho atual em RELL Seas, citando correções em bosses, sistemas em desenvolvimento, planejamento de mares futuros e checklists mensais de produção.</p>
+
+        <div class="news-article__body">
+          <p>Fontes das profundezas indicam que <strong>Capt. Badman</strong> trouxe novas atualizações sobre o desenvolvimento de <strong>RELL Seas</strong>, reforçando que o projeto segue em ritmo ativo, com foco em correções, implementação de conteúdo e planejamento estrutural dos mares.</p>
+          <p>Segundo as mensagens divulgadas, o trabalho segue principalmente no <strong>Sea Three</strong>, com retorno ao <strong>Sea Two</strong> previsto durante a metade da semana. A informação ajuda a esclarecer que a equipe está alternando entre áreas importantes do jogo, ajustando conteúdos já existentes e corrigindo problemas encontrados durante o processo.</p>
+
+          <figure class="news-figure">
+            <img src="/assets/images/big-news/rell-seas-devnotes-anexo1.png" alt="Capt. Badman comenta trabalho no Sea Three e retorno ao Sea Two" class="news-inline-img" />
+            <figcaption class="news-media__caption">Capt. Badman comenta o trabalho no Sea Three e o retorno ao Sea Two durante a semana.</figcaption>
+          </figure>
+
+          <p>Em uma nova atualização, Capt. Badman detalhou algumas frentes específicas de desenvolvimento. No <strong>Sea Two</strong>, seu irmão estaria trabalhando em correções relacionadas ao <strong>Ozaru Boss</strong>. Enquanto isso, ele próprio estaria no <strong>Sea Three</strong>, corrigindo o <strong>God&rsquo;s Eye</strong>.</p>
+          <p>Além disso, a equipe principal foi mencionada em outras tarefas importantes, como a exportação de animação de boss do <strong>Aegon</strong>, design de efeitos sonoros para o sistema de cozinha e finalização de <strong>Whole Cake Island</strong>, citada como uma ilha do <strong>Sea Six</strong>.</p>
+
+          <figure class="news-figure">
+            <img src="/assets/images/big-news/rell-seas-devnotes-anexo2.png" alt="Atualização sobre Ozaru Boss, God's Eye, Aegon e Whole Cake Island" class="news-inline-img" />
+            <figcaption class="news-media__caption">Atualização cita Ozaru Boss, God&rsquo;s Eye, Aegon, sistema de cozinha e Whole Cake Island.</figcaption>
+          </figure>
+
+          <p>Outro ponto relevante foi o esclarecimento sobre a construção antecipada de outros mares. Segundo Capt. Badman, algumas ilhas e áreas futuras estão sendo produzidas antes do cronograma principal para auxiliar no planejamento geral do jogo.</p>
+          <p>Esse processo envolve distância entre ilhas, mapas, cenas, bosses, elementos de mundo e ajustes estruturais. Ou seja, quando a equipe mostra modelos, ilhas ou conteúdos futuros, isso não significa necessariamente que tudo estará disponível no lançamento inicial.</p>
+          <p>A explicação também serve como alerta contra especulações. Alguns materiais apresentados em vídeos ou showcases podem ser destinados a atualizações futuras. O objetivo, segundo a equipe, é mostrar o cuidado e o nível de planejamento por trás do projeto, não confirmar automaticamente cada elemento como conteúdo de lançamento.</p>
+          <p>Por fim, outro print divulgado mostrou checklists mensais com várias tarefas concluídas. Apesar do avanço, a própria equipe deixou claro que a lista de trabalho não termina. O desenvolvimento segue em ciclos constantes de criação, correção, teste e otimização.</p>
+
+          <div class="news-figure-grid">
+            <img src="/assets/images/big-news/rell-seas-devnotes-anexo3.png" alt="Checklists mensais com tarefas concluídas" class="news-inline-img" />
+            <img src="/assets/images/big-news/rell-seas-devnotes-anexo4.png" alt="Checklist parcial de produção em andamento" class="news-inline-img" />
+          </div>
+          <p class="news-media__caption" style="margin-top:0;">Checklists mensais indicam progresso contínuo, mas também reforçam que o trabalho segue em andamento.</p>
+
+          <p>Para a <strong>P.A.Z</strong>, essa atualização reforça uma leitura importante: <strong>RELL Seas não está parado</strong>. Bosses estão sendo corrigidos, sistemas estão recebendo ajustes, ilhas seguem em produção e conteúdos futuros estão sendo planejados com antecedência.</p>
+          <p>Ainda assim, progresso não deve ser confundido com lançamento imediato. O jogo continua avançando, mas parte desse avanço acontece nos bastidores, em tarefas técnicas que precisam ser resolvidas antes da abertura oficial dos mares.</p>
+          <p class="news-article__closer">O mar está sendo preparado. Mas antes da partida, cada ilha, boss, sistema e rota ainda precisa passar pelo crivo da equipe.</p>
+          <p class="news-article__source">Fonte: Dev Notes de Capt. Badman no Discord Oficial da Rell Games.</p>
+          <p class="news-article__source news-article__trust-line">E lembrem-se, confiem EM MIM, com as suas notícias!</p>
+          <p class="news-article__sign-off">Que as notícias ecoem das profundezas.</p>
+        </div>
+      </article>
+
+      <div class="news-rule" aria-hidden="true"><span>Big News</span></div>
+
+      <!-- =====================================================
            ARTIGO — RELL Seas prepara Movie 3
            ===================================================== -->
       <article class="news-article">
@@ -558,7 +629,8 @@
           <p>Além do Movie 3, a equipe também indicou que pretende comentar futuramente sobre mudanças recentes no <strong>Roblox</strong> e como elas podem afetar os planos do jogo.</p>
           <p>Para a <strong>P.A.Z</strong>, essa atualização é relevante porque mostra que o desenvolvimento segue ativo, mas ainda passa por uma fase técnica importante. O jogo não está apenas recebendo conteúdo novo: ele também está sendo ajustado, otimizado e preparado para funcionar de forma mais sólida.</p>
           <p class="news-article__closer">O mar está sendo construído. Mas nem toda ilha já está pronta para receber tripulação.</p>
-          <p style="font-style:italic;color:var(--bone-dim);font-size:14px;margin-top:18px;">Fonte: Dev Notes de Capt. Badman no Discord Oficial da Rell Games.</p>
+          <p class="news-article__source">Fonte: Dev Notes de Capt. Badman no Discord Oficial da Rell Games.</p>
+          <p class="news-article__source news-article__trust-line">E lembrem-se, confiem EM MIM, com as suas notícias!</p>
           <p class="news-article__sign-off">Que as notícias ecoem das profundezas.</p>
         </div>
       </article>
@@ -587,7 +659,8 @@
           <p>Além da explicação sobre o passado, a equipe também revelou algumas frentes atuais de trabalho. Entre elas estão o desenvolvimento do <strong>Mar Três</strong>, com foco em inteligência artificial; ajustes no <strong>Mar Dois</strong>, incluindo correções e configuração de missões; a cutscene de entrada do <strong>Aegon</strong>; efeitos sonoros para talentos; animações de finalização contra mobs, com inspiração em jogos como Batman Arkham; e a construção de ilhas subaquáticas.</p>
           <p>Para a <strong>P.A.Z</strong>, essa atualização é relevante porque mostra que RELL Seas continua em produção ativa, com esforços concentrados tanto em conteúdo quanto em sistemas técnicos. O comunicado também reforça que a equipe está tentando ser mais aberta sobre os bastidores do desenvolvimento, mesmo quando as respostas não são exatamente as que a comunidade gostaria de ouvir.</p>
           <p>Ainda não há lançamento confirmado. Porém, a movimentação indica que o projeto segue avançando, agora com maior atenção à otimização, estrutura e acabamento.</p>
-          <p style="font-style:italic;color:var(--bone-dim);font-size:14px;margin-top:18px;">Fonte: Comunicado da equipe RELL Seas</p>
+          <p class="news-article__source">Fonte: Comunicado da equipe RELL Seas</p>
+          <p class="news-article__source news-article__trust-line">E lembrem-se, confiem EM MIM, com as suas notícias!</p>
           <p class="news-article__sign-off">Que as notícias ecoem das profundezas.</p>
         </div>
       </article>
@@ -616,7 +689,8 @@
           <p>
             <a href="https://www.youtube.com/watch?v=YLNVe590upc" target="_blank" rel="noopener noreferrer" style="color:var(--ghost-cyan);">Assista ao vídeo da Domínio Carmesim</a>
           </p>
-          <p style="font-style:italic;color:var(--bone-dim);font-size:14px;margin-top:18px;">Fonte: Big News da P.A.Z</p>
+          <p class="news-article__source">Fonte: Big News da P.A.Z</p>
+          <p class="news-article__source news-article__trust-line">E lembrem-se, confiem EM MIM, com as suas notícias!</p>
           <p class="news-article__sign-off">Que as notícias ecoem das profundezas.</p>
         </div>
       </article>
@@ -663,7 +737,8 @@
             <a href="https://discord.gg/javVFyAx8N" target="_blank" rel="noopener noreferrer" style="color:var(--ghost-cyan);">Discord do Domínio Carmesim</a><br>
             <a href="https://www.roblox.com/share/g/277905568" target="_blank" rel="noopener noreferrer" style="color:var(--ghost-cyan);">Comunidade Roblox P.A.Z</a>
           </p>
-          <p style="font-style:italic;color:var(--bone-dim);font-size:14px;margin-top:18px;">Fonte: Big News da P.A.Z</p>
+          <p class="news-article__source">Fonte: Big News da P.A.Z</p>
+          <p class="news-article__source news-article__trust-line">E lembrem-se, confiem EM MIM, com as suas notícias!</p>
           <p class="news-article__sign-off">Que as notícias ecoem das profundezas.</p>
         </div>
       </article>
@@ -697,6 +772,7 @@
             </blockquote>
             <p>A atualização marca uma nova etapa visual para o esquadrão, reforçando sua presença dentro da tripulação e consolidando sua identidade nos registros oficiais da crew. A bandeira deixa de ser apenas um símbolo decorativo e passa a representar, de forma pública, a imagem que a <strong>Ghost Gang</strong> carrega nos mares.</p>
             <p>Segundo informações internas, a mudança faz parte do processo de atualização visual da <strong>P.A.Z</strong>, que vem organizando seus esquadrões, registros, hierarquia e símbolos no site oficial. Com isso, cada divisão passa a ter uma representação mais clara e alinhada ao crescimento da tripulação.</p>
+            <p class="news-article__source news-article__trust-line">E lembrem-se, confiem EM MIM, com as suas notícias!</p>
             <p class="news-article__sign-off">Que as notícias ecoem das profundezas.</p>
           </div>
         </div>
@@ -733,6 +809,7 @@
           <img src="https://i.imgur.com/Q7r919k.png" alt="Anúncio oficial da Rell Games" class="news-inline-img" />
           <p style="font-size:12.5px;font-style:italic;color:var(--bone-dim);margin:0 0 20px;">Print do anúncio no Discord oficial da Rell Games.</p>
           <p>Muito provavelmente estaremos recebendo mais aplicações para nós, <strong>Brasileiros</strong>, podermos <strong>fazer parte da equipe do Rell Games</strong>. Já que a expansão para a <strong>LATAM</strong> não é mais um sonho distante, mas algo que eles perceberam ser necessário dado à demanda e ao número de reclamações de ping ridículo nos últimos eventos, especialmente envolvendo o <strong>Culling Games</strong> em <strong>Jujutsu Shenanigans</strong>.</p>
+          <p class="news-article__source news-article__trust-line">E lembrem-se, confiem EM MIM, com as suas notícias!</p>
           <p class="news-article__sign-off">Que as notícias ecoem das profundezas.</p>
         </div>
       </article>
@@ -765,6 +842,7 @@
           <h3 class="news-section-title">E a aba Hierarquia?</h3>
           <p>A aba <strong>Hierarquia</strong> agora está funcional e serve para mostrar a organização oficial da crew. Nela, membros poderão visualizar melhor a estrutura da <strong>P.A.Z</strong>, entendendo cargos, responsabilidades e posições dentro da tripulação. Isso ajuda novos membros a se localizarem e toda a crew a manter uma organização mais sólida.</p>
           <p>As abas <strong>Alianças</strong> e <strong>Hierarquia</strong> já podem ser acessadas pelo site oficial da <strong>P.A.Z</strong>: <a href="https://p-a-z.onrender.com/" target="_blank" rel="noopener noreferrer" style="color:var(--ghost-cyan);">p-a-z.onrender.com</a></p>
+          <p class="news-article__source news-article__trust-line">E lembrem-se, confiem EM MIM, com as suas notícias!</p>
           <p class="news-article__sign-off">Que as notícias ecoem das profundezas.</p>
         </div>
       </article>
@@ -795,6 +873,7 @@
           <p>O <strong>Vault</strong> é uma área criada dentro do site da <strong>P.A.Z</strong> para servir como um cofre de informações sobre <strong>Rell Seas</strong>. Nele, será possível consultar conteúdos antigos, postagens oficiais, registros importantes e materiais já mostrados ao público até hoje.</p>
           <p>Enquanto o lançamento de <strong>Rell Seas</strong> ainda não chega, o <strong>Vault</strong> será usado para acompanhar o que já foi revelado, organizar informações confiáveis e facilitar o acesso de todos os membros da crew.</p>
           <p>O <strong>Vault</strong> já pode ser acessado pelo site oficial da <strong>P.A.Z</strong>: <a href="https://p-a-z.onrender.com/" target="_blank" rel="noopener noreferrer" style="color:var(--ghost-cyan);">p-a-z.onrender.com</a></p>
+          <p class="news-article__source news-article__trust-line">E lembrem-se, confiem EM MIM, com as suas notícias!</p>
           <p class="news-article__sign-off">Que as notícias ecoem das profundezas.</p>
         </div>
       </article>
@@ -826,6 +905,7 @@
           <p>Com sua chegada ao cargo, Greed já implementou a <strong>VAULT</strong> no site da P.A.Z — um arquivo para guardar toda informação que já tivemos do Rell Seas em ordem cronológica. Com isso, sabemos que a chegada de Greed representa mais do que uma simples função administrativa. Trata-se da criação de uma voz oficial para registrar os avanços da P.A.Z, acompanhar sua expansão e documentar os acontecimentos mais importantes ligados à tripulação.</p>
 
           <p class="news-article__closer">Uma Nova Era de Comunicação está chegando para a P.A.Z.</p>
+          <p class="news-article__source news-article__trust-line">E lembrem-se, confiem EM MIM, com as suas notícias!</p>
           <p class="news-article__sign-off">Que as notícias ecoem das profundezas.</p>
         </div>
       </article>
@@ -853,6 +933,7 @@
             <p>Segundo informações apuradas, o novo canal será utilizado para divulgar vídeos de recrutamento, registros da crew, momentos de destaque, chamadas para novos membros e conteúdos voltados à identidade da tripulação. A movimentação reforça a estratégia da P.A.Z de ocupar não apenas os mares, mas também as principais rotas de comunicação fora do Discord.</p>
             <p>Nos bastidores, a criação da página é vista como mais um passo no fortalecimento da imagem pública da crew. Com presença ativa no site oficial, no Discord e agora no TikTok, a P.A.Z amplia seu alcance e abre uma nova frente para atrair recrutas interessados em PvPvE sério, boss grind e progresso real.</p>
             <p>Fontes internas afirmam que novos conteúdos devem ser publicados em breve. E, pelo ritmo das movimentações recentes, tudo indica que este é apenas o começo da expansão midiática dos Predators of the Abyssal Zone.</p>
+            <p class="news-article__source news-article__trust-line">E lembrem-se, confiem EM MIM, com as suas notícias!</p>
           </div>
         </div>
       </article>
@@ -889,6 +970,7 @@
             <p>Informações vindas dos bastidores indicam que a <strong>P.A.Z</strong> lançou a primeira versão oficial de seu vídeo de recrutamento. O material foi produzido para circulação no Instagram e em outras plataformas, apresentando ao público a identidade visual da crew e reforçando o chamado para novos membros interessados em PvPvE sério, boss grind e progresso real.</p>
             <p>De acordo com dados apurados pelo Big News, a P.A.Z já opera com mais de <strong>70 membros ativos</strong>, organizados em três esquadrões principais: <strong>Águas Pacíficas</strong>, <strong>Cães do Abismo</strong> e <strong>Ghost Gang</strong>. Cada divisão possui uma função estratégica própria dentro da tripulação, compondo uma estrutura voltada para organização, presença e domínio em alto nível.</p>
             <p>Fontes oficiais informam que interessados em se alistar devem acessar o Discord da crew por meio do botão disponível na página inicial do site ou utilizar os links de convite compartilhados pelos membros autorizados. A movimentação reforça a expansão da P.A.Z e sinaliza que novas vagas podem se tornar cada vez mais disputadas.</p>
+            <p class="news-article__source news-article__trust-line">E lembrem-se, confiem EM MIM, com as suas notícias!</p>
           </div>
         </div>
       </article>
@@ -911,6 +993,7 @@
           <p>Fontes próximas à liderança indicam que o site oficial da <strong>P.A.Z — Predators of the Abyssal Zone</strong> — foi desenvolvido, publicado e colocado em operação com sucesso. A nova plataforma surge como um ponto central de informações da crew, reunindo a estrutura dos esquadrões, a hierarquia interna, registros de caçadas e comunicados oficiais diretamente ligados ao Big News.</p>
           <p>Segundo informações apuradas, o projeto foi conduzido por <strong>Greed</strong> com o objetivo de fortalecer a presença da tripulação além dos limites do Discord. A iniciativa busca oferecer uma base sólida de consulta tanto para novos recrutas quanto para veteranos já inseridos nas operações da P.A.Z.</p>
           <p>Ainda de acordo com fontes internas, o site não será uma estrutura estática. Novas páginas, registros de caçadas, rankings de membros, arquivos estratégicos e coberturas de eventos devem ser adicionados conforme a P.A.Z expande sua influência pelos mares.</p>
+          <p class="news-article__source news-article__trust-line">E lembrem-se, confiem EM MIM, com as suas notícias!</p>
         </div>
       </article>
 
