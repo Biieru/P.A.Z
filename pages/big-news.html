@@ -452,6 +452,19 @@
     }
     .news-figure { margin: 22px 0; text-align: center; }
     .news-figure .news-inline-img { margin-left: auto; margin-right: auto; max-width: min(100%, 720px); }
+    .news-figure .news-media__frame {
+      max-width: min(100%, 720px);
+      margin: 0 auto;
+      background: #050810;
+      border: 1px solid rgba(201, 169, 97, 0.3);
+      overflow: hidden;
+    }
+    .news-figure .news-media__frame video {
+      width: 100%;
+      height: auto;
+      display: block;
+      object-fit: contain;
+    }
     .news-figure-grid {
       display: grid; grid-template-columns: repeat(2, 1fr); gap: 16px;
       max-width: 820px; margin: 22px auto 8px;
@@ -554,6 +567,48 @@
 
     <div class="news-feed">
 
+      <!-- =====================================================
+           ARTIGO — RELL Seas clima, doenças e progressão médica
+           ===================================================== -->
+      <article class="news-article">
+        <div class="news-article__header">
+          <span class="news-article__category news-article__category--furo">Furo de Última Hora</span>
+          <span class="news-article__author">Por Greed</span>
+          <span class="news-article__date">Jun 2026</span>
+        </div>
+
+        <h2 class="news-article__title">RELL Seas Revela Sistema de Clima, Doenças e Progressão Médica</h2>
+        <p class="news-article__subtitle-text">Novas Dev Notes mostram detalhes sobre tempestades, biomas, estações, doenças contagiosas e comportamento de NPCs durante eventos climáticos.</p>
+
+        <div class="news-article__body">
+          <p>Fontes das profundezas indicam que novas <strong>Dev Notes</strong> de <strong>RELL Seas</strong> trouxeram informações importantes sobre sistemas de mundo vivo, incluindo clima, biomas, estações, progressão médica e doenças que poderão afetar os jogadores durante a aventura.</p>
+          <p>Segundo Capt. Thraggoon, a equipe vem trabalhando em cenários de tempestade, biomas, estações e no sistema de progressão de doutor. A atualização também revelou que os jogadores poderão encontrar doenças ao longo da jornada, variando desde condições simples, como o <strong>resfriado comum</strong>, até ameaças mais graves, como <strong>Flesh Rot</strong>.</p>
+
+          <figure class="news-figure">
+            <div class="news-media__frame">
+              <video
+                src="/assets/videos/rell-seas-clima-doencas-devnotes.mp4"
+                controls
+                preload="metadata"
+                playsinline
+                aria-label="Dev Notes sobre clima, doenças, NPCs e progressão médica em RELL Seas"
+              ></video>
+            </div>
+            <figcaption class="news-media__caption">Dev Notes revelam detalhes sobre tempestades, doenças, NPCs e progressão médica em RELL Seas.</figcaption>
+          </figure>
+
+          <p>Outro ponto citado foi o funcionamento do contágio. Capt. Badman explicou que, caso um jogador esteja tossindo próximo de NPCs ou outros jogadores, existe a possibilidade de infectá-los. Em alguns casos, NPCs como Marines podem reagir de forma agressiva diante desse comportamento.</p>
+          <p>A atualização também trouxe detalhes sobre o comportamento dos NPCs durante tempestades. A maioria tende a procurar abrigo em ambientes fechados, enquanto NPCs estacionários, como guardas em serviço, devem permanecer em seus postos.</p>
+          <p>Por questão de performance, NPCs não devem receber o mesmo visual molhado aplicado aos jogadores. Segundo a explicação, isso evita sobrecarga em áreas com muitos NPCs interativos próximos. Ainda assim, o personagem do jogador receberá efeitos visuais progressivos, com a chuva descendo aos poucos e encharcando o modelo com o tempo.</p>
+          <p>Para a <strong>P.A.Z</strong>, essas informações mostram que <strong>RELL Seas</strong> não está sendo construído apenas em torno de combate, bosses e exploração. Sistemas ambientais, doenças, reações de NPCs e pequenos detalhes de imersão também fazem parte da experiência planejada.</p>
+          <p class="news-article__closer">O mar não será apenas um campo de batalha. Ele também será um ambiente vivo, capaz de afetar o jogador, mudar comportamentos e criar situações inesperadas durante a jornada.</p>
+          <p class="news-article__source">Fonte: Dev Notes de Capt. Badman e Capt. Thraggoon no Discord Oficial da Rell Games.</p>
+          <p class="news-article__source news-article__trust-line">E lembrem-se, confiem EM MIM, com as suas notícias!</p>
+          <p class="news-article__sign-off">Que as notícias ecoem das profundezas.</p>
+        </div>
+      </article>
+
+      <div class="news-rule" aria-hidden="true"><span>Big News</span></div>
 
       <!-- =====================================================
            ARTIGO — Dev Notes Mar Dois, Mar Três e conteúdos futuros
