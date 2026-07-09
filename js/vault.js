@@ -13,7 +13,7 @@
        subtitle  : string — linha de resumo / subtítulo
        media     : objeto com:
                      type    — "image" | "video" | "none"
-                     src     — caminho do arquivo (ex: "/assets/images/foo.jpg")
+                     src     — caminho do arquivo (URL completa ou relativa à página)
                      alt     — texto alternativo
                      caption — legenda (opcional)
                      portrait— boolean, true para mídia 9:16 (ex: vídeos verticais)

@@ -48,10 +48,6 @@ ul { list-style: none; padding: 0; margin: 0; }
   --max-w: 1380px;
   --gutter: clamp(20px, 4vw, 56px);
   --radius: 6px;
-
-  /* Tempo de transição entre páginas (mantenha sincronizado com main.js TRANSITION_MS) */
-  --transition-out: 900ms;
-  --transition-in:  900ms;
 }
 
 html, body {

@@ -6,58 +6,78 @@
   "use strict";
 
   /* ===========================================================
+     RAIZ DO SITE
+     Derivada do src deste script (js/main.js), portanto estável
+     mesmo depois de pushState. Funciona em file://, localhost e
+     GitHub Pages (site servido em subdiretório, ex: /P.A.Z/).
+     =========================================================== */
+  const SITE_ROOT = (() => {
+    const s = document.currentScript;
+    if (s && s.src) return s.src.replace(/js\/main\.js.*$/, "");
+    // Fallback: deriva da URL do documento
+    const href = window.location.href.split(/[?#]/)[0];
+    return href.replace(/\/[^/]*$/, "/").replace(/\/pages\/$/, "/");
+  })();
+
+  /* Exposto para outros scripts montarem caminhos de assets */
+  window.PAZ_ROOT = SITE_ROOT;
+
+  /* ===========================================================
      ROUTER SPA
      Troca apenas o conteúdo de #app-content via fetch().
      O header, áudio e atmosfera ficam vivos entre páginas.
+     Todas as URLs internas são absolutas (resolvidas contra
+     SITE_ROOT), imunes a mudanças de URL via pushState.
      =========================================================== */
   const Router = (() => {
-    const FADE_MS  = 460;
-    const cache    = {};    // { pathname: DOMParser document }
+    const FADE_MS = 460;
+    const cache   = {};   // { href absoluto: Document }
 
     const appContent = () => document.getElementById("app-content");
     const overlay    = () => document.getElementById("pageTransition");
 
-    /* Converte pathname em URL fetchável independente do ambiente */
-    function toFetchURL(pathname) {
-      // Em file://, precisa de URL relativa à localização real do documento
-      if (window.location.protocol === "file:") {
-        // Descobrir o diretório raiz do site (onde está o index.html)
-        const base = window.location.href
-          .split("?")[0]
-          .replace(/\/[^/]*$/, "/")          // pasta do arquivo atual
-          .replace(/\/pages\/$/, "/");       // se estiver em pages/, sobe um nível
-        // Montar URL completa: base + pathname sem a barra inicial
-        return base + pathname.replace(/^\//, "");
-      }
-      return pathname; // servidor: usa root-relative normalmente
+    const isHttp = () => /^https?:$/.test(window.location.protocol);
+
+    /* Normaliza: a home tem duas formas (raiz e index.html) */
+    function normalize(href) {
+      const clean = href.split(/[?#]/)[0];
+      return (clean === SITE_ROOT || clean === SITE_ROOT + "index.html")
+        ? SITE_ROOT
+        : clean;
+    }
+
+    /* Tem esquema explícito? (https:, mailto:, data:, …) */
+    const hasScheme = str => /^[a-z][a-z0-9+.-]*:/i.test(str);
+
+    /* Converte hrefs relativos de <a data-link> em absolutos,
+       resolvidos contra baseHref */
+    function absolutizeLinks(scope, baseHref) {
+      scope.querySelectorAll("a[data-link]").forEach(a => {
+        const raw = a.getAttribute("href");
+        if (!raw || raw.startsWith("#") || hasScheme(raw)) return;
+        try { a.setAttribute("href", new URL(raw, baseHref).href); } catch {}
+      });
+    }
+
+    /* Resolve src de <img>/<video>/<source> do conteúdo injetado
+       para o contexto da página de origem */
+    function absolutizeMedia(node, baseHref) {
+      node.querySelectorAll("img[src], video[src], source[src]").forEach(el => {
+        const raw = el.getAttribute("src");
+        if (!raw || raw.startsWith("/") || hasScheme(raw)) return;
+        try { el.setAttribute("src", new URL(raw, baseHref).href); } catch {}
+      });
     }
 
     /* Busca e parseia um HTML remoto */
-    async function fetchDoc(pathname) {
-      if (cache[pathname]) return cache[pathname];
-      const url = toFetchURL(pathname);
-      const res = await fetch(url);
+    async function fetchDoc(href) {
+      if (cache[href]) return cache[href];
+      const res = await fetch(href);
       if (!res.ok) throw new Error("HTTP " + res.status);
       const html = await res.text();
       const doc  = new DOMParser().parseFromString(html, "text/html");
-      cache[pathname] = doc;
+      cache[href] = doc;
       return doc;
-    }
-
-    /* Resolve URLs de <img> e <video> no conteúdo injetado para o contexto atual */
-    function resolveMediaURLs(node, sourcePath) {
-      // sourcePath = pathname da página de onde veio o conteúdo, ex: "/pages/esquadroes.html"
-      const sourceDir = sourcePath.replace(/\/[^\/]*$/, "/"); // ex: "/pages/"
-
-      node.querySelectorAll("img[src], video[src], source[src]").forEach(el => {
-        const attr = el.getAttribute("src");
-        if (!attr || attr.startsWith("http") || attr.startsWith("/") || attr.startsWith("data:")) return;
-        // Montar URL absoluta a partir do diretório da página fonte
-        try {
-          const absolute = new URL(attr, window.location.origin + sourceDir).pathname;
-          el.setAttribute("src", absolute);
-        } catch {}
-      });
     }
 
     /* Aplica estilos inline específicos da página (<style> no <head>) */
@@ -72,13 +92,13 @@
     }
 
     /* Atualiza link ativo no nav */
-    function updateNav(pathname) {
-      const tail = pathname.replace(/\/$/, "") || "/";
+    function updateNav(href) {
+      const target = normalize(href);
       document.querySelectorAll(".nav__link").forEach(a => {
-        const href = a.getAttribute("href") || "";
-        // normaliza: remove trailing slash e compara
-        const aPath = href.replace(/\/$/, "") || "/";
-        a.classList.toggle("is-active", aPath === tail);
+        const raw = a.getAttribute("href") || "";
+        let aHref;
+        try { aHref = normalize(new URL(raw, SITE_ROOT).href); } catch { return; }
+        a.classList.toggle("is-active", aHref === target);
       });
     }
 
@@ -95,68 +115,63 @@
       if (el) el.classList.remove("is-exiting");
     }
 
-    /* Navegação principal */
-    async function navigate(pathname, push = true) {
+    /* Navegação principal — href sempre absoluto */
+    async function navigate(href, push = true) {
       // Sem shell SPA (#app-content) → navegação normal completa
-      // Acontece quando o usuário acessa pages/*.html diretamente pelo navegador
+      // Acontece quando o usuário acessa pages/*.html diretamente
       if (!appContent()) {
-        window.location.href = pathname;
+        window.location.href = href;
         return;
       }
-      // Ignora mesma página
-      const current = window.location.pathname.replace(/\/$/, "") || "/";
-      const target  = pathname.replace(/\/$/, "") || "/";
+
+      const target  = normalize(href);
+      const current = normalize(window.location.href);
       if (target === current && push) return;
 
-      // Fecha nav mobile se estiver aberta
       closeNav();
-
       await fadeOut();
 
       try {
-        // Home: o conteúdo já está no shell — re-injeta a partir do cache ou parse do index
-        const fetchPath = (target === "/" || target.endsWith("index.html"))
-          ? "/index.html"   // servidor
-          : target;
-        // Em file://, evitar pushState (pode falhar) — só atualiza o conteúdo
+        // A raiz é servida como index.html
+        const fetchHref = target === SITE_ROOT ? SITE_ROOT + "index.html" : target;
 
-        const doc   = await fetchDoc(fetchPath);
-        const main  = doc.querySelector("main");
+        const doc  = await fetchDoc(fetchHref);
+        const main = doc.querySelector("main");
         if (!main) throw new Error("No <main>");
 
         applyPageStyles(doc);
 
-        // Swap conteúdo — resolver URLs de mídia para o contexto atual
         const app = appContent();
         if (app) {
           const cloned = main.cloneNode(true);
-          resolveMediaURLs(cloned, fetchPath);
+          absolutizeMedia(cloned, fetchHref);
+          absolutizeLinks(cloned, fetchHref);
           app.innerHTML = "";
           app.appendChild(cloned);
 
           // Disparar evento de navegação para scripts externos (ex: vault.js)
-          window.dispatchEvent(new CustomEvent("paz:pageload", { detail: { pathname } }));
+          window.dispatchEvent(new CustomEvent("paz:pageload", { detail: { href: target } }));
 
           // Atualizar data-page no body para CSS (fundo escuro em páginas internas)
-          var isHome = target === "/" || target === "" || target.endsWith("index.html");
-          document.body.dataset.page = isHome ? "home" : target.replace("/pages/","").replace(".html","");
+          document.body.dataset.page = (target === SITE_ROOT)
+            ? "home"
+            : target.slice(SITE_ROOT.length).replace(/^pages\//, "").replace(/\.html$/, "");
         }
 
         // Título
         const title = doc.querySelector("title")?.textContent;
         if (title) document.title = title;
 
-        // URL e estado
-        // pushState não funciona em file:// — só executa em servidor
-      if (push && window.location.protocol !== "file:") {
-        history.pushState({ pathname: target }, title || "", target);
-      }
+        // URL e estado — pushState não funciona em file://
+        if (push && isHttp()) {
+          history.pushState({ href: target }, title || "", target);
+        }
         updateNav(target);
         window.scrollTo({ top: 0, behavior: "instant" });
 
       } catch (err) {
         console.warn("Router: fallback para navegação normal.", err);
-        window.location.href = pathname;
+        window.location.href = href;
         return;
       }
 
@@ -165,64 +180,51 @@
 
     /* Prefetch silencioso ao idle */
     function prefetch() {
-      if (!("requestIdleCallback" in window)) return;
+      if (!("requestIdleCallback" in window) || !isHttp()) return;
       requestIdleCallback(() => {
         document.querySelectorAll("a[data-link]").forEach(a => {
           const href = a.getAttribute("href") || "";
-          if (!href || href.startsWith("http") || href.startsWith("#")) return;
-          try {
-            const { pathname } = new URL(href, siteBase());
-            if (!cache[pathname]) fetchDoc(pathname).catch(() => {});
-          } catch {}
+          if (!href.startsWith(SITE_ROOT)) return;
+          const target = normalize(href);
+          const fetchHref = target === SITE_ROOT ? SITE_ROOT + "index.html" : target;
+          if (!cache[fetchHref]) fetchDoc(fetchHref).catch(() => {});
         });
       });
     }
 
-    /* Base real do site (sempre a raiz, independente do pushState atual) */
-    function siteBase() {
-      if (window.location.protocol === "file:") {
-        // Sobe até o diretório raiz do projeto (onde está index.html)
-        const href = window.location.href.split("?")[0];
-        const dir  = href.replace(/\/[^\/]*$/, "/");
-        return dir.replace(/\/pages\/$/, "/"); // se estiver dentro de pages/, sobe
-      }
-      return window.location.origin + "/";
-    }
-
     function init() {
-      /* Intercepta cliques — sempre resolve relativo à raiz do site */
+      /* Resolver os links do shell contra a URL real do documento,
+         antes de qualquer pushState */
+      absolutizeLinks(document, window.location.href);
+
+      /* Intercepta cliques em links internos */
       document.addEventListener("click", e => {
         const a = e.target.closest("a[data-link]");
         if (!a) return;
-        const href = a.getAttribute("href");
-        if (!href) return;
-        if (href.startsWith("#")) return;
-        let parsed;
-        try {
-          // Usa siteBase() como base: evita o bug /pages/pages/X
-          parsed = new URL(href, siteBase());
-        } catch { return; }
-        // Link externo? Deixa o browser tratar normalmente
-        if (window.location.protocol !== "file:" && parsed.origin !== window.location.origin) return;
         if (e.ctrlKey || e.metaKey || e.shiftKey || e.button === 1) return;
+        const href = a.getAttribute("href");
+        if (!href || href.startsWith("#")) return;
+        // Fora do site? Deixa o browser tratar normalmente
+        if (!href.startsWith(SITE_ROOT)) return;
         e.preventDefault();
-        navigate(parsed.pathname);
+        navigate(href);
       });
 
       /* Botão voltar / avançar */
       window.addEventListener("popstate", e => {
-        const p = e.state?.pathname || window.location.pathname;
-        navigate(p, false);
+        navigate(e.state?.href || window.location.href, false);
       });
 
       /* Estado inicial */
-      history.replaceState(
-        { pathname: window.location.pathname },
-        document.title,
-        window.location.pathname
-      );
+      if (isHttp()) {
+        history.replaceState(
+          { href: normalize(window.location.href) },
+          document.title,
+          window.location.href
+        );
+      }
 
-      updateNav(window.location.pathname);
+      updateNav(window.location.href);
       prefetch();
     }
 

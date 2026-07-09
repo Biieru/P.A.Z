@@ -229,7 +229,7 @@ function gsExportPDF() { gsExportSectionPDF("gs-tables-area", "grande-salao-comp
    ========================================================= */
 var GS_CONTRACT_HTML2CANVAS = "https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js";
 var GS_CONTRACT_JSPDF = "https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js";
-var GS_CONTRACT_TEMPLATE_URL = "/assets/images/template.png?v=20260526-04";
+var GS_CONTRACT_TEMPLATE_URL = (window.PAZ_ROOT || "../") + "assets/images/template.png?v=20260526-04";
 var GS_CONTRACT_EMBED_ICON_URL = "https://i.imgur.com/EZWCQ4s.png";
 var GS_CONTRACT_MARKDOWN_CLAUSE = "Abandono resulta em consquências graves, que vão desde multas, perda temporária de acesso ao quadro de contratos, caçadas ou expulsão. A liderança da P.A.Z não se responsabiliza por perdas causadas por imprudência ou abandono de formação. Porém traições serão diretamente resolvidas pelo alto escalão da P.A.Z.";
 var gsContractResolvedImgSrc = null;
