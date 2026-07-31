@@ -15,6 +15,13 @@ const PAZ_IMG = (window.PAZ_ROOT || "../") + "assets/images/";
 
 const ALIANCAS_DATA = [
   {
+    id: 4,
+    name: "The Honorables",
+    image: PAZ_IMG + "big-news/paz-the-honorables-alianca.png",
+    discord: "",
+    body: "A The Honorables passa a integrar o mapa diplomatico da P.A.Z como uma nova crew aliada, reforcando a construcao externa da Predators of the Abyssal Zone antes da abertura oficial dos mares de RELL Seas.\n\nEssa alianca representa mais do que um registro simbolico. Ela abre espaco para cooperacao, eventos, campanhas, troca de informacoes e presenca estrategica entre tripulacoes que ja estao se organizando para o futuro.\n\nA P.A.Z segue fortalecendo suas relacoes, registrando sua presenca e preparando sua posicao nos mares. O mar ainda nao abriu completamente. Mas as bandeiras ja comecaram a se reconhecer."
+  },
+  {
     id: 3,
     name: "Domínio Carmesim",
     image: PAZ_IMG + "Dominio-Carmesim-Crew.png",
@@ -91,7 +98,11 @@ function openAlliance(crew) {
 
   if (imgEl)   { imgEl.src = crew.image; imgEl.alt = "Logo da " + crew.name; }
   if (titleEl)  titleEl.textContent = crew.name;
-  if (linkEl)  { linkEl.href = crew.discord; }
+  if (linkEl)  {
+    const hasDiscord = !!(crew.discord && crew.discord.trim());
+    linkEl.href = hasDiscord ? crew.discord : "#";
+    linkEl.hidden = !hasDiscord;
+  }
   if (bodyEl) {
     const hasBody = !!(crew.body && crew.body.trim());
     if (hasBody) {
